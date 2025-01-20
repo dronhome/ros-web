@@ -5,9 +5,9 @@ const config = {
   preprocess: sveltePreprocess(),
   kit: {
     adapter: adapter({
-      pages: 'build',
-      assets: 'build',
-      strict: false, // Allow dynamic routes without throwing errors
+      pages: 'build',  // Output folder
+      assets: 'build', // Static assets folder
+      fallback: 'index.html', // Enable SPA mode
     }),
   },
 };

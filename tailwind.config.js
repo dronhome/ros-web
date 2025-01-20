@@ -1,6 +1,6 @@
 // tailwind.config.cjs
 module.exports = {
-  content: ['./src/**/*.{html,svelte,js,ts}'], // Adjust to your project structure
+  content: ['./src/**/*.{html,js,svelte,ts}'],
   darkMode: 'class', // Enable class-based dark mode
   theme: {
     extend: {
