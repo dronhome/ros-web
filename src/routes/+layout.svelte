@@ -1,3 +1,4 @@
+
 <script>
     import Sidebar from '$lib/components/Sidebar.svelte';
     import ContentArea from '$lib/components/ContentArea.svelte';
