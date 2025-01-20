@@ -5,10 +5,13 @@ const config = {
   preprocess: sveltePreprocess(),
   kit: {
     adapter: adapter({
-      pages: 'build',  // Output folder
-      assets: 'build', // Static assets folder
-      fallback: 'index.html', // Enable SPA mode
+      pages: 'build',
+      assets: 'build',
+      fallback: 'index.html', // For SPA mode
     }),
+    paths: {
+    //   base: '/', // Replace <repository-name> with your actual GitHub repository name
+    },
   },
 };
 
