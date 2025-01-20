@@ -1,3 +1,4 @@
+export const prerender = true;
 
 <script>
     import Sidebar from '$lib/components/Sidebar.svelte';
