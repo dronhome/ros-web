@@ -9,7 +9,8 @@
 
     onMount(async () => {
         try {
-            const response = await fetch('/data/course.json');
+            const response = await fetch('/ros-web/data/course.json');
+
             modules = await response.json();
         } catch (error) {
             console.error('Error loading modules:', error);

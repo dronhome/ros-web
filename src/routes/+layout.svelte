@@ -4,6 +4,7 @@
     import Sidebar from '$lib/components/Sidebar.svelte';
     import ContentArea from '$lib/components/ContentArea.svelte';
     import { onMount } from 'svelte';
+    // export const path = '/ros-web'
 
     let selectedContent = null;
     let isSidebarOpen = true;
@@ -54,7 +55,7 @@
                         on:click={toggleSidebar}
                         title="Close Sidebar"
                     >
-                        <img src="/icons/sidebar.svg" alt="Toggle Sidebar" />
+                        <img src="/ros-web/icons/sidebar.svg" alt="Toggle Sidebar" />
                     </button>
                     <h3>ROSMASTER R2 Vzdelávací kurz</h3>
                 </div>
@@ -74,7 +75,7 @@
                         on:click={toggleSidebar}
                         title="Open Sidebar"
                     >
-                        <img src="/icons/sidebar.svg" alt="Toggle Sidebar" />
+                        <img src="/ros-web/icons/sidebar.svg" alt="Toggle Sidebar" />
                     </button>
                 </div>
             {/if}
@@ -93,7 +94,7 @@
                     on:click={toggleSidebar}
                     title="Close Sidebar"
                 >
-                    <img src="/icons/sidebar.svg" alt="Toggle Sidebar" />
+                    <img src="/ros-web/icons/sidebar.svg" alt="Toggle Sidebar" />
                 </button>
                 <h3>ROSMASTER R2 Vzdelávací kurz</h3>
             </div>
@@ -111,7 +112,7 @@
                     on:click={toggleSidebar}
                     title="Show Sidebar"
                 >
-                    <img src="/icons/sidebar.svg" alt="Toggle Sidebar" />
+                    <img src="/ros-web/icons/sidebar.svg" alt="Toggle Sidebar" />
                 </button>
             </div>
             <ContentArea isSidebarOpen={isSidebarOpen} content={selectedContent} />
