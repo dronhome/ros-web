@@ -1,5 +1,6 @@
 
 <script>
+    export const prerender = true;
     import Sidebar from '$lib/components/Sidebar.svelte';
     import ContentArea from '$lib/components/ContentArea.svelte';
     import { onMount } from 'svelte';

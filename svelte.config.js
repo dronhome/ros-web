@@ -10,7 +10,7 @@ const config = {
       fallback: 'index.html', // For SPA mode
     }),
     paths: {
-    //   base: '/', // Replace <repository-name> with your actual GitHub repository name
+		base: '/ros-web'
     },
   },
 };
