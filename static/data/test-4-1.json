@@ -1,0 +1,87 @@
+{
+    "name": "Docker - základný prehľad",
+    "title": "Docker - základný prehľad",
+    "questions": [
+      {
+        "type": "mcq",
+        "question": "Čo je Docker?",
+        "options": [
+          "Virtualizačný hypervízor",
+          "Open-source platforma na kontajnery",
+          "Programovací jazyk",
+          "Systém na správu databáz"
+        ],
+        "answer": "Open-source platforma na kontajnery"
+      },
+      {
+        "type": "truefalse",
+        "question": "Docker kontajnery zdieľajú jadro hostiteľského operačného systému.",
+        "answer": "True"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorý Docker príkaz zobrazí všetky lokálne stiahnuté obrazy?",
+        "options": [
+          "docker ps",
+          "docker images",
+          "docker run",
+          "docker pull"
+        ],
+        "answer": "docker images"
+      },
+      {
+        "type": "short",
+        "question": "Ako sa nazýva textový súbor s inštrukciami na vytvorenie vlastného Docker obrazu?",
+        "answer": "Dockerfile"
+      },
+      {
+        "type": "mcq",
+        "question": "Čo znamená ‘Image (Obraz)’ v Docker terminológii?",
+        "options": [
+          "Bežiaci kontajner",
+          "Šablóna s aplikáciou a závislosťami",
+          "Konfiguračný súbor",
+          "Služba na Docker Hub"
+        ],
+        "answer": "Šablóna s aplikáciou a závislosťami"
+      },
+      {
+        "type": "truefalse",
+        "question": "Docker VM má vlastné jadro a vyžaduje viac zdrojov ako Docker kontajner.",
+        "answer": "False"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorý príkaz použijete na spustenie kontajnera hello-world?",
+        "options": [
+          "docker start hello-world",
+          "docker run hello-world",
+          "docker exec hello-world",
+          "docker pull hello-world"
+        ],
+        "answer": "docker run hello-world"
+      },
+      {
+        "type": "short",
+        "question": "Ako sa nazýva verejná služba na zdieľanie Docker obrazov?",
+        "answer": "Docker Hub"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorý z nasledujúcich aspektov nie je hlavným prínosom Dockeru?",
+        "options": [
+          "Izolácia aplikácií",
+          "Prenositeľnosť kódu",
+          "Vyššia spotreba pamäte",
+          "Rýchle spúšťanie"
+        ],
+        "answer": "Vyššia spotreba pamäte"
+      },
+      {
+        "type": "truefalse",
+        "question": "Docker Compose slúži na definovanie a spúšťanie viacero kontajnerov naraz.",
+        "answer": "True"
+      }
+    ]
+  }
+  

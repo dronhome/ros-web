@@ -1,0 +1,104 @@
+{ 
+                "id": "exercise-4-2", 
+                "name": "Cvičenie 4.2 - Práca s hardvérom a spúšťanie Docker kontajnera",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "Kontrola pripojených zariadení"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Pomocou príkazov si môžeme prezrieť pripojené zariadenia a určiť, ktoré hardvérové komponenty sú dostupné pre použitie v systéme."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Zobrazenie pravidiel udev",
+                        "description": "– Použite príkaz na zobrazenie konfigurácie pripojených zariadení:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "ll /etc/udev/rules.d"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Zobrazenie pripojených sériových zariadení",
+                        "description": "– Použite príkaz na identifikáciu zariadení typu ttyUSB:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "ll /dev | grep ttyUSB*"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Zobrazenie Astra kamery",
+                        "description": "– Overte, či je Astra kamera pripojená pomocou príkazu:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "ll /dev/astra*"
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Analýza súboru run_docker.sh"
+                    },
+                    {
+                        "type": "code",
+                        "content": "cat run_docker.sh"
+                    },
+                    {
+                        "type": "code",
+                        "content": "#!/bin/bash\nxhost +\n\ndocker run -it \\\n--net=host \\\n--env=\"DISPLAY\" \\\n--env=\"QT_X11_NO_MITSHM=1\" \\\n-v /tmp/.X11-unix:/tmp/.X11-unix \\\n-v /home/jetson/temp:/root/yahboomcar_ros2_ws/temp \\\n-v /home/jetson/rosboard:/root/rosboard \\\n-v /home/jetson/maps:/root/maps \\\n-v /dev/bus/usb/001/010:/dev/bus/usb/001/010 \\\n-v /dev/bus/usb/001/012:/dev/bus/usb/001/012 \\\n--device=/dev/astradepth \\\n--device=/dev/astrauvc \\\n--device=/dev/video0 \\\n--device=/dev/myserial \\\n--device=/dev/rplidar \\\n--device=/dev/input \\\n-p 9090:9090 \\\n-p 8888:8888 \\\nyahboomtechnology/ros-foxy:4.0.5 /bin/bash"
+                    },                    
+                    {
+                        "type": "text",
+                        "content": "Súbor `run_docker.sh` je skript, ktorý umožňuje spustiť Docker kontajner s rôznymi nastaveniami a pripojenými zariadeniami. Obsahuje tieto kľúčové časti:"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Pripojenie ku GUI",
+                        "description": "– Použitím príkazu `xhost +` sa umožní prístup ku grafickému prostrediu hostiteľa pre aplikácie bežiace v kontajneri."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Sieťové nastavenia",
+                        "description": "– Parameter `--net=host` zdieľa sieťové rozhranie hostiteľského systému s kontajnerom."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Pripojenie zariadení",
+                        "description": "– Parametre `--device` umožňujú pripojenie hardvérových zariadení (napr. kamera Astra alebo lidar RPLIDAR) priamo do kontajnera."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Zdieľanie súborov",
+                        "description": "– Príkazy `-v` mapujú priečinky medzi hostiteľským systémom a kontajnerom, čo umožňuje zdieľanie dát."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Spustenie kontajnera",
+                        "description": "– Kontajner sa spustí s obrazom `yahboomtechnology/ros-foxy:4.0.5` a interaktívnou Bash konzolou."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Spustenie skriptu run_docker.sh"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Na spustenie Docker kontajnera použite príkaz:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "./run_docker.sh"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Po spustení skriptu sa Docker kontajner pripojí k hostiteľskému systému, pričom bude mať prístup k zdieľaným zariadeniam (napr. Astra kamera a lidar) a dátam. Kontajner je pripravený na spustenie aplikácií, ako je napríklad RViz2. RViz2 je grafický nástroj na vizualizáciu dát, ako sú lidarové skeny alebo mapy robota. Na spustenie RViz2 je potrebné pripojenie cez VNC. RViz2 bude detailne vysvetlený v neskoršej časti kurzu."
+                    }                                 
+                ]
+            }

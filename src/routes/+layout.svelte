@@ -1,124 +1,106 @@
-
 <script>
-    export const prerender = true;
     import Sidebar from '$lib/components/Sidebar.svelte';
-    import ContentArea from '$lib/components/ContentArea.svelte';
     import { onMount } from 'svelte';
-    // export const path = '/ros-web'
+    import { afterNavigate } from '$app/navigation';
+    import { tick } from 'svelte';
 
-    let selectedContent = null;
     let isSidebarOpen = true;
-
-    // Track if the screen is small (mobile).
     let isMobile = false;
 
-    // Check screen size on mount and on resize
     function checkScreenSize() {
-        isMobile = window.innerWidth <= 600; // pick your desired breakpoint
+        isMobile = window.innerWidth <= 600;
         isSidebarOpen = window.innerWidth >= 1000;
     }
 
+    function toggleSidebar() {
+        isSidebarOpen = !isSidebarOpen;
+        localStorage.setItem('sidebarOpen', JSON.stringify(isSidebarOpen));
+    }
+
+
     onMount(() => {
         checkScreenSize();
+
+        const savedState = localStorage.getItem('sidebarOpen');
+        if (savedState !== null) {
+            isSidebarOpen = JSON.parse(savedState);
+        } else {
+            isSidebarOpen = window.innerWidth >= 1000;
+        }
+
         window.addEventListener('resize', checkScreenSize);
     });
 
-    function handleSelectContent(content) {
-        selectedContent = content;
-        // On mobile, once a module is selected, we want to hide the sidebar
+
+    afterNavigate(async () => {
         if (isMobile) {
             isSidebarOpen = false;
         }
-    }
-
-    function toggleSidebar() {
-        // If user toggles sidebar on mobile, either show/hide it
-        if (isMobile) {
-            isSidebarOpen = !isSidebarOpen;
-        } else {
-            // On desktop, you do your usual toggle
-            isSidebarOpen = !isSidebarOpen;
+        await tick(); // Wait for the DOM to update
+        const container = document.querySelector('.content-area');
+        if (container) {
+            container.scrollTop = 0; // ✅ Reset scroll position
         }
-    }
+    })
 </script>
 
-<!-- LAYOUT -->
+
+<!-- Desktop Layout -->
 {#if !isMobile}
-    <!-- Desktop / Large Screen Layout -->
     <div class="layout">
-        <!-- Sidebar -->
         {#if isSidebarOpen}
             <div class="bar_cont">
                 <div class="button_div_bar">
-                    <button
-                        class="toggle-sidebar-btn"
-                        on:click={toggleSidebar}
-                        title="Close Sidebar"
-                    >
+                    <button class="toggle-sidebar-btn" on:click={toggleSidebar} title="Close Sidebar">
                         <img src="/ros-web/icons/sidebar.svg" alt="Toggle Sidebar" />
                     </button>
                     <h3>ROSMASTER R2 Vzdelávací kurz</h3>
                 </div>
                 <div class="sidebar">
-                    <Sidebar onSelectContent={handleSelectContent} />
+                    <Sidebar />
                 </div>
             </div>
         {/if}
 
-        <!-- Content Area -->
         <div class="content-area" style="width: {isSidebarOpen ? '75vw' : '100vw'}">
             {#if !isSidebarOpen}
-                <!-- Button Div when Sidebar is closed on desktop -->
                 <div class="button_div_cont">
-                    <button
-                        class="toggle-sidebar-btn"
-                        on:click={toggleSidebar}
-                        title="Open Sidebar"
-                    >
+                    <button class="toggle-sidebar-btn" on:click={toggleSidebar} title="Open Sidebar">
                         <img src="/ros-web/icons/sidebar.svg" alt="Toggle Sidebar" />
                     </button>
                 </div>
             {/if}
-            <ContentArea isSidebarOpen={isSidebarOpen} content={selectedContent} />
+            
+            <slot />
         </div>
     </div>
 
+<!-- Mobile Layout -->
 {:else}
-    <!-- Mobile Layout -->
     {#if isSidebarOpen}
-        <!-- Show ONLY Sidebar if no content selected -->
         <div class="bar_cont" style="width: 100vw">
             <div class="button_div_bar">
-                <button
-                    class="toggle-sidebar-btn"
-                    on:click={toggleSidebar}
-                    title="Close Sidebar"
-                >
+                <button class="toggle-sidebar-btn" on:click={toggleSidebar} title="Close Sidebar">
                     <img src="/ros-web/icons/sidebar.svg" alt="Toggle Sidebar" />
                 </button>
                 <h3>ROSMASTER R2 Vzdelávací kurz</h3>
             </div>
             <div class="sidebar" style="width: 100vw">
-                <Sidebar onSelectContent={handleSelectContent} />
+                <Sidebar />
             </div>
         </div>
     {:else}
-        <!-- Show ONLY Content if user has selected something -->
         <div class="content-area" style="width: 100vw;">
-            <!-- Possibly add a button to go back to the sidebar -->
             <div class="button_div_cont">
-                <button
-                    class="toggle-sidebar-btn"
-                    on:click={toggleSidebar}
-                    title="Show Sidebar"
-                >
+                <button class="toggle-sidebar-btn" on:click={toggleSidebar} title="Show Sidebar">
                     <img src="/ros-web/icons/sidebar.svg" alt="Toggle Sidebar" />
                 </button>
             </div>
-            <ContentArea isSidebarOpen={isSidebarOpen} content={selectedContent} />
+            <slot />
         </div>
     {/if}
 {/if}
+
 
 <style>
     :global(body) {

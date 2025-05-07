@@ -1,0 +1,192 @@
+{ 
+                "id": "exercise-1-1",
+                "name": "Cvičenie 1 - Návod na diaľkové ovládanie mobilnou aplikáciou pre Rosmaster R2",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "1. Inštalácia mobilnej aplikácie"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "1.1 Naskenovanie kódu na inštaláciu aplikácie"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Pre používateľov <strong>Androidu</strong>:<br>1. Otvorte prehliadač vo svojom mobilnom zariadení.<br>2. Naskenujte nižšie uvedený QR kód na stiahnutie a inštaláciu aplikácie MakerControl."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Pre používateľov <strong>iOS</strong>:<br>1. Otvorte App Store a vyhľadajte aplikáciu MakerControl.<br>2. Alebo použite skener kódov na naskenovanie nižšie uvedeného QR kódu na stiahnutie a inštaláciu aplikácie."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Ak už máte na telefóne nainštalovanú aplikáciu MakerControl, nie je potrebné ju opätovne inštalovať."
+                    },
+                    {
+                        "type": "image",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735146911/16250477241055-min_uudl5e.png",
+                        "alt": "QR code"
+                    },
+                
+                    {
+                        "type": "title",
+                        "content": "2. Pripojenie aplikácie k Rosmaster R2 Robotovi"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "2.1 Nastavenie siete"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Systém Rosmaster obsahuje vstavaný hotspot s názvom ROSMASTER a predvoleným heslom 12345678. Pred použitím hotspotu sa uistite, že je zapnutý vypínač napájania na zariadení Rosmaster."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Možnosť 1:",
+                        "description": "Pripojte svoj telefón priamo k hotspotu ROSMASTER."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Možnosť 2:",
+                        "description": "Pripojte zariadenia Rosmaster a telefón k tej istej sieti routera."
+                    },
+                
+                    {
+                        "type": "subtitle",
+                        "content": "2.2 Výber zariadenia"
+                    },
+                    {
+                        "type": "text",
+                        "content": "1. Otvorte aplikáciu MakerControl.<br>2. Zo zoznamu zariadení vyberte Rosmaster R2 v kategórii ROS Robot."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735149088/image-20220325121723408_zg0ad2.png",
+                        "alt": "Zoznam zariadení"
+                    },
+                
+                    {
+                        "type": "subtitle",
+                        "content": "2.3 Vytvorenie sieťového pripojenia"
+                    },
+                    {
+                        "type": "text",
+                        "content": "1. Stlačte na ikonu Wi-Fi v pravom hornom rohu aplikácie na pripojenie k robotovi Rosmaster.<br>2. Do poľa IP zadajte IP adresu zobrazenú na OLED displeji Rosmastera. Použite predvolené hodnoty pre polia Port a Video.<br>3. Kliknite na Connect."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Po pripojení:<br>- Aplikácia sa automaticky presunie na hlavné ovládacie rozhranie.<br>- Ikona Wi-Fi už nebude zobrazovať zakázaný znak."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735149046/photo_2024-12-25_18-50-35_s4ovp9.jpg",
+                        "alt": "Pripojenie k robotovi Rosmaster"
+                    },
+                
+                    {
+                        "type": "title",
+                        "content": "3. Preskúmanie funkcií aplikácie"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "3.1 Diaľkové ovládanie"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Nastavenie rýchlosti:",
+                        "description": "Ovládanie bežiacej rýchlosti robota."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Nastavenie uhla serva predných kolies:",
+                        "description": "Nastavenie uhla natočenia predných kolies."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Ovládanie pohybu:",
+                        "description": "Pohyb robota dopredu, dozadu, doľava, doprava alebo zastavenie."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Režim celej obrazovky:",
+                        "description": "Zobrazenie kamerového záznamu na celú obrazovku (kompatibilný s bezdrôtovými USB ovládačmi a stojanmi)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Displej kamery:",
+                        "description": "Zobrazenie záznamu kamery v reálnom čase."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Prepínanie režimov ovládania:",
+                        "description": "Vyberte medzi gravitáciou, tlačidlovým ovládaním alebo ovládaním pomocou joysticku."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Ovládanie bzučiaka:",
+                        "description": "Aktivujte alebo deaktivujte bzučiak stlačením alebo uvoľnením tlačidla."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Režim automatického stabilizovania:",
+                        "description": "Aktivujte tento režim na plynulé zastavenie robota po prijatí príkazu na zastavenie."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Ovládanie otáčania:",
+                        "description": "Nastavte maximálny uhol otáčania serva predných kolies doľava a doprava."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735149648/image-20220325141443189_qzwbry.jpg",
+                        "alt": "Rozhranie diaľkového ovládania"
+                    },
+                
+                    {
+                        "type": "subtitle",
+                        "content": "3.2 Farebné svetlá"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Stlačte na ikonu Dazzling Lights na hlavnom rozhraní. Ovládanie svetiel je rozdelené do troch sekcií:"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Prepnúť farby:",
+                        "description": "Nastavenie RGB farieb svetelného panela v reálnom čase pomocou posúvnikov R, G a B."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Pevné farby:",
+                        "description": "Vyberte prednastavené farby (červená, zelená, modrá, žltá, fialová, tyrkysová, biela alebo vypnuté). Možné je aj monochromatické dýchanie."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Špeciálne efekty:",
+                        "description": "Tečúce svetlá, svetelná reťaz, hviezdy, monochromatické dýchacie svetlá a prechodové svetlá. Rýchlosť efektov sa dá meniť posúvačom."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735149728/image-20220325143915694_c5tsid.png",
+                        "alt": "Ovládanie farebných svetiel"
+                    },
+                
+                    {
+                        "type": "subtitle",
+                        "content": "3.3 Pokyny na konfiguráciu"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Úloha konfigurácie: Konfigurácia serva predných kolies zabezpečuje zarovnanie kolies pre rovnomerný a presný pohyb. Pravidelné resetovanie môže byť potrebné na odstránenie nesúladu zarovnania spôsobeného prepravou alebo častým používaním."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Postup:<br>1. Stlačte na ikonu Configuration na hlavnom rozhraní.<br>2. Zdvihnite predné kolesá robota nad zem.<br>3. Pomocou posúvnika zarovnajte predné kolesá paralelne s telom robota.<br>4. Kliknite na Confirm na uloženie nastavení."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735149736/image-20220325144624337_ttpz4d.png",
+                        "alt": "Konfigurácia serva predných kolies"
+                    }
+                ]
+            }

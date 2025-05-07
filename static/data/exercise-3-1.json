@@ -1,0 +1,101 @@
+{ 
+                "id": "exercise-3-1", 
+                "name": "Cvičenie 3.1 - Pripojenie k Jupyter Lab",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "Rovnaká sieť"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Na pripojenie k Jupyter Lab na Rosmaster R2 musíte byť v rovnakej sieti ako robot, v našom prípade ide o sieť Technická univerzita v Košiciach. Ak nie ste v rovnakej sieti, budete musieť použiť <a href='https://uvt.tuke.sk/wps/portal/uv/sluzby/vzdialeny-pristup-vpn' target='_blank'>TUKE VPN</a>, aby ste sa mohli pripojiť k robotovi."
+                    },
+                    {
+                        "type": "title",
+                        "content": "Pripojenie cez SSH"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Ďalším krokom je pripojenie k Rosmasteru cez SSH. Použite príkaz: <strong>`ssh -c aes256-ctr -p 2024 jetson@147.232.54.84`</strong>. Heslo: <strong>`yahboom`</strong>."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Poznámka: AES šifrovanie nemusí byť potrebné pre všetky operačné systémy, z ktorých sa pripájate. Vyskúšajte pripojenie bez tejto možnosti, ak narazíte na problémy."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Nezabudnite, že autíčko musí byť zapnuté."
+                    },
+                    {
+                        "type": "title",
+                        "content": "Pripojenie k Jupyter Lab"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Najprv skontrolujte, či je Jupyter Lab nainštalovaný. Na kontrolu použite tento príkaz:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "jupyter-lab --version"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Ak nie je nainštalovaný, postupujte podľa nasledujúcich krokov na inštaláciu:"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Aktualizujte zoznam balíkov:",
+                        "description": "Použite tento príkaz:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "sudo apt update"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Nainštalujte Python a Pip:",
+                        "description": "Použite tento príkaz:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "sudo apt install python3 python3-pip -y"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Nainštalujte Jupyter Lab:",
+                        "description": "Použite tento príkaz:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "pip3 install jupyterlab"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Po nainštalovaní spustite Jupyter Lab nasledujúcim príkazom:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "jupyter-lab --no-browser --ip=0.0.0.0 --port=8888"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Po spustení Jupyter Lab sa v konzole zobrazia odkazy na pripojenie k Jupyter Lab. Tieto odkazy obsahujú token, ktorý je potrebné použiť na prístup k rozhraniu. V našom prípade však tieto odkazy nemusia vždy fungovať. Preto musíme manuálne získať token a nakonfigurovať pripojenie."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Najprv nájdite token v konzole, kde bol Jupyter Lab spustený. Potom použite nasledujúci príkaz v ďalšom termináli na vytvorenie tunela SSH:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "ssh -L 8888:localhost:8888 -p 2024 jetson@147.232.54.84"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Tento príkaz vytvorí tunel medzi vaším lokálnym počítačom a Rosmasterom cez port 8888. To umožní prístup k Jupyter Lab na vašom lokálnom počítači."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Potom otvorte vo svojom prehliadači adresu <a href='http://localhost:8888' target='_blank'>http://localhost:8888</a> a zadajte token získaný z konzoly, aby ste získali prístup k Jupyter Lab."
+                    }                    
+                ]
+            }

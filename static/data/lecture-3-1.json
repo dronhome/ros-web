@@ -1,0 +1,76 @@
+{
+                "id": "lecture-3-1", 
+                "name": "Prednáška 3 - Jupyter Lab",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "Čo je JupyterLab?"
+                    },
+                    {
+                        
+                        "type": "image-short",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1736265225/main-logo_x9uowl.svg",
+                        "alt": "jupyter lab logo"
+                        
+                    },
+                    {
+                        "type": "text",
+                        "content": "JupyterLab je najnovšie webové interaktívne vývojové prostredie pre notebooky, kód a dáta. Jeho flexibilné rozhranie umožňuje používateľom konfigurovať a usporiadať pracovné postupy v dátovej vede, vedeckých výpočtoch, výpočtovej žurnalistike a strojovom učení. Modulárny dizajn podporuje rozšírenia na rozšírenie a obohatenie funkčnosti."
+                    },
+                    {
+                        "type": "text",
+                        "content": "<em>Táto definícia je prevzatá z <a href='https://jupyter.org/' target='_blank'>oficiálnej stránky Jupyter</a>.</em>"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Výhody JupyterLab pri ovládaní Rosmaster"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Interaktívne ladenie:",
+                        "description": "Umožňuje testovanie a ladenie kódu na ovládanie Rosmastera v reálnom čase."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Podpora Pythonu a ďalších jazykov:",
+                        "description": "Python je hlavným jazykom pre Rosmaster, ale JupyterLab umožňuje rozšírenie o ďalšie jazyky."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Vizualizácia senzorových dát:",
+                        "description": "Umožňuje zobrazovať dáta zo senzorov Rosmastera pomocou knižníc ako Matplotlib alebo Plotly."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Modulárny prístup:",
+                        "description": "Lepšia organizácia kontrolného kódu pre motory, senzory a kameru Rosmastera."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Rozšíriteľnosť:",
+                        "description": "Možnosť integrácie s ROS2 alebo inými nástrojmi pre pokročilé aplikácie."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Správa súborov:",
+                        "description": "Jednoduchá správa kódu a konfiguračných súborov pre projekty Rosmaster."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Spolupráca v tíme:",
+                        "description": "Umožňuje zdieľanú prácu na poznámkových blokoch a analýzu dát Rosmastera."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Podpora dátových formátov:",
+                        "description": "Práca s formátmi, ako sú CSV a JSON, ktoré Rosmaster využíva."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "text",
+                        "content": "JupyterLab nám v podstate umožňuje implementovať všetky funkcie, ktoré sme vykonali pomocou STM32CubeIDE, ale s oveľa menším množstvom kódu. Použitím knižnice `Rosmaster_Lib` a jej triedy `Rosmaster` je možné ľahko a efektívne ovládať hardvér Rosmastera bez potreby manuálneho nastavovania nízkoúrovňových registrov alebo prácneho kódovania."
+                    }
+                ]
+            }

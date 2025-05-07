@@ -1,0 +1,87 @@
+{
+    "name": "Hĺbková kamera: detailnejší pohľad",
+    "title": "Hĺbková kamera: detailnejší pohľad",
+    "questions": [
+      {
+        "type": "mcq",
+        "question": "Čo dokáže hĺbková kamera okrem zachytenia 2D obrazu?",
+        "options": [
+          "Len farebnú informáciu",
+          "Meranie vzdialenosti objektov (hĺbku)",
+          "Zmenšovanie obrázkov",
+          "Zaznamenávanie zvuku"
+        ],
+        "answer": "Meranie vzdialenosti objektov (hĺbku)"
+      },
+      {
+        "type": "truefalse",
+        "question": "Technológia Time-of-Flight meria hĺbku pomocou merania času návratu svetelného impulzu.",
+        "answer": "True"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorú metódu používa Astra Pro Plus na tvorbu hĺbkových dát?",
+        "options": [
+          "Stereo videnie",
+          "Štruktúrované svetlo",
+          "LIDAR",
+          "Ultrazvuková technológia"
+        ],
+        "answer": "Štruktúrované svetlo"
+      },
+      {
+        "type": "short",
+        "question": "Uveďte dve hlavné technológie hĺbkových kamier spomenuté v prednáške.",
+        "answer": "Štruktúrované svetlo, Time-of-Flight"
+      },
+      {
+        "type": "mcq",
+        "question": "Aká úloha nepatrí medzi typické použitia hĺbkových kamier?",
+        "options": [
+          "Obstacle Detection",
+          "Color grading videí",
+          "3D Mapping/Reconstruction",
+          "Human-Interaction Tasks"
+        ],
+        "answer": "Color grading videí"
+      },
+      {
+        "type": "truefalse",
+        "question": "Astra Pro Plus disponuje integrovaným RGB aj hĺbkovým senzorom.",
+        "answer": "True"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorý ROS balíček sa používa pre integráciu Astra Pro Plus na ROSmaster R2?",
+        "options": [
+          "astra_camera",
+          "image_transport",
+          "depth_image_proc",
+          "camera_calibration"
+        ],
+        "answer": "astra_camera"
+      },
+      {
+        "type": "short",
+        "question": "Ako sa volá 3D hĺbková kamera na ROSmaster R2?",
+        "answer": "Astra Pro Plus"
+      },
+      {
+        "type": "mcq",
+        "question": "V ktorej oblasti sa hĺbkové kamery bežne používajú mimo ROSmaster R2?",
+        "options": [
+          "Autonómne vozidlá",
+          "Vývoj webových stránok",
+          "Textové editory",
+          "Správa databáz"
+        ],
+        "answer": "Autonómne vozidlá"
+      },
+      {
+        "type": "truefalse",
+        "question": "Hĺbkové kamery umožňujú robustnejšie SLAM algoritmy v 3D prostredí.",
+        "answer": "True"
+      }
+    ]
+  }
+  

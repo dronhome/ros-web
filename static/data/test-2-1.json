@@ -1,0 +1,62 @@
+{
+    "name": "Komponenty a IDE",
+    "title": "Komponenty a IDE",
+    "questions": [
+      {
+        "type": "mcq",
+        "question": "Na ktorom mikrokontroléri beží logika ROS robot expansion boardu?",
+        "options": ["STM32", "Jetson Orin NX", "A1 LIDAR", "USB HUB expansion board"],
+        "answer": "STM32"
+      },
+      {
+        "type": "mcq",
+        "question": "Koľko USB 3.0 výstupov má USB HUB expansion board od Yahboom?",
+        "options": ["2", "3", "4", "5"],
+        "answer": "4"
+      },
+      {
+        "type": "truefalse",
+        "question": "SWD rozhranie slúži na ladenie mikrokontroléra pomocou nástrojov ako ST-Link alebo J-Link.",
+        "answer": "True"
+      },
+      {
+        "type": "short",
+        "question": "Aký softvér použijete na vývoj firmware pre STM32 v ROS robot expansion boarde?",
+        "answer": "STM32CubeIDE"
+      },
+      {
+        "type": "mcq",
+        "question": "FreeRTOS je aký typ operačného systému?",
+        "options": ["General-purpose OS", "Real-Time OS", "Batch OS", "Network OS"],
+        "answer": "Real-Time OS"
+      },
+      {
+        "type": "truefalse",
+        "question": "I2C rozhranie na expansion boarde umožňuje pripojenie OLED displejov a ďalších senzorov.",
+        "answer": "True"
+      },
+      {
+        "type": "mcq",
+        "question": "Pri Ackermannovom riadení sa vnútorné koleso zatáča viac než vonkajšie koleso pre plynulejší priebeh zákruty.",
+        "options": ["Áno", "Nie"],
+        "answer": "Áno"
+      },
+      {
+        "type": "short",
+        "question": "Prečo je STM32CubeIDE založené na Eclipse?",
+        "answer": "Pre flexibilitu a možnosť integrácie pluginov z ekosystému Eclipse."
+      },
+      {
+        "type": "mcq",
+        "question": "Ktoré rozhranie slúži na pripojenie prijímača diaľkového ovládania modelov lietadiel?",
+        "options": ["CAN", "SBUS", "I2C", "PWM servomotor"],
+        "answer": "SBUS"
+      },
+      {
+        "type": "short",
+        "question": "Na čo slúži CAN rozhranie na ROS robot expansion boarde?",
+        "answer": "Na pripojenie zariadení kompatibilných s protokolom CAN (napr. priemyselných senzorov)."
+      }
+    ]
+  }
+  

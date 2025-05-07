@@ -1,0 +1,72 @@
+{
+    "name": "ROSMASTER R2 a jeho komponenty",
+    "title": "ROSMASTER R2 a jeho komponenty",
+    "questions": [
+      {
+        "type": "mcq",
+        "question": "Ktorý modul slúži ako “mozog” Rosmaster R2 a kde beží ROS?",
+        "options": [
+          "STM32 na expansion boarde",
+          "Jetson Orin NX 8GB",
+          "A1 LIDAR",
+          "USB HUB expansion board"
+        ],
+        "answer": "Jetson Orin NX 8GB"
+      },
+      {
+        "type": "mcq",
+        "question": "Aký procesor je na ROS robot expansion boarde od Yahboom?",
+        "options": [
+          "ARM Cortex-A78AE",
+          "NVIDIA Ampere GPU",
+          "STM32",
+          "Intel Atom"
+        ],
+        "answer": "STM32"
+      },
+      {
+        "type": "truefalse",
+        "question": "Depth camera Astra Pro Plus používa technológiu štruktúrovaného svetla na meranie hĺbky.",
+        "answer": "True"
+      },
+      {
+        "type": "short",
+        "question": "Ako sa nazýva 360° LIDAR senzor používaný na Rosmaster R2?",
+        "answer": "RPLIDAR A1"
+      },
+      {
+        "type": "mcq",
+        "question": "Koľko USB 3.0 výstupov má USB HUB expansion board od Yahboom?",
+        "options": ["2", "3", "4", "5"],
+        "answer": "4"
+      },
+      {
+        "type": "truefalse",
+        "question": "OLED displej zobrazuje stav batérie a IP adresu systému.",
+        "answer": "True"
+      },
+      {
+        "type": "mcq",
+        "question": "Na akom operačnom systéme beží Rosmaster R2?",
+        "options": ["Windows 10", "Ubuntu", "macOS", "FreeRTOS"],
+        "answer": "Ubuntu"
+      },
+      {
+        "type": "short",
+        "question": "Ktorý framework používa Rosmaster R2 na komunikáciu medzi uzlami?",
+        "answer": "ROS"
+      },
+      {
+        "type": "mcq",
+        "question": "Koľko osí meria 9-osový senzor orientácie na Rosmaster R2?",
+        "options": ["3", "6", "9", "12"],
+        "answer": "9"
+      },
+      {
+        "type": "truefalse",
+        "question": "Batéria Rosmaster R2 podporuje funkciu výstrahy pri nízkom napätí.",
+        "answer": "True"
+      }
+    ]
+  }
+  

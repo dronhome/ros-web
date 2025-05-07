@@ -1,0 +1,338 @@
+{
+    "id": "exercise-2-2",
+    "name": "Cvičenie 2.2 - Ovládanie bzučiaka bez a s použitím FreeRTOS",
+    "description": [
+        {
+            "type": "text",
+            "content": "V tomto cvičení implementujeme program na ovládanie bzučiaka bez a s použitím FreeRTOS a preskúmame rozdiely v implementáciách a výsledkoch. Nižšie je uvedená tabuľka, ktorá ukazuje základné rozdiely medzi týmito dvoma implementáciami."
+        },                    
+        {
+            "type": "title",
+            "content": "Rozdiel medzi bez FreeRTOS a s FreeRTOS"
+        },
+        {
+            "type": "table",
+            "columns": ["Aspekt", "Bez FreeRTOS", "S FreeRTOS"],
+            "rows": [
+                {
+                    "Aspekt": "Model vykonávania",
+                    "Bez FreeRTOS": "Sekvenčné vykonávanie pomocou jednej slučky while(1).",
+                    "S FreeRTOS": "Súbežné vykonávanie viacerých úloh."
+                },
+                {
+                    "Aspekt": "Spracovanie úloh",
+                    "Bez FreeRTOS": "Úlohy (napr. ovládanie LED, bzučiaka) sú spracované v tej istej slučke.",
+                    "S FreeRTOS": "Úlohy sú rozdelené do samostatných vlákien s prioritami."
+                },
+                {
+                    "Aspekt": "Odozva",
+                    "Bez FreeRTOS": "Pomalšia odozva na udalosti, ako je stlačenie tlačidla, kvôli sekvenčnému spracovaniu.",
+                    "S FreeRTOS": "Rýchlejšia odozva na udalosti, pretože úlohy sa spracovávajú paralelne."
+                },
+                {
+                    "Aspekt": "Komplexnosť kódu",
+                    "Bez FreeRTOS": "Jednoduchšie, ale ťažšie spravovateľné s rastúcou funkčnosťou.",
+                    "S FreeRTOS": "Komplexnejšie, ale ľahšie spravovateľné pre veľké projekty."
+                },
+                {
+                    "Aspekt": "Škálovateľnosť",
+                    "Bez FreeRTOS": "Obmedzená škálovateľnosť; pridávanie ďalších funkcií zvyšuje zložitosť slučky.",
+                    "S FreeRTOS": "Vysoko škálovateľné; úlohy sú modulárne a spravované FreeRTOS."
+                },
+                {
+                    "Aspekt": "Zdieľanie zdrojov",
+                    "Bez FreeRTOS": "Vyžaduje manuálne zdieľanie a správu stavu.",
+                    "S FreeRTOS": "FreeRTOS spravuje zdieľanie zdrojov a synchronizáciu."
+                },
+                {
+                    "Aspekt": "Časovanie",
+                    "Bez FreeRTOS": "Oneskorenia blokujú všetky operácie.",
+                    "S FreeRTOS": "Oneskorenia ovplyvňujú iba konkrétnu úlohu, ostatné úlohy pokračujú."
+                }
+            ]
+        },
+        {
+            "type": "title",
+            "content": "Bez FreeRTOS"
+        },
+        {
+            "type": "text",
+            "content": "Najprv vytvoríme program na ovládanie bzučiaka bez použitia FreeRTOS, teda bez multithreadingu. Všetky operácie budú spracované v jednej slučke (napríklad while(1)), kde kód vykonáva jednotlivé úlohy sekvenčne, jedna po druhej. Tento prístup je jednoduchý, ale s rastúcou komplexnosťou aplikácie môže byť správa a pridávanie nových funkcií náročnejšie. Navyše, ak dôjde k oneskoreniu (napríklad HAL_Delay), všetky ostatné operácie sú pozastavené, čo môže spôsobiť pomalšiu odozvu systému."
+        },
+        {
+            "type": "title",
+            "content": "Vykonajte všetky potrebné konfigurácie"
+        },
+        {
+            "type": "subtitle",
+            "content": "Importujte .ioc súbor z predchádzajúceho cvičenia"
+        },
+        {
+            "type": "text",
+            "content": "Aby sme ušetrili čas a mohli využiť konfigurácie z predchádzajúcich projektov, namiesto vytvorenia úplne nového STM32 projektu môžeme vytvoriť nový STM32 projekt z existujúceho konfiguračného súboru. Tento prístup nám umožňuje použiť už nakonfigurované nastavenia bez potreby manuálneho nastavovania."
+        },
+        {
+            "type": "text",
+            "content": "Zvoľme túto možnosť cez File -> New -> STM32 Project from an Existing STM32CubeMX Configuration File (.ioc)."
+        },
+        {
+            "type": "image-long",
+            "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735593447/20_vkq6mw.png",
+            "alt": "Výber možnosti na vytvorenie projektu zo súboru .ioc"
+        },
+        {
+            "type": "text",
+            "content": "Potom vyberte .ioc súbor z predchádzajúceho cvičenia a pomenujte nový projekt primerane."
+        },
+        {
+            "type": "image-long",
+            "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735593446/19_zptdve.png",
+            "alt": "Výber a pomenovanie nového projektu zo súboru .ioc"
+        },
+        {
+            "type": "subtitle",
+            "content": "Konfigurácia pinov"
+        },
+        {
+            "type": "text",
+            "content": "Musíme nakonfigurovať piny pre bzučiak ako výstup a tlačidlo ako vstup a zároveň ich pomenovať primerane. Bzučiak pomenujeme ako BEEP a tlačidlo ako KEY1."
+        },
+        {
+            "type": "text",
+            "content": "Bzučiak je pripojený na pin PC5 STM32 čipu. Musíte nastaviť PC5 do režimu GPIO_Output."
+        },
+        {
+            "type": "image-long",
+            "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735594133/21_ir1qcq.png",
+            "alt": "Konfigurácia pinu PC5 ako GPIO_Output pre bzučiak"
+        },
+        {
+            "type": "text",
+            "content": "Tlačidlo je pripojené na pin PD2. Musíte nastaviť PD2 do režimu GPIO_Input."
+        },
+        {
+            "type": "image-long",
+            "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735594134/22_zdedqg.png",
+            "alt": "Konfigurácia pinu PD2 ako GPIO_Input pre tlačidlo"
+        },
+        {
+            "type": "text",
+            "content": "Nezabudnite stlačiť Ctrl+S na vygenerovanie kódu."
+        },
+        {
+            "type": "title",
+            "content": "Upravte štruktúru súborov"
+        },
+        {
+            "type": "subtitle",
+            "content": "Vytvorte nový priečinok so zdrojovým kódom"
+        },
+        {
+            "type": "text",
+            "content": "Pre jednoduchšiu správu vytvoríme nový priečinok zdrojového kódu BSP. BSP znamená Board Support Package a pomáha zjednodušiť správu kódu tým, že organizuje funkcie a inicializáciu hardvéru na jednom mieste. Kliknite pravým tlačidlom myši na názov projektu -> New -> Source Folder a pomenujte priečinok ako BSP."
+        },
+        {
+            "type": "subtitle",
+            "content": "Pridajte nový priečinok do prostredia"
+        },
+        {
+            "type": "text",
+            "content": "Kliknite na Project -> Properties -> C/C++ Build -> Settings -> MCU GCC Compiler -> Include Paths, a potom kliknite na tlačidlo Add a vyplňte ../BSP a uložte zmeny."
+        },
+        {
+            "type": "image-long",
+            "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735595787/23_onf6gi.png",
+            "alt": "Pridanie BSP priečinka do nastavení projektu"
+        },
+        {
+            "type": "subtitle",
+            "content": "Pridajte súbory do nového priečinka"
+        },
+        {
+            "type": "image-long",
+            "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735595788/24_zal7n2.png",
+            "alt": "Pridané BSP súbory do nového priečinka"
+        },
+        {
+            "type": "text",
+            "content": "Budete musieť pridať tri páry súborov s názvami uvedenými na obrázku: bsp_key.h/bsp_key.c, bsp_beep.h/bsp_beep.c a bsp.h/bsp.c."
+        },
+        {
+            "type": "title",
+            "content": "Zapíšte nasledujúci kód do týchto súborov"
+        },
+        {
+            "type": "subtitle",
+            "content": "bsp_key.c"
+        },
+        {
+            "type": "code",
+            "content": "/* bsp_key.c */\n#include \"bsp_key.h\"\n#include \"bsp.h\"\n\n// Kontrola, či je tlačidlo stlačené. Ak áno, vráti KEY_PRESS, inak KEY_RELEASE.\nstatic uint8_t Key1_is_Press(void) {\n    if (!HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin)) {\n        return KEY_PRESS;  // Tlačidlo je stlačené\n    }\n    return KEY_RELEASE;    // Tlačidlo je uvoľnené\n}\n\n// Čítanie stavu tlačidla K1.\n// mode: 0 - stlačenie vždy vráti KEY_PRESS\n//       1 - KEY_PRESS sa vráti len raz za každé stlačenie\nuint8_t Key1_State(uint8_t mode) {\n    static uint16_t key1_state = 0;\n\n    if (Key1_is_Press() == KEY_PRESS) {\n        if (key1_state < (mode + 1) * 2) {\n            key1_state++;\n        }\n    } else {\n        key1_state = 0;  // Obnovenie stavu pri uvoľnení tlačidla\n    }\n\n    if (key1_state == 2) {\n        return KEY_PRESS;\n    }\n\n    return KEY_RELEASE;\n}"
+        },
+        {
+            "type": "subtitle",
+            "content": "bsp_key.h"
+        },
+        {
+            "type": "code",
+            "content": "/* bsp_key.h */\n#ifndef BSP_KEY_H_\n#define BSP_KEY_H_\n\n#include \"stm32f1xx_hal.h\"\n#include \"stm32f1xx_hal_gpio.h\"\n\n/* Definície stavov tlačidiel */\n#define KEY_PRESS         1\n#define KEY_RELEASE       0\n\n/* Definície režimov tlačidiel */\n#define KEY_MODE_ONE_TIME 1\n#define KEY_MODE_ALWAYS   0\n\n/* Deklarácie funkcií */\nuint8_t Key1_State(uint8_t mode);\n\n#endif /* BSP_KEY_H_ */"
+        },
+        {
+            "type": "subtitle",
+            "content": "bsp_beep.h"
+        },
+        {
+            "type": "code",
+            "content": "/* bsp_beep.h */\n#ifndef BSP_BEEP_H_\n#define BSP_BEEP_H_\n\n#include \"main.h\"\n\n/* Definície stavov bzučiaka */\n#define BEEP_STATE_OFF          0\n#define BEEP_STATE_ON_ALWAYS    1\n#define BEEP_STATE_ON_DELAY     2\n\n/* Makrá na ovládanie bzučiaka */\n#define BEEP_ON()     HAL_GPIO_WritePin(BEEP_GPIO_Port, BEEP_Pin, SET)\n#define BEEP_OFF()    HAL_GPIO_WritePin(BEEP_GPIO_Port, BEEP_Pin, RESET)\n\n/* Deklarácie funkcií */\nvoid Beep_Timeout_Close_Handle(void);\nvoid Beep_On_Time(uint16_t time);\n\n#endif /* BSP_BEEP_H_ */"
+        },
+        {
+            "type": "subtitle",
+            "content": "bsp_beep.c"
+        },
+        {
+            "type": "code",
+            "content": "/* bsp_beep.c */\n#include \"bsp_beep.h\"\n#include \"bsp.h\"\n\nstatic uint16_t beep_on_time = 0;\nstatic uint8_t beep_state = 0;\n\n// Nastavenie času bzučiaka\nstatic void Beep_Set_Time(uint16_t time) {\n    beep_on_time = time;\n}\n\n// Získanie zostávajúceho času bzučiaka\nstatic uint16_t Beep_Get_Time(void) {\n    return beep_on_time;\n}\n\n// Nastavenie stavu bzučiaka\nstatic void Beep_Set_State(uint8_t state) {\n    beep_state = state;\n}\n\n// Získanie aktuálneho stavu bzučiaka\nstatic uint8_t Beep_Get_State(void) {\n    return beep_state;\n}\n\n// Aktivácia bzučiaka na určitý čas\nvoid Beep_On_Time(uint16_t time) {\n    if (time == BEEP_STATE_ON_ALWAYS) {\n        Beep_Set_State(BEEP_STATE_ON_ALWAYS);\n        Beep_Set_Time(0);\n        BEEP_ON();\n    } else if (time == BEEP_STATE_OFF) {\n        Beep_Set_State(BEEP_STATE_OFF);\n        Beep_Set_Time(0);\n        BEEP_OFF();\n    } else {\n        if (time >= 10) {\n            Beep_Set_State(BEEP_STATE_ON_DELAY);\n            Beep_Set_Time(time / 10);\n            BEEP_ON();\n        }\n    }\n}\n\n// Automatické vypnutie bzučiaka po uplynutí času (volá sa každých 10 ms)\nvoid Beep_Timeout_Close_Handle(void) {\n    if (Beep_Get_State() == BEEP_STATE_ON_DELAY) {\n        if (Beep_Get_Time()) {\n            beep_on_time--;\n        } else {\n            BEEP_OFF();\n            Beep_Set_State(BEEP_STATE_OFF);\n        }\n    }\n}"
+        },
+        {
+            "type": "subtitle",
+            "content": "bsp.h"
+        },
+        {
+            "type": "code",
+            "content": "/* bsp.h */\n#ifndef BSP_H_\n#define BSP_H_\n\n#include \"main.h\"\n#include \"stm32f1xx_hal_gpio.h\"\n#include \"stm32f1xx_hal.h\"\n#include \"stm32f103xe.h\"\n#include \"bsp_beep.h\"\n#include \"bsp_key.h\"\n\n#define LED_ON()         HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, SET)\n#define LED_OFF()        HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, RESET)\n#define LED_TOGGLE()     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin)\n\nvoid Bsp_Init(void);\nvoid Bsp_Loop(void);\nvoid Bsp_Led_Show_State_Handle(void);\n\n#endif /* BSP_H_ */"
+        },
+        {
+            "type": "subtitle",
+            "content": "bsp.c"
+        },
+        {
+            "type": "code",
+            "content": "/* bsp.c */\n#include \"bsp.h\"\n\n// Zobrazovanie aktuálneho stavu pomocou LED, volá sa každých 10 ms.\nvoid Bsp_Led_Show_State_Handle(void) {\n    static uint8_t led_count = 0;\n    led_count++;\n    if (led_count > 20) {\n        led_count = 0;\n        LED_TOGGLE();\n    }\n}\n\n// Inicializácia periférnych zariadení\nvoid Bsp_Init(void) {\n    Beep_On_Time(50);\n}\n\n// Funkcia volaná v hlavnej slučke main.c na minimalizáciu zmien v main.c\nvoid Bsp_Loop(void) {\n    if (Key1_State(KEY_MODE_ONE_TIME)) {\n        Beep_On_Time(50);\n    }\n    Bsp_Led_Show_State_Handle();\n    Beep_Timeout_Close_Handle();\n    HAL_Delay(10);\n}"
+        },
+        {
+            "type": "subtitle",
+            "content": "Importujte súbor bsp.h v main.c"
+        },
+        {
+            "type": "code",
+            "content": "/* Private includes */\n/* USER CODE BEGIN Includes */\n#include \"bsp.h\"\n/* USER CODE END Includes */"
+        },
+        {
+            "type": "subtitle",
+            "content": "Zavolajte Bsp_Init() vo funkcii main"
+        },
+        {
+            "type": "code",
+            "content": "/* Initialize all configured peripherals */\nMX_GPIO_Init();\n/* USER CODE BEGIN 2 */\nBsp_Init();\n/* USER CODE END 2 */"
+        },
+        {
+            "type": "subtitle",
+            "content": "Zavolajte Bsp_Loop() vo while(1)"
+        },
+        {
+            "type": "code",
+            "content": "/* Infinite loop */\n/* USER CODE BEGIN WHILE */\nwhile (1)\n{\n    Bsp_Loop();\n/* USER CODE END WHILE */\n\n/* USER CODE BEGIN 3 */\n}\n/* USER CODE END 3 */"
+        },
+        {
+            "type": "subtitle",
+            "content": "Kompilácia a nahranie programu"
+        },
+        {
+            "type": "text",
+            "content": "Najprv skompilujte kód a vygenerujte hex súbor. Uistite sa, že voľba na generovanie hex súboru je povolená v nastaveniach projektu. Po úspešnej kompilácii nahrajte hex súbor na rozširujúcu dosku pomocou nahrávacieho softvéru."
+        },
+        {
+            "type": "subtitle",
+            "content": "Výsledky programu"
+        },
+        {
+            "type": "text",
+            "content": "Po nahratí programu do rozširujúcej dosky by mal bzučiak zazvoniť na 50 milisekúnd, LED svetlo bude blikať každých 200 milisekúnd a bzučiak zazvoní na 50 milisekúnd pri každom stlačení tlačidla. Týmto sme úspešne implementovali základný program na ovládanie periférií bez použitia FreeRTOS."
+        },
+        {
+            "type": "text",
+            "content": "Tento prístup nám umožnil pochopiť, ako pracovať so slučkou while(1) a manuálne spravovať udalosti, ako je stlačenie tlačidla a oneskorenia. Avšak, tento spôsob má svoje obmedzenia, hlavne ak sa pokúsime pridať ďalšie úlohy alebo zložitejšie funkcie. Napríklad oneskorenia môžu blokovať iné operácie a pridávanie nových funkcií môže zvýšiť zložitosť hlavnej slučky."
+        },
+        {
+            "type": "subtitle",
+            "content": "Prechod na FreeRTOS"
+        },
+        {
+            "type": "text",
+            "content": "Tu prichádza na scénu FreeRTOS. Prechádzame na implementáciu, ktorá využíva multitasking, čím oddeľujeme jednotlivé funkcie do samostatných úloh. To umožňuje efektívnejšie spracovanie úloh, vyššiu škálovateľnosť a lepšiu odozvu na udalosti. V ďalšej časti uvidíme, ako pretransformujeme tento program na použitie s FreeRTOS a preskúmame jeho výhody."
+        },
+        {
+            "type": "title",
+            "content": "S FreeRTOS"
+        },
+        {
+            "type": "text",
+            "content": "FreeRTOS prináša možnosť multitaskingu, čo umožňuje spracovávať jednotlivé úlohy paralelne namiesto sekvenčného vykonávania. Tento prístup zlepšuje odozvu systému, umožňuje lepšiu škálovateľnosť a zjednodušuje správu zložitejších programov. FreeRTOS je obzvlášť užitočný pri projektoch, kde sú rôzne úlohy (napríklad ovládanie bzučiaka, tlačidiel a LED) oddelené a majú rôzne priority."
+        },
+        {
+            "type": "title",
+            "content": "Vykonajte všetky potrebné konfigurácie"
+        },
+        {
+            "type": "subtitle",
+            "content": "Importujte .ioc súbor z predchádzajúceho projektu"
+        },
+        {
+            "type": "subtitle",
+            "content": "Konfigurácia FreeRTOS"
+        },
+        {
+            "type": "text",
+            "content": "Kliknite na Middleware -> FreertOS, vyberte CMSIS_V1, kliknite na Tasks and Queues. Predvolene bude vytvorená jedna úloha, pridajte dve nové úlohy, z ktorých jedna bude spravovať bzučiak a druhá tlačidlá. Pri pridávaní úloh zmeňte iba ich názvy, ostatné konfigurácie ponechajte predvolené."
+        },
+        {
+            "type": "image-long",
+            "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735597668/25_m1iul8.png",
+            "alt": "Konfigurácia FreeRTOS úloh"
+        },
+        {
+            "type": "subtitle",
+            "content": "bsp_task.h"
+        },
+        {
+            "type": "code",
+            "content": "/* bsp_task.h */\n#ifndef BSP_TASK_H_\n#define BSP_TASK_H_\n\n#include \"bsp.h\"  // Zahrnutie potrebných závislostí\n\n// Deklarácie funkcií\nvoid Task_Entity_LED(void);   // Funkcia na ovládanie LED\nvoid Task_Entity_Beep(void);  // Funkcia na ovládanie bzučiaka\nvoid Task_Entity_Key(void);   // Funkcia na ovládanie tlačidla\n\nextern int enable_beep;       // Globálna premenná na ovládanie bzučiaka\n\n#endif /* BSP_TASK_H_ */"
+        },
+        {
+            "type": "subtitle",
+            "content": "bsp_task.c"
+        },
+        {
+            "type": "code",
+            "content": "/* bsp_task.c */\n#include \"bsp.h\"\n\nint enable_beep = 0;  // Premenná určujúca, či je bzučiak aktívny\n\n// Funkcia pre úlohu ovládania LED\nvoid Task_Entity_LED(void)\n{\n    while (1)\n    {\n        // LED mení svoj stav každých 100 milisekúnd\n        LED_TOGGLE();\n        osDelay(100);\n    }\n}\n\n// Funkcia pre úlohu ovládania bzučiaka\nvoid Task_Entity_Beep(void)\n{\n    while (1)\n    {\n        if (enable_beep)\n        {\n            // Bzučiak sa zapne každých 200 milisekúnd\n            BEEP_ON();\n            osDelay(100);\n            BEEP_OFF();\n            osDelay(100);\n        }\n        else\n        {\n            // Ak je bzučiak vypnutý, zostáva vypnutý\n            BEEP_OFF();\n            osDelay(100);\n        }\n    }\n}\n\n// Funkcia pre úlohu ovládania tlačidla\nvoid Task_Entity_Key(void)\n{\n    while (1)\n    {\n        if (Key1_State(1) == KEY_PRESS)\n        {\n            // Stlačenie tlačidla prepína stav bzučiaka\n            enable_beep = !enable_beep;\n        }\n        osDelay(10);\n    }\n}"
+        },
+        {
+            "type": "subtitle",
+            "content": "main.c"
+        },
+        {
+            "type": "code",
+            "content": "/* main.c */\n#include \"bsp_task.h\"\n#include \"bsp.h\"\n\n// Funkcia pre úlohu ovládania LED\nvoid StartDefaultTask(void const * argument)\n{\n    // Volanie funkcie na ovládanie LED\n    Task_Entity_LED();\n}\n\n// Funkcia pre úlohu ovládania bzučiaka\nvoid BEEP_TASK(void const * argument)\n{\n    // Volanie funkcie na ovládanie bzučiaka\n    Task_Entity_Beep();\n}\n\n// Funkcia pre úlohu ovládania tlačidla\nvoid KEY_TASK(void const * argument)\n{\n    // Volanie funkcie na ovládanie tlačidla\n    Task_Entity_Key();\n}"
+        },
+        {
+            "type": "subtitle",
+            "content": "Kompilácia a nahranie programu"
+        },
+        {
+            "type": "text",
+            "content": "Najprv skompilujte kód a vygenerujte hex súbor. Uistite sa, že voľba na generovanie hex súboru je povolená v nastaveniach projektu. Po úspešnej kompilácii nahrajte hex súbor na rozširujúcu dosku pomocou nahrávacieho softvéru."
+        },
+        {
+            "type": "subtitle",
+            "content": "Výsledky programu"
+        },
+        {
+            "type": "text",
+            "content": "Po nahratí programu do rozširujúcej dosky bude LED svetlo blikať každých 200 milisekúnd. Po stlačení tlačidla bzučiak zapípa každých 200 milisekúnd. Po opätovnom stlačení tlačidla sa bzučiak vypne. Tento výsledok ukazuje úspešnú implementáciu úloh pomocou FreeRTOS."
+        },
+        {
+            "type": "text",
+            "content": "Použitie FreeRTOS nám umožnilo rozdeliť každú funkciu (ovládanie LED, bzučiaka a tlačidla) do samostatných úloh. To zvyšuje škálovateľnosť systému a zjednodušuje správu zložitejších projektov. Na rozdiel od prístupu bez FreeRTOS, kde sme všetko riadili v jednej slučke, tento prístup minimalizuje blokovanie operácií, ako sú oneskorenia. FreeRTOS tiež umožňuje prioritizáciu úloh, čo zlepšuje odozvu systému na udalosti. Celkovo nám FreeRTOS poskytuje lepšiu modularitu, efektívnejšie spracovanie a flexibilitu pri rozširovaní projektu."
+        }
+    ]
+}

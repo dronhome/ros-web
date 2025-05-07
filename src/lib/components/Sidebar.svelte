@@ -1,40 +1,35 @@
 <script>
     import ModuleTree from './ModuleTree.svelte';
     import { onMount } from 'svelte';
+    import { base } from '$app/paths';
 
-    export let onSelectContent; // Function to propagate content selection
-
+    export let onSelectContent;
     let modules = [];
-    let isLoading = true; // Track loading state
+    let isLoading = true;
 
     onMount(async () => {
         try {
-            const response = await fetch('/ros-web/data/course.json');
-
+            const response = await fetch('/ros-web/data/modules.json');
             modules = await response.json();
         } catch (error) {
             console.error('Error loading modules:', error);
         } finally {
-            isLoading = false; // End loading once the data is fetched
+            isLoading = false;
         }
     });
 </script>
 
 <div class="sidebar">
     {#if isLoading}
-        <!-- Centered Spinner -->
         <div class="loading-container">
             <div class="loading-spinner"></div>
         </div>
     {:else}
-        <!-- Module List -->
         <div class="module-list">
-            <!-- Intro Section -->
-            <div class="intro" on:click={() => onSelectContent(null)}>
+            <a class="intro" href={`${base}/module/welcome`}>
                 <h3>Informácie o predmete</h3>
-            </div>
-            
-            <!-- Dynamic Modules -->
+            </a>
+
             {#each modules as module}
                 <ModuleTree {module} onSelectContent={onSelectContent} />
             {/each}
@@ -42,28 +37,22 @@
     {/if}
 </div>
 
-
-
 <style>
     .sidebar {
         position: relative;
-        /* padding-left: 30px; */
         width: 100%;
         background: #212121;
         color: white;
         overflow-y: auto;
-        /* height: 100%; */
         box-sizing: border-box;
-        /* margin-bottom: 50px; */
         padding-bottom: 100px;
     }
 
-    /* Spinner Container */
     .loading-container {
         display: flex;
-        justify-content: center; /* Center horizontally */
-        align-items: center; /* Center vertically */
-        height: calc(100vh - 200px); /* Fill the sidebar height */
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 200px);
     }
 
     .loading-spinner {
@@ -81,41 +70,38 @@
         }
     }
 
-    /* Module List Styles */
     .module-list {
         display: flex;
         flex-direction: column;
     }
 
     .intro {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 1rem;
-    padding: 18px 30px;
-    user-select: none;
-    background: transparent;
-    color: #ddd;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
-    transition: background 0.3s ease;
-}
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: 1rem;
+        padding: 18px 30px;
+        user-select: none;
+        background: transparent;
+        color: #ddd;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+        transition: background 0.3s ease;
+        text-decoration: none;
+    }
 
-.intro:hover {
-    background-color: #333;
-    color: #fff;
-}
+    .intro:hover {
+        background-color: #333;
+        color: #fff;
+    }
 
-.intro h3 {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: transparent;
-    color: #ddd;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    font-size: 1.1rem;
-    opacity: 0.9;
-}
-
-
-
+    .intro h3 {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: transparent;
+        color: #ddd;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
 </style>

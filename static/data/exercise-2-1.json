@@ -1,0 +1,299 @@
+{ 
+                "id": "exercise-2-1", 
+                "name": "Cvičenie 2.1 - Stiahnite si STMCubeIDE vývojové prostredie", 
+                "description": [
+                    {
+                        "type": "text",
+                        "content": "Stiahnite si najnovšiu verziu vývojového prostredia STM32CubeIDE <a href='https://www.st.com/en/development-tools/stm32cubeide.html' target='_blank'>tu</a> a počas inštalácie ponechajte všetky parametre na predvolených nastaveniach."
+                    },
+                    { 
+                        "type": "title", 
+                        "content": "Vytvorte svoj prvý projekt" 
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "1. Vytvorte svoj prvý pracovný priestor"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Vyberte požadované umiestnenie alebo ho ponechajte na predvolenom nastavení."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735568856/1_rhgpzx.png",
+                        "alt": "Snímka obrazovky výberu pracovného priestoru"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "2. Vytvorte projekt"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Kliknite na File -> New -> STM32 Project."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735568857/2_v6bvmb.png",
+                        "alt": "Vytvorenie STM32 projektu"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "3. Vyberte čip"
+                    },
+                    {
+                        "type": "text",
+                        "content": "V poli Commercial Part Number vyhľadajte a vyberte čip <strong>STM32F103RCT6</strong>, potom ho zvoľte zo zoznamu MCUs/MPUs List a kliknite na Next v pravom dolnom rohu pre prechod na ďalší krok."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735568857/3_imq3j1.png",
+                        "alt": "Výber STM32 čipu"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "4. Pomenujte svoj projekt"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Pomenujte svoj projekt a ponechajte options na predvolenom nastavení."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "5. Kliknite na Yes pre načítanie grafického obsahu"
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735568857/5_mburuq.png",
+                        "alt": "prompt to click yes"
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735568857/6_l2jnqw.png",
+                        "alt": "Načítané prostredie"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Vykonajte všetky potrebné konfigurácie"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "1. Nastavenie ladenia"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Kliknite na Pinout & Configuration, vyberte System Core -> SYS -> Debug a zvoľte Serial Wire. Táto konfigurácia umožňuje efektívne ladenie a analýzu mikrokontroléra STM32 počas vývoja."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735571368/7_q58zpp.png",
+                        "alt": "Nastavenie ladenia pomocou Serial Wire"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "2. Modifikujte systémový takt"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Externý kryštálový oscilátor má frekvenciu 8M. Kryštálový oscilátor generuje stabilný hodinový signál potrebný pre chod mikrokontroléra. Modifikácia frekvencie zabezpečí optimálnu prevádzku a stabilitu."
+                    },
+                    {
+                        "type": "text",
+                        "content": "V Pinout & Configuration vyberte RCC -> HSE a zvoľte Crystal/Ceramic Resonator. HSE je externý takt, zatiaľ čo LSE je interný takt. Externý takt je stabilnejší a efektívnejší ako interný."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735571368/8_iv2awz.png",
+                        "alt": "Nastavenie HSE na Crystal/Ceramic Resonator"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Prepnite na Clock Configuration, nastavte frekvenciu HCLK na 72, stlačte Enter na potvrdenie a následne kliknite na OK v popup okne Clock Wizard."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735571369/9_ylhlls.png",
+                        "alt": "Modifikácia frekvencie na 72MHz"
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735571369/10_mhmnqu.png",
+                        "alt": "Clock Wizard okno"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "3. Konfigurácia LED pinu"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Nastavte pin PC13 na GPIO_Output, môžete tiež zmeniť jeho označenie na LED pre zjednodušenie."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735571370/11_ngy78f.png",
+                        "alt": "Konfigurácia LED pinu"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Potom stlačte Ctrl+S na uloženie. Tento krok vygeneruje všetok potrebný kód pre nastavenia mikrokontroléra a zabezpečí pripravenosť na implementáciu."
+                    },
+                    {
+                        "type": "title",
+                        "content": "Napíšte jednoduchý kód"
+                    },
+                    {
+                        "type": "text",
+                        "content": "V súbore main.c nájdite slučku while (1). Táto slučka je nekonečná a zaisťuje, že kód vo vnútri sa vykonáva opakovane počas celého chodu programu."
+                    },
+                    {
+                        "type": "code",
+                     "content": "/* Infinite loop */\n/* USER CODE BEGIN WHILE */\nwhile (1)\n{\n    // Nastaví pin LED na logickú úroveň HIGH (zapne LED)\n    HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, SET);\n\n    // Pozastaví vykonávanie programu na 200 ms\n    HAL_Delay(200);\n\n    // Nastaví pin LED na logickú úroveň LOW (vypne LED)\n    HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, RESET);\n\n    // Pozastaví vykonávanie programu na 200 ms\n    HAL_Delay(200);\n}\n/* USER CODE END WHILE */\n\n/* USER CODE BEGIN 3 */\n/* USER CODE END 3 */"
+                    },
+                    {
+                        "type": "text",
+                        "content": "V tejto slučke sa vykonáva striedavé zapínanie a vypínanie LED diódy každých 200 milisekúnd. Funkcia HAL_GPIO_WritePin nastaví pin LED na vysokú (zapnutú) alebo nízku (vypnutú) úroveň, zatiaľ čo HAL_Delay pozastaví vykonávanie programu na zadaný čas v milisekundách."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Kód musíte písať medzi značky USER CODE BEGIN a USER CODE END, pretože obsah mimo týchto značiek bude prepísaný pri ďalšej generácii kódu grafickým nástrojom. Tieto značky zaisťujú, že váš vlastný kód zostane zachovaný. Nezapisujte čínske komentáre, pretože môžu spôsobiť zobrazenie nečitateľných znakov."
+                    },
+                    {
+                        "type": "title",
+                        "content": "Kompilácia"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "1. Pridanie funkcie na generovanie hex súborov"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Kliknite na Project -> Properties -> C/C++ Build -> Settings -> MCU Post build outputs a následne zaškrtnite možnosť Convert to Intel Hex file (-O ihex), ako je znázornené na nasledujúcom obrázku."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Použitie hex súborov je dôležité, pretože sú široko akceptované a umožňujú jednoduchý a bezchybný prenos programu do mikrokontroléra cez programátory a nástroje na nahrávanie."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735575828/12_qwvttg.png",
+                        "alt": "Voľba na generovanie hex súborov"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "2. Kompilácia programu"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Na kompiláciu projektu kliknite na ikonu kladiva v paneli nástrojov."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735575828/13_izv1zd.png",
+                        "alt": "Kompilácia programu cez ikonu kladiva"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "3. Úspešná kompilácia"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Po kompilácii by konzola mala zobrazovať žiadne chyby a ideálne ani žiadne varovania. Súbor your-project-name.hex bude uvedený ako vygenerovaný."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735576082/14_yuidhe.png",
+                        "alt": "Výsledok úspešnej kompilácie"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Nahrať program"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "1. Stiahnite potrebný ovládač"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Pre správnu komunikáciu cez USB na rozširujúcej doske Rosmaster je potrebné nainštalovať ovládač čipu CH340. Ak bol predtým na počítači nainštalovaný ovládač CH340 (napríklad pri používaní Arduino softvéru), nie je potrebné ho znovu inštalovať. Ovládač nájdete na tomto odkaze: <a href='https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers/all' target='_blank'>CH340 Driver</a>."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Spustite stiahnutý súbor .exe a kliknite na tlačidlo Inštalovať."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735579668/15_hubdhy.png",
+                        "alt": "Inštalácia ovládača CH340"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "2. Stiahnite softvér na nahrávanie"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Tento krok vyžaduje mcuisp (alebo flymcu) softvér na nahrávanie firmvéru mikrokontroléra rozširujúcej dosky Rosmaster. Softvér môžete stiahnuť z <a href='http://www.mcuisp.com/' target='_blank'>oficiálnej stránky mcuisp</a>. Mcuisp je prenosný softvér (green version), ktorý nevyžaduje inštaláciu. Stačí ho otvoriť dvojklikom."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735579669/16_gywqv6.png",
+                        "alt": "Inštalácia flymcu"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Tento softvér je potrebný na zápis firmvéru do mikrokontroléra na rozširujúcej doske Rosmaster. Zabezpečuje správny a bezchybný prenos súborov."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "3. Pripojte zariadenie"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Pred pripojením Rosmastera k počítaču odpojte Micro USB dátový kábel a napájací kábel, ktorý spája rozširujúcu dosku s Jetson Nano."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Zasuňte jeden koniec USB dátového kábla do USB portu počítača a druhý koniec do Micro USB portu na rozširujúcej doske Rosmaster."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "4. Konfigurácia nahrávacieho softvéru"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Vyberte port:",
+                        "description": "Vyberte správny port USB, ku ktorému je zariadenie pripojené."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Vyberte firmvér:",
+                        "description": "Zadajte cestu k hex súboru firmvéru, ktorý chcete nahrať."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Vyberte možnosti nahrávania:",
+                        "description": "Uistite sa, že ste vybrali možnosť DTR low-level reset, RTS high-level into BootLoader. Ak túto možnosť nevyberiete, nahrávanie môže zlyhať."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735579671/17_kma3gz.png",
+                        "alt": "Konfigurácia nahrávacieho softvéru"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "5. Nahrajte program"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Najprv je potrebné prepnúť mikrokontrolér na rozširujúcej doske do programovacieho režimu: Stlačte a podržte tlačidlo BOOT0 na rozširujúcej doske, potom stlačte tlačidlo RESET a nakoniec uvoľnite tlačidlo BOOT0."
+                    },
+                    {
+                        "type": "image-long",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735579671/18_gcsjwj.png",
+                        "alt": "Kliknite na tlačidlo Start ISP(P)"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Kliknite na tlačidlo Start ISP(P), a mcuisp softvér nahraje vybraný firmvér do mikrokontroléra na rozširujúcej doske Rosmaster. Po úspešnom dokončení sa na pravej strane objaví hlásenie: www.mcuisp.com: Mission Complete, Anything Ok!!!. LED na rozširujúcej doske bude blikať každých 200 ms."
+                    }
+                    
+                ]
+            }

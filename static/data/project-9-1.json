@@ -1,0 +1,102 @@
+    {
+          "id": "project-9-1",
+          "name": "Projekt 1 – Ovládanie auta pomocou klávesnice",
+          "description": [
+            {
+                "type": "title",
+                "content": "Teoretické pozadie"
+              },
+              {
+                "type": "text",
+                "content": "Riadenie malého autonómneho podvozku Rosmaster robíme priamo z terminálu v režime raw. To znamená, že každý stlačený znak je k dispozícii okamžite, bez čakania na kláves Enter. Kód využíva:"
+              },
+              {
+                "type": "bullet",
+                "item": "termios + tty",
+                "description": "prepnutie terminálu do raw módu a obnovenie pôvodného stavu."
+              },
+              {
+                "type": "bullet",
+                "item": "select.select()",
+                "description": "neblokujúce zistenie, či bol stlačený znak (timeout 50 ms)."
+              },
+              {
+                "type": "bullet",
+                "item": "Rosmaster_Lib",
+                "description": "API výrobcu; funkcie set_car_run() (pohon) a set_akm_steering_angle() (riadenie)."
+              },
+              {
+                "type": "bullet",
+                "item": "Hlavná slučka",
+                "description": "dokola (~20 Hz), aby sme reagovali na vstup a posielali príkazy."
+              },
+              {
+                "type": "title",
+                "content": "Docker"
+              },
+              {
+                "type": "text",
+                "content": "Aby sme mohli tento program spustiť, potrebujeme knižnicu Rosmaster_Lib, ktorá nie je bežne dostupná cez pip. Najjednoduchším spôsobom je teda spustiť program v pripravenom Docker kontajneri, ktorý už túto knižnicu obsahuje."
+              },
+              {
+                "type": "text",
+                "content": "Na spustenie použijeme nasledovný Docker príkaz:"
+              },
+              {
+                "type": "code",
+                "content": "docker run -it \\\n  --net=host \\\n  --env=\"DISPLAY=$DISPLAY\" \\\n  --env=\"XAUTHORITY=/root/.Xauthority\" \\\n  --env=\"QT_X11_NO_MITSHM=1\" \\\n  -v /tmp/.X11-unix:/tmp/.X11-unix \\\n  -v $HOME/.Xauthority:/root/.Xauthority:ro \\\n  -v /home/jetson/temp:/root/yahboomcar_ros2_ws/temp \\\n  -v /home/jetson/rosboard:/root/rosboard \\\n  -v /home/jetson/maps:/root/maps \\\n  -v /dev/bus/usb/001/010:/dev/bus/usb/001/010 \\\n  -v /dev/bus/usb/001/012:/dev/bus/usb/001/012 \\\n  --device=/dev/astradepth \\\n  --device=/dev/astrauvc \\\n  --device=/dev/video2 \\\n  --device=/dev/myspeech \\\n  --device=/dev/myserial \\\n  --device=/dev/rplidar \\\n  --device=/dev/input \\\n  --security-opt apparmor:unconfined \\\n  -p 9090:9090 \\\n  -p 8888:8888 \\\n  yahboomtechnology/ros-foxy:4.2.0 /bin/bash"
+              },
+              {
+                "type": "text",
+                "content": "Jednotlivé parametre tohto príkazu si vysvetlíme neskôr v ďalšej časti kurzu."
+              },
+        {
+            "type": "title",
+            "content": "Rozdelenie kódu na logické bloky"
+        },
+        {
+            "type": "table",
+            "columns": ["Časť", "Funkcia"],
+            "rows": [
+            { "Časť": "Importy a globálne nastavenia", "Funkcia": "Načítanie knižníc a príprava terminálu" },
+            { "Časť": "getKey()", "Funkcia": "Vráti 1 znak alebo prázdny reťazec, bez blokovania" },
+            { "Časť": "print_instructions()", "Funkcia": "Prehľad ovládania pre používateľa" },
+            { "Časť": "Inicializácia robota", "Funkcia": "Vytvorenie objektu, vlákno príjmu, konštanty PWM/uhly" },
+            { "Časť": "Hlavná while-slučka", "Funkcia": "Spracovanie kláves, prepínanie zatáčania, jazda, stop, quit" },
+            { "Časť": "Upratovanie", "Funkcia": "Zastavenie robota a obnovenie nastavení terminálu" }
+            ]
+        },
+        {
+            "type": "title",
+            "content": "Implementácia"
+        },
+        {
+          "type": "code",
+          "content": "#!/usr/bin/env python3\n# Tento riadok zabezpečí, že skript sa spustí pomocou Python 3 interpreteru\n\n# --- Import potrebných knižníc ---\nimport sys               # Prístup k systémovým funkciám, ako napr. stdin\nimport select            # Používa sa na neblokujúce čítanie vstupu\nimport tty               # Práca s terminálom v režime raw\nimport termios           # Zmena terminálových nastavení\nimport time              # Použitie časových oneskorení\nfrom Rosmaster_Lib import Rosmaster  # Knižnica na ovládanie Rosmaster robota\n\n# --- Funkcia na získanie stlačenej klávesy ---\ndef getKey(settings):\n    \"\"\"\n    Číta jeden znak z klávesnice bez blokovania (netreba stlačiť Enter).\n    Ak nie je žiadny stlačený znak, vráti prázdny reťazec.\n    \"\"\"\n    tty.setraw(sys.stdin.fileno())  # Nastaví terminál do režimu raw (okamžitý vstup)\n    rlist, _, _ = select.select([sys.stdin], [], [], 0.05)  # Čaká max. 50 ms na vstup\n    key = sys.stdin.read(1) if rlist else ''  # Prečíta 1 znak, ak je dostupný\n    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)  # Obnoví pôvodné nastavenia terminálu\n    return key\n\n# --- Funkcia na zobrazenie ovládacích inštrukcií ---\ndef print_instructions():\n    \"\"\"\n    Vypíše prehľad dostupných klávesových skratiek na ovládanie robota.\n    \"\"\"\n    print(\"Demonštrácia pohybu a riadenia\")\n    print(\"------------------------------\")\n    print(\"  Podrž W: Jazda dopredu\")\n    print(\"  Podrž S: Jazda dozadu\")\n    print(\"  A: Prepni zatáčanie vľavo (+30° / 0°)\")\n    print(\"  D: Prepni zatáčanie vpravo (-30° / 0°)\")\n    print(\"  X: Okamžité zastavenie\")\n    print(\"  Q: Ukonči program\")\n    print(\"------------------------------\")\n\n# --- Hlavná časť programu ---\nif __name__ == \"__main__\":\n    # Uložíme si aktuálne nastavenia terminálu (aby sme ich mohli neskôr obnoviť)\n    settings = termios.tcgetattr(sys.stdin)\n\n    # Inicializácia objektu robota Rosmaster\n    car = Rosmaster()\n    car.create_receive_threading()          # Spustí vlákno na príjem údajov zo senzora\n    car.set_auto_report_state(True)         # Povolenie automatického odosielania stavu\n    time.sleep(0.2)                         # Malé oneskorenie na stabilizáciu komunikácie\n\n    # Definovanie konštánt pre rýchlosť jazdy a uhly zatáčania\n    FORWARD_SPEED = 50                      # Rýchlosť dopredu\n    BACKWARD_SPEED = 30                     # Rýchlosť dozadu\n    STEER_LEFT = -30                        # Uhol zatáčania vľavo\n    STEER_RIGHT = 30                        # Uhol zatáčania vpravo\n\n    # Premenné na sledovanie stavu zatáčania (prepínače)\n    left_active = False                     # Či je zatáčanie vľavo aktívne\n    right_active = False                    # Či je zatáčanie vpravo aktívne\n\n    # Zobrazí inštrukcie pre používateľa\n    print_instructions()\n\n    try:\n        while True:\n            # Získanie aktuálne stlačenej klávesy\n            key = getKey(settings).lower()  # Prevedieme na malé písmeno pre jednoduchšie porovnanie\n\n            # --- Prepínanie zatáčania ---\n            if key == 'a':\n                if right_active:\n                    right_active = False    # Vypneme zatáčanie doprava, ak bolo aktívne\n                left_active = not left_active  # Prepni stav zatáčania vľavo\n\n            elif key == 'd':\n                if left_active:\n                    left_active = False     # Vypneme zatáčanie vľavo, ak bolo aktívne\n                right_active = not right_active  # Prepni stav zatáčania vpravo\n\n            # --- Okamžité zastavenie ---\n            elif key == 'x':\n                left_active = False         # Vypni zatáčanie vľavo\n                right_active = False        # Vypni zatáčanie vpravo\n                car.set_car_run(0, 0)       # Zastav jazdu\n                car.set_akm_steering_angle(0)  # Vycentruj kolesá\n                print(\"[Akcia] Zastavenie všetkých pohybov\")\n\n            # --- Ukončenie programu ---\n            elif key == 'q':\n                print(\"Ukončujem ovládanie\")\n                break  # Preruší cyklus, program sa ukončí\n\n            # --- Nastavenie uhla zatáčania podľa aktívneho prepínača ---\n            if left_active:\n                car.set_akm_steering_angle(STEER_LEFT)   # Zatáčanie vľavo\n            elif right_active:\n                car.set_akm_steering_angle(STEER_RIGHT)  # Zatáčanie vpravo\n            else:\n                car.set_akm_steering_angle(0)            # Žiadne zatáčanie\n\n            # --- Jazda vpred alebo vzad ---\n            if key == 'w':\n                car.set_car_run(1, FORWARD_SPEED)  # Jazda dopredu (smer = 1)\n            elif key == 's':\n                car.set_car_run(2, BACKWARD_SPEED)  # Jazda dozadu (smer = 2)\n            else:\n                car.set_car_run(0, 0)               # Inak zastav jazdu (ale nie riadenie)\n\n            # Malé oneskorenie na zníženie zaťaženia procesora\n            time.sleep(0.05)\n\n    # --- Ak nastane chyba, vypíš ju ---\n    except Exception as e:\n        print(\"Nastala výnimka:\", e)\n\n    # --- Upratovanie (zastavenie auta a obnovenie terminálu) ---\n    finally:\n        car.set_car_run(0, 0)                         # Zastav pohyb\n        car.set_akm_steering_angle(0)                 # Vycentruj kolesá\n        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)  # Obnov terminál\n        print(\"Ovládanie bolo ukončené, robot je zastavený\")"
+        },          
+        {
+            "type": "title",
+            "content": "Možné vylepšenia"
+          },
+          {
+            "type": "text",
+            "content": "Po zvládnutí základného ovládania auta je možné projekt ďalej rozširovať alebo prepojiť s ďalšími technológiami. Tu je niekoľko návrhov na vylepšenie, ktoré posunú projekt na vyššiu úroveň:"
+          },
+          {
+            "type": "bullet",
+            "item": "Plynulé zvyšovanie/znižovanie rýchlosti (+ / -)",
+            "description": "Ide o pomerne jednoduchý doplnok. Namiesto fixnej rýchlosti môžete zaviesť premennú pre aktuálnu rýchlosť, ktorú zvyšujete alebo znižujete podľa stlačených kláves. Vďaka tomu bude ovládanie realistickejšie a jemnejšie."
+          },
+          {
+            "type": "bullet",
+            "item": "Prepojenie s ROS 2",
+            "description": "Tento skript by sa dal prepojiť s ROS 2, napríklad publikovaním príkazov alebo stavov do topicu. Vzhľadom na jednoduchosť programu to však nemusí byť efektívne riešenie. Hodí sa skôr ako cvičenie pre učenie sa ROS publikačného systému."
+          },
+          {
+            "type": "bullet",
+            "item": "Limitácia cez SSH",
+            "description": "Ak je podvozok ovládaný cez SSH (napr. z notebooku), nie je možné naraz čítať viacero stlačených klávesov (napr. W + A). Preto zatáčanie funguje ako prepínanie fixného uhla vľavo/vpravo. Toto obmedzenie sťažuje súčasnú jazdu a riadenie, preto sme zaviedli prepínače pre riadenie."
+  }
+        ]
+    }
+    

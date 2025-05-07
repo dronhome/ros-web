@@ -1,0 +1,206 @@
+[
+    {
+    "id": "module-1",
+    "name": "Modul 1: Úvod do ROSMASTER R2",
+    "lectures": [
+        { "id": "lecture-1-1", "name": "Prednáška 1 – Úvod do robota ROSMASTER R2 a jeho komponentov" }
+    ],
+    "exercises": [
+        { "id": "exercise-1-1", "name": "Cvičenie 1 - Návod na diaľkové ovládanie mobilnou aplikáciou pre Rosmaster R2" }
+    ],
+    "tests": [
+        {
+            "id": "test-1-1",
+            "name": "Test 1.1: ROSMASTER R2 a jeho komponenty"
+        }
+    ]
+    },
+    {
+    "id": "module-2",
+    "name": "Modul 2: Ovládanie hardvéru cez STM32CubeIDE",
+    "lectures": [
+        { "id": "lecture-2-1", "name": "Prednáška 2 – Komponenty a IDE" }
+    ],
+    "exercises": [
+        { "id": "exercise-2-1", "name": "Cvičenie 2.1 - Stiahnite si STMCubeIDE vývojové prostredie" },
+        { "id": "exercise-2-2", "name": "Cvičenie 2.2 - Ovládanie bzučiaka bez a s použitím FreeRTOS" }
+    ],
+    "tests": [
+        {
+            "id": "test-2-1",
+            "name": "Test 2.1: Komponenty a IDE"
+        }
+    ]
+    },
+    {
+    "id": "module-3",
+    "name": "Modul 3: Ovládanie hardvéru cez Jupyter Lab",
+    "lectures": [
+        {
+        "id": "lecture-3-1",
+        "name": "Prednáška 3 – Jupyter Lab"
+        }
+    ],
+    "exercises": [
+        {
+        "id": "exercise-3-1",
+        "name": "Cvičenie 3.1 – Pripojenie k Jupyter Lab"
+        },
+        {
+        "id": "exercise-3-2",
+        "name": "Cvičenie 3.2 – Základné ovládanie"
+        },
+        {
+        "id": "exercise-3-3",
+        "name": "Cvičenie 3.3 – Základné ovládanie RGB a efektov"
+        },
+        {
+        "id": "exercise-3-4",
+        "name": "Cvičenie 3.4 – Ovládanie motorov"
+        },
+        {
+        "id": "exercise-3-5",
+        "name": "Cvičenie 3.5 – Základná kontrola pohybu robota"
+        }
+    ]
+    },
+    {
+    "id": "module-4",
+    "name": "Modul 4: Docker",
+    "lectures": [
+        {
+        "id": "lecture-4-1",
+        "name": "Prednáška 4 – Docker – základný prehľad"
+        }
+    ],
+    "exercises": [
+        {
+        "id": "exercise-4-1",
+        "name": "Cvičenie 4.1 – Použitie Dockeru na správu hardvéru a prenos dát"
+        },
+        {
+        "id": "exercise-4-2",
+        "name": "Cvičenie 4.2 – Práca s hardvérom a spúšťanie Docker kontajnera"
+        }
+    ],
+    "tests": [
+        {
+            "id": "test-4-1",
+            "name": "Test 4.1: Docker - základný prehľad"
+        }
+    ]
+    },
+    {
+    "id": "module-5",
+    "name": "Modul 5: ROS",
+    "lectures": [
+        {
+        "id": "lecture-5-1",
+        "name": "Prednáška 5.1 – ROS 1"
+        },
+        {
+        "id": "lecture-5-2",
+        "name": "Prednáška 5.2 – ROS 2"
+        }
+    ],
+    "exercises": [],
+    "tests": [
+        {
+            "id": "test-5-1",
+            "name": "Test 5.1: ROS 1 and ROS 2"
+        }
+    ]
+    },
+    {
+    "id": "module-6",
+    "name": "Modul 6: OpenCV",
+    "lectures": [
+        {
+        "id": "lecture-6-1",
+        "name": "Prednáška 6 – OpenCV – základný prehľad"
+        }
+    ],
+    "exercises": [
+        {
+        "id": "exercise-6-1",
+        "name": "Cvičenie 6.1 – Základy OpenCV"
+        },
+        {
+        "id": "exercise-6-2",
+        "name": "Cvičenie 6.2 – Odhad pózy pomocou OpenCV"
+        },
+        {
+        "id": "exercise-6-3",
+        "name": "Cvičenie 6.3 – Detekcia objektov pomocou OpenCV a SSD MobileNet V2"
+        }
+    ],
+    "tests": [
+        {
+            "id": "test-6-1",
+            "name": "Test 6.1: OpenCV - základný prehľad"
+        }
+    ]
+    },
+    {
+    "id": "module-7",
+    "name": "Modul 7: Základy ovládania kamery",
+    "lectures": [
+        {
+        "id": "lecture-7-1",
+        "name": "Prednáška 7 – Hĺbková kamera: detailnejší pohľad"
+        }
+    ],
+    "exercises": [
+        {
+        "id": "exercise-7-1",
+        "name": "Cvičenie 7.1 – Astra SDK: Inštalácia a spustenie"
+        },
+        {
+        "id": "exercise-7-2",
+        "name": "Cvičenie 7.2 – Základy SLAM"
+        }
+    ],
+    "tests": [
+        {
+            "id": "test-7-1",
+            "name": "Test 7.1: Hĺbková kamera: detailnejší pohľad"
+        }
+    ]
+    },
+    {
+    "id": "module-8",
+    "name": "Modul 8: LiDAR",
+    "lectures": [
+        {
+        "id": "lecture-8-1",
+        "name": "Prednáška 8 – LiDAR: Detailnejší pohľad"
+        }
+    ],
+    "exercises": [],
+    "tests": [
+        {
+            "id": "test-8-1",
+            "name": "Test 8.1: LiDAR: Detailnejší pohľad"
+        }
+    ]
+    },
+    {
+        "id": "module-9",
+        "name": "Modul 9: Ukážkové projekty",
+        "projects": [
+        {
+            "id": "project-9-1",
+            "name": "Projekt 1 – Ovládanie auta pomocou klávesnice"
+        },
+        {
+            "id": "project-9-2",
+            "name": "Projekt 2 – Sledovanie čiary"
+        },
+        {
+            "id": "project-9-3",
+            "name": "Projekt 3 – Jednoduchý autopilot"
+        }
+        ]
+    }
+    
+]

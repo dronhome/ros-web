@@ -1,0 +1,58 @@
+{ 
+                "id": "exercise-6-1",
+                "name": "Cvičenie 6.1 - Základy OpenCV",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "Práca s obrázkami"
+                    },
+                    {
+                        "type": "code",
+                        "content": "import cv2 as cv\n\nif __name__ == '__main__':\n    img = cv.imread('my_image.jpg')  # Načítanie obrázka z aktuálneho priečinka.\n\n    cv.imwrite('my_image_new.jpg', img)  # Uloženie novej verzie načítaného obrázka.\n    new_img = cv.imread('my_image_new.jpg')  # Načítanie novo uloženého obrázka.\n\n    while True:\n        cv.imshow('frame', img)  # Zobrazenie pôvodného obrázka v okne s názvom 'frame'.\n        cv.imshow('new_frame', new_img)  # Zobrazenie nového obrázka v okne 'new_frame'.\n\n        action = cv.waitKey(10) & 0xFF  # Čakanie na stlačenie klávesu každých 10 ms.\n        if action == ord('q') or action == 113:  # Ak používateľ stlačí 'q' alebo 'Q', ukončí sa slučka.\n            break\n\n    cv.destroyAllWindows()  # Zatvorenie všetkých otvorených okien."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Používanie kamery"
+                    },
+                    {
+                        "type": "code",
+                        "content": "import cv2 as cv\n\nif __name__ == '__main__':\n    frame = cv.VideoCapture(0)  # Otvorenie kamery (0 znamená predvolenú kameru).\n\n    while frame.isOpened():\n        ret, img = frame.read()  # Čítanie aktuálneho snímku z kamery.\n        cv.imshow('frame', img)  # Zobrazenie aktuálneho snímku v okne 'frame'.\n\n        action = cv.waitKey(10) & 0xFF  # Čakanie na stlačenie klávesu každých 10 ms.\n        if action == ord('q') or action == 113:  # Ak používateľ stlačí 'q' alebo 'Q', ukončí sa slučka.\n            break\n\n    frame.release()  # Uvoľnenie kamery.\n    cv.destroyAllWindows()  # Zatvorenie všetkých otvorených okien."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Manipulácia s obrázkami"
+                    },
+                    {
+                        "type": "code",
+                        "content": "import cv2\nimport numpy as np\n\nif __name__ == '__main__':\n    img = cv2.imread('my_image.jpg')  # Načítanie obrázka.\n    imgInfo = img.shape  # Získanie rozmerov obrázka.\n    height, width, deep = imgInfo  # Extrakcia výšky, šírky a počtu kanálov.\n\n    newImgInfo = (height * 2, width, deep)  # Vytvorenie rozmerov pre nový obrázok.\n    dst = np.zeros(newImgInfo, np.uint8)  # Vytvorenie prázdneho obrázka s nulovými hodnotami.\n\n    for i in range(height):\n        for j in range(width):\n            dst[i, j] = img[i, j]  # Kopírovanie pôvodného obrázka.\n            dst[height * 2 - i - 1, j] = img[i, j]  # Pridanie zrkadlovej verzie obrázka.\n\n    while True:\n        cv2.imshow('Original', img)  # Zobrazenie pôvodného obrázka.\n        cv2.imshow('Mirrored', dst)  # Zobrazenie obrázka s pridanou zrkadlovou verziou.\n\n        action = cv2.waitKey(10) & 0xFF  # Čakanie na stlačenie klávesu.\n        if action == ord('q') or action == 113:  # Ukončenie slučky po stlačení 'q'.\n            break\n\n    cv2.destroyAllWindows()  # Zatvorenie všetkých okien."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Kreslenie tvarov na obrázok"
+                    },
+                    {
+                        "type": "code",
+                        "content": "import cv2\nimport numpy as np\n\nif __name__ == '__main__':\n    img = cv2.imread('my_image.jpg')  # Načítanie obrázka.\n\n    circle = cv2.circle(img, (80, 80), 50, (255, 0, 255), 10)  # Nakreslenie kruhu.\n    rect = cv2.rectangle(img, (50, 20), (100, 100), (0, 255, 0), 5)  # Nakreslenie obdĺžnika.\n    cv2.putText(img, 'OpenCV Rocks!', (150, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)  # Pridanie textu.\n\n    while True:\n        cv2.imshow('Shapes', img)  # Zobrazenie obrázka s nakreslenými tvarmi.\n\n        action = cv2.waitKey(10) & 0xFF  # Čakanie na stlačenie klávesu.\n        if action == ord('q') or action == 113:  # Ukončenie slučky po stlačení 'q'.\n            break\n\n    cv2.destroyAllWindows()  # Zatvorenie všetkých okien."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Záver"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Tieto základné skripty demonštrujú, ako používať OpenCV na rôzne operácie s obrázkami a kamerou. Existuje množstvo online zdrojov a tutoriálov, ktoré vám umožnia preskúmať ďalšie funkcie OpenCV. Začnite experimentovať s týmito základmi a pripravte sa na prechod k zložitejším témam a aplikáciám OpenCV, ktoré preskúmame v nasledujúcom cvičení."
+                    }                                     
+                ]
+            }

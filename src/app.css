@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'svelte-highlight/styles/monokai-sublime.css';
+
+
+html, body {
+    height: 100%;
+    overflow: auto;
+}

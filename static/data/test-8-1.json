@@ -1,0 +1,81 @@
+{
+    "name": "LiDAR: Detailnejší pohľad",
+    "title": "LiDAR: Detailnejší pohľad",
+    "questions": [
+      {
+        "type": "mcq",
+        "question": "Ako LiDAR meria vzdialenosť k objektom?",
+        "options": [
+          "Vysielaním krátkych laserových impulzov a meraním času návratu",
+          "Snímáním farebných obrázkov a analýzou pixelov",
+          "Využitím ultrazvukových vĺn",
+          "Meraním magnetického poľa okolo objektov"
+        ],
+        "answer": "Vysielaním krátkych laserových impulzov a meraním času návratu"
+      },
+      {
+        "type": "truefalse",
+        "question": "LiDAR dokáže vytvoriť husté 2D mračno bodov otáčaním snímača o 360°.",
+        "answer": "True"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorá vlastnosť nepatrí medzi dôvody výberu RPLIDAR A1 na ROSmaster R2?",
+        "options": [
+          "Kompaktné rozmery a nízka hmotnosť",
+          "Presnosť a spoľahlivosť merania",
+          "Vysoká spotreba energie",
+          "Cenová dostupnosť"
+        ],
+        "answer": "Vysoká spotreba energie"
+      },
+      {
+        "type": "short",
+        "question": "Ako sa nazýva technológia OPTMAG použitá v RPLIDAR A1?",
+        "answer": "Optical Magnetic"
+      },
+      {
+        "type": "mcq",
+        "question": "Aký je typický merací dosah RPLIDAR A1?",
+        "options": [
+          "1 – 3 metre",
+          "6 – 12 metrov",
+          "15 – 20 metrov",
+          "Viac ako 30 metrov"
+        ],
+        "answer": "6 – 12 metrov"
+      },
+      {
+        "type": "truefalse",
+        "question": "RPLIDAR A1 komunikuje s platformou ROSMASTER R2 cez Bluetooth.",
+        "answer": "False"
+      },
+      {
+        "type": "short",
+        "question": "Akú rýchlosť rotácie (frekvenciu skenovania) má RPLIDAR A1?",
+        "answer": "5 – 10 Hz"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorý ROS balík je určený na integráciu RPLIDAR A1?",
+        "options": [
+          "rplidar_ros",
+          "astra_camera",
+          "image_transport",
+          "depth_image_proc"
+        ],
+        "answer": "rplidar_ros"
+      },
+      {
+        "type": "truefalse",
+        "question": "RPLIDAR A1 bežne vyžaduje napájanie 12 V.",
+        "answer": "False"
+      },
+      {
+        "type": "short",
+        "question": "Čo znamená skratka LiDAR?",
+        "answer": "Light Detection and Ranging"
+      }
+    ]
+  }
+  

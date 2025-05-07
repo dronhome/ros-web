@@ -1,0 +1,352 @@
+{
+    "id": "project-9-2",
+    "name": "Projekt 2 – Sledovanie čiary",
+    "description": [
+        {
+            "type": "title",
+            "content": "Docker"
+        },
+        {
+            "type": "text",
+            "content": "V tomto projekte vytvoríme program, ktorý umožní robotickému autíčku sledovať žltú čiaru. Program zabezpečí, aby sa autíčko pohybovalo dopredu a podľa uhla žltej čiary vzhľadom na smer jazdy plynulo zatáčalo doľava alebo doprava."
+        },
+        {
+            "type": "text",
+            "content": "Program budeme spúšťať v Docker kontajneri s konkrétnymi parametrami:"
+        },
+        {
+            "type": "code",
+            "content": "docker run -it \\\n  --net=host \\\n  --env=\"DISPLAY=$DISPLAY\" \\\n  --env=\"XAUTHORITY=/root/.Xauthority\" \\\n  --env=\"QT_X11_NO_MITSHM=1\" \\\n  -v /tmp/.X11-unix:/tmp/.X11-unix \\\n  -v $HOME/.Xauthority:/root/.Xauthority:ro \\\n  -v /home/jetson/temp:/root/yahboomcar_ros2_ws/temp \\\n  -v /home/jetson/rosboard:/root/rosboard \\\n  -v /home/jetson/maps:/root/maps \\\n  -v /dev/bus/usb/001/010:/dev/bus/usb/001/010 \\\n  -v /dev/bus/usb/001/012:/dev/bus/usb/001/012 \\\n  --device=/dev/astradepth \\\n  --device=/dev/astrauvc \\\n  --device=/dev/video2 \\\n  --device=/dev/myspeech \\\n  --device=/dev/myserial \\\n  --device=/dev/rplidar \\\n  --device=/dev/input \\\n  --security-opt apparmor:unconfined \\\n  -p 9090:9090 \\\n  -p 8888:8888 \\\n  yahboomtechnology/ros-foxy:4.2.0 /bin/bash"
+        },
+        {
+            "type": "text",
+            "content": "Jednotlivé parametre Docker príkazu majú nasledujúci význam:"
+        },
+        {
+            "type": "table",
+            "columns": ["Parameter", "Popis"],
+            "rows": [
+            {"Parameter": "--net=host", "Popis": "Kontajner používa sieť hostiteľa – dôležité pre ROS komunikáciu."},
+            {"Parameter": "DISPLAY, XAUTHORITY", "Popis": "Povolenie GUI z kontajnera cez X11."},
+            {"Parameter": "QT_X11_NO_MITSHM", "Popis": "Obídenie problémov s QT grafickým rozhraním."},
+            {"Parameter": "-v /tmp/.X11-unix", "Popis": "Prístup ku grafickému X11 systému hostiteľa."},
+            {"Parameter": "-v /home/jetson/temp", "Popis": "Zdieľanie priečinka temp na výmenu súborov."},
+            {"Parameter": "-v /home/jetson/rosboard", "Popis": "Zdieľanie ROS dashboardu."},
+            {"Parameter": "-v /home/jetson/maps", "Popis": "Zdieľanie máp medzi hostom a kontajnerom."},
+            {"Parameter": "-v /dev/bus/usb/...", "Popis": "Sprístupnenie USB zariadení (kamera, LIDAR, atď.)."},
+            {"Parameter": "--device=...", "Popis": "Sprístupnenie hardvéru pre ROS (kamera, lidar, serial, input...)."},
+            {"Parameter": "--security-opt", "Popis": "Zrušenie AppArmor obmedzení kvôli prístupu k zariadeniam."},
+            {"Parameter": "-p 9090, -p 8888", "Popis": "Mapovanie portov ROSBridge a webového rozhrania."}
+            ]
+        },
+        {
+            "type": "text",
+            "content": "Všetky tieto parametre nám umožnia jednoducho a efektívne využiť potrebné hardvérové zdroje a softvérové rozhrania pri vývoji nášho programu."
+        },
+        {
+            "type": "title",
+            "content": "Tvorba ROS 2 workspace: Teória"
+        },
+        {
+            "type": "text",
+            "content": "A ROS 2 workspace je adresárová štruktúra, v ktorej organizujete svoje ROS 2 balíky (packages), závislosti a build-súbory. Typicky vyzerá takto:"
+        },
+        {
+            "type": "table",
+            "columns": ["Adresár", "Popis"],
+            "rows": [
+            { "Adresár": "src/", "Popis": "Zdrojové súbory balíkov (packages)." },
+            { "Adresár": "build/", "Popis": "Dočasné súbory vytvorené počas buildu (automaticky)." },
+            { "Adresár": "install/", "Popis": "Hotové binárky a nainštalované node-y." },
+            { "Adresár": "log/", "Popis": "Logy z buildovania a spúšťania." }
+            ]
+        },
+        {
+            "type": "subtitle",
+            "content": "Prečo potrebujeme workspace?"
+        },
+        {
+            "type": "bullet",
+            "item": "Izolácia projektov",
+            "description": "– Každý workspace funguje ako samostatné vývojové prostredie. Všetky build súbory, nainštalované node-y aj zdrojové kódy sú oddelené od zvyšku systému."
+        },
+        {
+            "type": "bullet",
+            "item": "Správa závislostí",
+            "description": "– Colcon dokáže automaticky zistiť, v akom poradí treba buildovať balíky, a tak zabezpečiť, že všetky závislosti budú správne vyriešené."
+        },
+        {
+            "type": "bullet",
+            "item": "Overlay mechanizmus",
+            "description": "– Workspaces sa dajú vrstviť – môžete mať základný workspace a nad ním ďalšie, ktoré prekrývajú len určité balíky bez zásahu do pôvodných súborov."
+        },
+        {
+            "type": "subtitle",
+            "content": "Prečo sú v workspace „nodes“?"
+        },
+        {
+            "type": "bullet",
+            "item": "Nodes sú spustiteľné procesy",
+            "description": "– Každý node je ako samostatná aplikácia, ktorá komunikuje so zvyškom systému. Môže to byť napríklad čítanie kamery alebo riadenie motorov."
+        },
+        {
+            "type": "bullet",
+            "item": "Súčasť balíkov",
+            "description": "– Node-y sú uložené v balíkoch, ktoré okrem zdrojového kódu obsahujú aj inštrukcie, ako ich buildovať a inštalovať."
+        },
+        {
+            "type": "bullet",
+            "item": "Build a inštalácia",
+            "description": "– Po spustení príkazu colcon build sa node-y prekompilujú a presunú do priečinka install/, odkiaľ sa následne spúšťajú pomocou ros2 run."
+        },
+        {
+            "type": "text",
+            "content": "V skratke: workspace organizuje kód, závislosti a build-proces a zároveň je miestom, kde vznikajú (buildujú sa) a odkiaľ sa spúšťajú jednotlivé ROS 2 node-y."
+        },
+        {
+            "type": "title",
+            "content": "Tvorba ROS 2 workspace"
+        },
+
+            {
+                "type": "subtitle",
+                "content": "Spustenie Docker kontajnera"
+            },
+            {
+                "type": "text",
+                "content": "Na vašom hostiteľskom stroji spustíte pripravený skript, ktorý “natiahne” ROS 2 Foxy image aj s prístupom k hardvéru:"
+            },
+            {
+                "type": "code",
+                "content": "./run_docker.sh"
+            },
+            {
+                "type": "text",
+                "content": "Vo vnútri kontajnera budete mať už nakonfigurované zdieľanie GPU, USB zariadení, X11 okna aj portov pre ROSBridge/Web UI."
+            },
+            {
+                "type": "subtitle",
+                "content": "Vytvorenie ROS 2 workspace"
+            },
+            {
+                "type": "code",
+                "content": "mkdir -p ~/ros2_ws/src\ncd ~/ros2_ws/src"
+            },
+            {
+                "type": "bullet",
+                "item": "– ~/ros2_ws/src",
+                "description": "sem idú všetky zdrojové balíky (packages)."
+            },
+            {
+                "type": "bullet",
+                "item": "– build/ a install/",
+                "description": "vygenerujú sa pri prvom build-e."
+            },
+            {
+                "type": "subtitle",
+                "content": "Vytvorenie nového balíka “line_follower”"
+            },
+            {
+                "type": "code",
+                "content": "ros2 pkg create --build-type ament_python line_follower"
+            },
+            {
+                "type": "bullet",
+                "item": "– --build-type ament_python",
+                "description": "hovorí, že balík bude Python-ový a použijeme colcon + ament"
+            },
+            {
+                "type": "bullet",
+                "item": "– Vzniknú priečinky",
+                "description": "line_follower/ (meta-súbory) a line_follower/line_follower/ (tu pôjdu zdrojáky)."
+            },
+            {
+                "type": "subtitle",
+                "content": "Pridanie node-skriptov"
+            },
+            {
+                "type": "code",
+                "content": "~/ros2_ws/src/line_follower/line_follower/\n  ├── line_detector_node.py\n  └── driving_node.py"
+            },
+            {
+                "type": "bullet",
+                "item": "– line_detector_node.py",
+                "description": "číta obraz z kamery, detekuje žltú čiaru a vypočíta uhol čiary voči osi vozidla"
+            },
+            {
+                "type": "bullet",
+                "item": "– driving_node.py",
+                "description": "na základe uhla vydáva príkazy na pohyb (dopredu, zákruta vpravo/vľavo)"
+            },
+            {
+                "type": "subtitle",
+                "content": "Deklarácia závislostí v package.xml"
+            },
+            {
+                "type": "code",
+                "content": "<depend>rclpy</depend>\n<depend>std_msgs</depend>"
+            },
+            {
+                "type": "text",
+                "content": "Tým hovoríte, že váš balík potrebuje ROS 2 Python klienta (rclpy) a štandardné ROS správy (std_msgs)."
+            },
+            {
+                "type": "subtitle",
+                "content": "Registrácia skriptov v setup.py"
+            },
+            {
+                "type": "code",
+                "content": "entry_points={\n    'console_scripts': [\n        'line_detector_node = line_follower.line_detector_node:main',\n        'driving_node       = line_follower.driving_node:main',\n    ],\n},"
+            },
+
+            
+            {
+                "type": "title",
+                "content": "Coding"
+            },
+            {
+                "type": "subtitle",
+                "content": "line_detector_node.py"
+            },
+            {
+                "type": "code",
+                "content": "#!/usr/bin/env python3\n# Import knižnice ROS 2 pre Python\nimport rclpy\nfrom rclpy.node import Node\n# Správy typu Float32 pre publikovanie uhla\nfrom std_msgs.msg import Float32\n# Knižnice OpenCV a NumPy pre spracovanie obrazu\nimport cv2\nimport numpy as np\n\ndef detect_yellow_line_angle(frame):\n    \"\"\"\n    Detekuje žltú čiaru v danom frame a vypočíta jej uhol vzhľadom na horizontu.\n    Vracia:\n        angle_deg (float alebo None): Uhol detekovanej čiary v stupňoch (None, ak sa nenašla)\n        mask (numpy.ndarray): Binárna maska pre detekciu žltej farby.\n    \"\"\"\n    # Prevod obrázka do HSV priestoru\n    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)\n    # Definícia rozsahu žltej farby v HSV\n    lower_yellow = np.array([20, 100, 100])\n    upper_yellow = np.array([30, 255, 255])\n    # Vytvorenie masky pre žltú farbu\n    mask = cv2.inRange(hsv, lower_yellow, upper_yellow)\n    # Vytvorenie štrukturálneho elementu pre morfológiu\n    kernel = np.ones((5, 5), np.uint8)\n    # Otvorenie (zamedzenie šumu)\n    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)\n    # Uzavretie (doplnenie medzier)\n    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)\n    # Nájdenie kontúr v maske\n    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)\n    # Ak nič nebolo nájdené, vrátime None\n    if not contours:\n        return None, mask\n    # Výber najväčšej kontúry podľa plochy\n    largest_contour = max(contours, key=cv2.contourArea)\n    # Fitnutie priamky do kontúry (vracia vektor a bod)\n    [vx, vy, x0, y0] = cv2.fitLine(largest_contour, cv2.DIST_L2, 0, 0.01, 0.01)\n    # Výpočet uhla priamky\n    angle_rad = np.arctan2(vy, vx)\n    angle_deg = angle_rad * 180 / np.pi\n    # Konverzia numpy float na bežný float\n    return float(angle_deg[0]), mask\n\nclass LineDetectorNode(Node):\n    def __init__(self):\n        # Inicializácia ROS 2 node s názvom 'line_detector_node'\n        super().__init__('line_detector_node')\n        # Vytvorenie publishera pre správu Float32 na tému '/line_angle'\n        self.publisher_ = self.create_publisher(Float32, '/line_angle', 10)\n        # Otvorenie kamery; prípadne upravte index alebo názov zariadenia\n        self.cap = cv2.VideoCapture(1, cv2.CAP_V4L2)\n        if not self.cap.isOpened():\n            # Ak sa nepodarí otvoriť kameru, zalogujeme chybu\n            self.get_logger().error(\"Nepodarilo sa otvoriť kameru!\")\n        # Vytvorenie timeru, ktorý volá spätnú funkciu každých 0.1 s (10 Hz)\n        self.timer = self.create_timer(0.1, self.timer_callback)\n    \n    def timer_callback(self):\n        # Snímka z kamery\n        ret, frame = self.cap.read()\n        if not ret:\n            # Ak sa snímka nezachytila, zalogujeme chybu a ukončíme callback\n            self.get_logger().error(\"Zachytenie snímky zlyhalo\")\n            return\n        \n        # Detekcia uhla žltej čiary a masky\n        angle, mask = detect_yellow_line_angle(frame)\n        if angle is not None:\n            # Ak bol uhol detekovaný, vytvoríme správu a publikujeme ju\n            msg = Float32()\n            msg.data = angle\n            self.publisher_.publish(msg)\n            self.get_logger().info(f\"Publikovaný uhol čiary: {angle:.2f}°\")\n        else:\n            # Ak sa nenašla žltá čiara\n            self.get_logger().info(\"Žltá čiara nebola detekovaná.\")\n        # Voliteľné: zobrazenie originálneho frame a masky pre ladenie\n        cv2.imshow(\"Line Detector - Feed\", frame)\n        cv2.imshow(\"Line Detector - Mask\", mask)\n        cv2.waitKey(1)\n    \n    def destroy_node(self):\n        # Uvoľnenie kamery a zavretie OKIEN OpenCV\n        self.cap.release()\n        cv2.destroyAllWindows()\n        # Zavretie ROS 2 node\n        super().destroy_node()\n\ndef main(args=None):\n    # Inicializácia ROS 2\n    rclpy.init(args=args)\n    # Vytvorenie a spustenie node\n    node = LineDetectorNode()\n    rclpy.spin(node)\n    # Po ukončení ukončíme node a ROS 2\n    node.destroy_node()\n    rclpy.shutdown()\n\nif __name__ == '__main__':\n    main()"
+            },
+            {
+                "type": "subtitle",
+                "content": "driving_node.py"
+            },
+            {
+                "type": "code",
+                "content": "#!/usr/bin/env python3\nimport rclpy\nfrom rclpy.node import Node\nfrom std_msgs.msg import Float32\nimport time\nfrom Rosmaster_Lib import Rosmaster\n\n# Funkcie pre ovládanie pohybu pomocou knižnice Rosmaster\n# Jazda vpred rovno s konštantnou rýchlosťou\n\ndef drive_straight(car, forward_speed=15):\n    # Nastavenie natočenia kolies do stredu\n    car.set_akm_steering_angle(0)\n    # Spustenie motora vpred s danou rýchlosťou\n    car.set_car_run(1, forward_speed)\n\n# Otáčanie doprava o zadaný uhol pomocou gyroskopu\n\ndef turn_right(car, target_angle, speed):\n    direction = 6  # Predpokladá sa, že 6 znamená otáčanie doprava\n    # Spustenie otáčania vpravo s danou rýchlosťou\n    car.set_car_run(direction, speed)\n    accumulated_angle = 0.0  # Premenná pre zrážaný uhol\n    prev_time = time.time()  # Počiatočný čas pre výpočet dt\n    # Kým neodtočíme o požadovaný uhol\n    while accumulated_angle < target_angle:\n        # Čítanie údajov z gyroskopu (gz je rýchlosť uhlovej zmeny v rad/s)\n        _, _, gz = car.get_gyroscope_data()\n        now = time.time()\n        dt = now - prev_time  # Časový rozdiel od posledného merania\n        prev_time = now\n        gz_deg = gz * 57.2958  # Prevod z rad/s na stupne/s\n        accumulated_angle += abs(gz_deg) * dt  # Pridanie natočenia\n        time.sleep(0.005)\n    # Zastavenie otáčania a vrátenie kolies do stredu\n    car.set_car_run(0, 0)\n    car.set_akm_steering_angle(0)\n    print(\"Right turn completed.\")  # Výpis dokončenia otáčania\n\n# Otáčanie doľava o zadaný uhol pomocou gyroskopu\n\ndef turn_left(car, target_angle, speed):\n    direction = 5  # Predpokladá sa, že 5 znamená otáčanie doľava\n    # Spustenie otáčania vľavo s danou rýchlosťou\n    car.set_car_run(direction, speed)\n    accumulated_angle = 0.0\n    prev_time = time.time()\n    while accumulated_angle < target_angle:\n        # Čítanie údajov z gyroskopu\n        _, _, gz = car.get_gyroscope_data()\n        now = time.time()\n        dt = now - prev_time\n        prev_time = now\n        gz_deg = gz * 57.2958\n        accumulated_angle += abs(gz_deg) * dt\n        time.sleep(0.005)\n    # Zastavenie otáčania a vrátenie kolies do stredu\n    car.set_car_run(0, 0)\n    car.set_akm_steering_angle(0)\n    print(\"Left turn completed.\")  # Výpis dokončenia otáčania\n\nclass DrivingNode(Node):\n    def __init__(self):\n        super().__init__('driving_node')\n        # Odber správ s uhlom linky typu Float32\n        self.subscription = self.create_subscription(\n            Float32,\n            '/line_angle',\n            self.angle_callback,\n            10\n        )\n        self.subscription  # Predísť varovaniu o nepoužití premennej\n        # Inicializácia rozhrania Rosmaster\n        self.car = Rosmaster()\n        self.car.create_receive_threading()  # Spustenie vlákna na príjem dát\n        self.car.set_auto_report_state(True)  # Automatické hlásenie stavu\n        time.sleep(0.2)\n\n        # Predvolené hodnoty pre rýchlosť a uhol otáčania\n        self.forward_speed = 15\n        self.target_turn_angle = 85.0  # Cieľový uhol pre otáčanie\n        # Čas poslednej otáčky pre implementáciu ochladzovacieho intervalu\n        self.last_turn_time = 0.0\n        self.cooldown_period = 3.0  # Ochladzovací interval v sekundách\n\n    def angle_callback(self, msg):\n        current_time = time.time()\n        # Ak sme ešte v ochladzovacom intervale, pokračujeme rovno\n        if (current_time - self.last_turn_time) < self.cooldown_period:\n            drive_straight(self.car, self.forward_speed)\n            return\n        \n        angle = msg.data  # Hodnota uhla z odkazu\n        self.get_logger().info(f\"Received line angle: {angle:.2f} degrees\")\n        # Rozhodovanie na základe uhla\n        if 0 < angle <= 30:\n            self.get_logger().info(\"Condition met: Turn Left\")\n            turn_left(self.car, self.target_turn_angle, self.forward_speed)\n            self.last_turn_time = time.time()\n        elif -30 <= angle < 0:\n            self.get_logger().info(\"Condition met: Turn Right\")\n            turn_right(self.car, self.target_turn_angle, self.forward_speed)\n            self.last_turn_time = time.time()\n        else:\n            # Ak uhol mimo rozsahu, pokračujeme rovno\n            drive_straight(self.car, self.forward_speed)\n\n    def destroy_node(self):\n        # Pri ukončení uzla zastavíme auto a zavoláme nadtriedu\n        self.car.set_car_run(0,0)\n        self.car.set_akm_steering_angle(0)\n        super().destroy_node()\n\n# Funkcia main pre spustenie ROS 2 uzla\n\ndef main(args=None):\n    rclpy.init(args=args)  # Inicializácia ROS 2\n    node = DrivingNode()   # Vytvorenie uzla\n    rclpy.spin(node)       # Spustenie slučky uzla\n    node.destroy_node()    # Zastavenie uzla po ukončení\n    rclpy.shutdown()       # De-inicializácia ROS 2\n\nif __name__ == '__main__':\n    main()"
+            },
+            
+            {
+                "type": "title",
+                "content": "Kompilácia a spustenie"
+            },
+            {
+                "type": "subtitle",
+                "content": "Prejdite do koreňa workspace"
+            },
+            {
+                "type": "code",
+                "content": "cd ~/ros2_ws"
+            },
+            {
+                "type": "text",
+                "content": "Tu sa nachádzajú priečinky src/, build/ a install/. V koreňovom adresári sa spúšťa build."
+            },
+            {
+                "type": "subtitle",
+                "content": "Postavte (build) balík line_follower"
+            },
+            {
+                "type": "code",
+                "content": "colcon build --packages-select line_follower"
+            },
+            {
+                "type": "bullet",
+                "item": "--packages-select",
+                "description": "– Zostaví len balík line_follower, čo je rýchlejšie ako build všetkých balíkov."
+            },
+            {
+                "type": "bullet",
+                "item": "Výsledok",
+                "description": " –Artefakty sa uložia do priečinka build/ a inštalačné súbory do install/."
+            },
+            {
+                "type": "subtitle",
+                "content": "Nastavte ROS 2 prostredie"
+            },
+            {
+                "type": "code",
+                "content": "source ~/ros2_ws/install/setup.bash"
+            },
+            {
+                "type": "text",
+                "content": "Tento príkaz nastaví shell premenné ako ROS_PACKAGE_PATH a PYTHONPATH, aby ROS vedel, kde hľadať balíky."
+            },
+            {
+                "type": "subtitle",
+                "content": "Spustenie detektora čiary"
+            },
+            {
+                "type": "code",
+                "content": "ros2 run line_follower line_detector_node"
+            },
+            {
+                "type": "bullet",
+                "item": "ros2 run",
+                "description": "– Vyhľadá vo vašom balíku spustiteľný skript line_detector_node a spustí ho."
+            },
+            {
+                "type": "bullet",
+                "item": "Funkcia",
+                "description": "– Node číta obraz z kamery, deteguje žltú čiaru a publikuje uhol."
+            },
+            {
+                "type": "subtitle",
+                "content": "Spustenie riadiaceho (driving) node-u"
+            },
+            {
+                "type": "code",
+                "content": "source ~/ros2_ws/install/setup.bash\nros2 run line_follower driving_node"
+            },
+            {
+                "type": "bullet",
+                "item": "Zdrojovanie",
+                "description": "– Zabezpečí, že shell „vidí“ nainštalované skripty."
+            },
+            {
+                "type": "bullet",
+                "item": "Funkcia",
+                "description": "– driving_node odoberá správy s uhlom čiary a vydáva príkazy na pohyb vozidla."
+            },
+            {
+                "type": "subtitle",
+                "content": "Spustenie oboch node-ov súčasne"
+            },
+            {
+                "type": "text",
+                "content": "V dvoch samostatných termináloch: v prvom spustite line_detector_node, v druhom driving_node."
+            },
+            {
+                "type": "bullet",
+                "item": "Source v každom termináli",
+                "description": "– Uistite sa, že v každom termináli máte vykonané source ~/ros2_ws/install/setup.bash."
+            },
+            {
+                "type": "bullet",
+                "item": "Očakávaný výstup",
+                "description": "– V logoch by ste mali vidieť publikáciu uhlov aj príkazy na ovládanie motorov."
+            },
+            {
+                "type": "text",
+                "content": "Týmto spôsobom máte kompletný build a spustenie line follower programu v ROS 2."
+            },
+            { "type": "title", "content": "Zhrnutie a záver – Projekt 2" }, 
+            { "type": "text", "content": "V projekte 2 sme úspešne implementovali ROS 2 aplikáciu pre sledovanie žltej čiary na robotickom podvozku Rosmaster a jej automatické riadenie. Využili sme Docker kontajner pre jednoduchú distribúciu knižnice Rosmaster_Lib a hardvérovej konfigurácie, založili sme ROS 2 workspace a vytvorili dva samostatné uzly: jeden pre detekciu uhla čiary pomocou OpenCV a druhý pre riadenie pohybu na základe prijatých údajov. Celý systém je modulárny, prenosný a pripravený na ďalšie rozširovanie." }, 
+            { "type": "table", 
+            "columns": ["Vylepšenie", "Popis"], 
+            "rows": [ { "Vylepšenie": "Plynulé riadenie rýchlosti", "Popis": "Pridať adaptívnu reguláciu rýchlosti (+ / –) podľa uhla zákruty pre jemnejšiu a bezpečnejšiu jazdu." }, 
+            { "Vylepšenie": "Logovanie a vizualizácia", "Popis": "Implementovať zber a ukladanie dát (uhly, rýchlosti, stav senzora) a ich zobrazenie v reálnom čase v dashboarde." }, 
+            { "Vylepšenie": "Mapovanie a navigácia", "Popis": "Rozšíriť systém o LIDAR alebo stereo kameru pre 3D mapovanie prostredia a plánovanie trás." } ] }, { "type": "text", "content": "Táto tabuľka zhrňuje navrhované vylepšenia, ktoré môžu ešte viac zdokonaliť funkčnosť, spoľahlivosť a použiteľnosť nášho line follower systému." },
+            {
+                "type": "title",
+                "content": "Sledovanie čiary video ukážky"
+            },
+            {
+                "type": "video",
+                "src": "https://res.cloudinary.com/devzsrl7h/video/upload/v1746619220/IMG_1365_rxhvfp.mp4",
+                "poster": "https://res.cloudinary.com/devzsrl7h/video/upload/so_1/fl_screenshot/IMG_1357_eshhxo.jpg",
+                "alt": "Sledovanie čiary – ukážka 1"
+              },
+              {
+                "type": "video",
+                "src": "https://res.cloudinary.com/devzsrl7h/video/upload/v1746619220/IMG_1369_j86jad.mp4",
+                "poster": "https://res.cloudinary.com/devzsrl7h/video/upload/so_1/fl_screenshot/IMG_1356_ddbwuv.jpg",
+                "alt": "Sledovanie čiary – ukážka 2"
+              }
+    ]
+}

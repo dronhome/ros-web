@@ -1,0 +1,72 @@
+{ 
+                "id": "exercise-4-1", 
+                "name": "Cvičenie 4.1 - Použitie Dockeru na správu hardvéru a prenos dát",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "Interakcia Dockeru s hardvérom a prenos dát"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Docker je využívaný na správu a nasadenie softvéru na robotických systémoch, ako je ROSMASTER R2, ktorý obsahuje hardvérové komponenty ako AstraPro Plus kameru a Silan A1 lidar. Tieto zariadenia môžu byť pripojené do kontajnerov na spracovanie dát a navigáciu robota."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Hardvérové pripojenie (port binding)"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Na umožnenie prístupu k hardvéru (napr. kamera, lidar) z kontajnera je potrebné nastaviť pravidlá udev na hostiteľskom systéme a následne pripojiť zariadenia pomocou parametra --device."
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker run -it --device=/dev/myserial --device=/dev/rplidar ubuntu:latest /bin/bash"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Týmto spôsobom budú zariadenia, ako 'myserial' a 'rplidar', dostupné na používanie v Docker kontejnere."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Zobrazenie GUI v Docker kontejnere"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Pri práci s robotickými systémami je často potrebné vizualizovať dáta (napr. lidarové skeny alebo 3D mapovanie). Pomocou nástrojov ako xhost + môžete zobrazovať GUI aplikácie spustené v kontajneri na hostiteľskom systéme."
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker run -it --env=\"DISPLAY\" --env=\"QT_X11_NO_MITSHM=1\" -v /tmp/.X11-unix:/tmp/.X11-unix <image_name> /bin/bash"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Takto spustené GUI aplikácie (napríklad rviz2) umožňujú vizualizáciu robotických operácií priamo z kontajnera."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Prenos súborov medzi hostiteľom a kontajnerom"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Kopírovanie súborov z kontajnera na hostiteľa",
+                        "description": "– Použite príkaz docker cp na presun súborov z kontajnera do hostiteľského systému:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker cp <container_id>:/path/in/container /path/on/host"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Kopírovanie súborov z hostiteľa do kontajnera",
+                        "description": "– Použite príkaz docker cp na presun súborov z hostiteľského systému do kontajnera:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker cp /path/on/host <container_id>:/path/in/container"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Tieto príkazy umožňujú výmenu konfigurácií, logov alebo iných dôležitých dát medzi hostiteľským systémom a kontajnerom."
+                    }                    
+                ]
+            }

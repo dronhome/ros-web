@@ -1677,7 +1677,7 @@
                 ]             
             },
             {
-                "id": "exercise-3-4",
+                "id": "exercise-3-5",
                 "name": "Cvičenie 3.5 - Základná kontrola pohybu robota",
                 "description": [
                     {
@@ -4156,5 +4156,9 @@
                 ] 
             }
         ]
+    },
+    {
+        "id": "module-9",
+        "name": "Ukážkové projekty"
     }
 ]
