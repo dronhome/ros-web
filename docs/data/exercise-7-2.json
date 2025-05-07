@@ -1,0 +1,203 @@
+{ 
+                "id": "exercise-7-2", 
+                "name": "Cvičenie 7.2 - Základy SLAM",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "ORB-SLAM2: Systém pre simultánnu lokalizáciu a mapovanie"
+                    },
+                    {
+                        "type": "text",
+                        "content": "ORB-SLAM2 je systém na simultánnu lokalizáciu a mapovanie (SLAM) v reálnom čase, ktorý využíva monokulárne, stereoskopické (binokulárne) alebo RGB-D kamery na mapovanie prostredia a odhad pohybu kamery."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Monokulárne kamery"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Monokulárne kamery zachytávajú 2D obrazy pomocou jednej šošovky. Tento typ kamery vyžaduje, aby ORB-SLAM2 určoval hĺbku a mierku trianguláciou cez viacero snímok, pretože hĺbková informácia nie je priamo dostupná."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Stereoskopické (binokulárne) kamery"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Stereoskopické alebo binokulárne kamery pozostávajú z dvoch šošoviek umiestnených vedľa seba. Umožňujú priamy výpočet hĺbky analýzou rozdielu medzi dvoma obrazmi, čím poskytujú metrické informácie o hĺbke."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "RGB-D kamery"
+                    },
+                    {
+                        "type": "text",
+                        "content": "RGB-D kamery, ako sú Kinect alebo Intel RealSense, zachytávajú farebné (RGB) obrazy aj hĺbkové dáta. Tieto kamery poskytujú presné hĺbkové informácie pre každý pixel bez potreby výpočtu rozdielov v obraze."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Hlavné vlastnosti ORB-SLAM2"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Sledovanie (Tracking)",
+                        "description": "Odhad pohybu kamery pomocou ORB (Oriented FAST and Rotated BRIEF) funkcií."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Mapovanie (Mapping)",
+                        "description": "Vytvára riedku 3D mapu prostredia."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Uzavretie slučky (Loop Closing)",
+                        "description": "Detekuje a opravuje slučky na zníženie posunu a zlepšenie presnosti."
+                    },
+                    {
+                        "type": "text",
+                        "content": "ORB-SLAM2 sa široko využíva v robotike, rozšírenej realite a autonómnych vozidlách. Je open-source a napísaný v jazyku C++."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Spustenie Docker kontajnera pre ORB-SLAM2 testy"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Na vykonanie testov s monokulárnymi, binokulárnymi a RGB-D kamerami v rámci ORB-SLAM2 je potrebné vstúpiť do Docker kontajnera, kde je predkonfigurovaný všetok potrebný softvér a hardware."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Príkaz na spustenie Docker kontajnera"
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker run -it --rm \\\n  --name multi_control \\\n  -e DISPLAY=$DISPLAY \\\n  -v /tmp/.X11-unix:/tmp/.X11-unix \\\n  --device=/dev/bus/usb/001/006 \\\n  --privileged \\\n  image_name /bin/bash"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Tento príkaz spustí Docker kontajner s názvom 'multi_control', umožní prístup k zobrazovaciemu zariadeniu, USB zariadeniam a spustí interaktívnu shell reláciu v kontajneri."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Docker kontajner slúži na izoláciu prostredia, v ktorom máme predinštalovaný a nakonfigurovaný softvér potrebný pre SLAM testy. Tým sa minimalizujú problémy s kompatibilitou softvéru, knižníc a operačného systému."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Dôležitosť parametrov --device a DISPLAY"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "--device",
+                        "description": "Tento parameter odkazuje na konkrétnu kameru pripojenú k hosťovskému počítaču a umožňuje jej použitie vo vnútri kontajnera. Bez tohto parametra program v kontajneri nedokáže komunikovať s kamerou, a teda ani vykonávať testy SLAM, ktoré sú na nej závislé."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "DISPLAY a grafické prostredie",
+                        "description": "Parametre ako -e DISPLAY a -v /tmp/.X11-unix:/tmp/.X11-unix umožňujú kontajneru prístup k grafickému rozhraniu hosťovského počítača. Tieto sú dôležité, aby program mohol zobrazovať výstupy, ako sú vizualizácie trajektórií, 3D máp alebo obraz z kamery. Bez nich program buď nebude fungovať, alebo nebude schopný ukázať žiadne výsledky na obrazovke."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Spustenie testov ORB-SLAM2"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Monocular test"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Pre náš prípad navigujte do adresára:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "cd /root/yahboomcar_ros2_ws/software/orbslam2/ORB_SLAM2-master"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Spustite nasledujúci príkaz:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "Examples/Monocular/mono_euroc Vocabulary/ORBvoc.txt Examples/Monocular/EuRoC.yaml data/MH01/mav0/cam0/data Examples/Monocular/EuRoC_TimeStamps/MH01.txt"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Výsledok: Test monocular kamery mapuje prostredie pomocou 2D obrazu. Hĺbku a mierku si systém odvodzuje z viacerých snímok v čase, čím generuje 3D mračno bodov."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Stereo test"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Pre náš prípad navigujte do adresára:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "cd /root/yahboomcar_ros2_ws/software/orbslam2/ORB_SLAM2-master"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Spustite nasledujúci príkaz:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "Examples/Stereo/stereo_euroc Vocabulary/ORBvoc.txt Examples/Stereo/EuRoC.yaml data/MH01/mav0/cam0/data data/MH01/mav0/cam1/data Examples/Stereo/EuRoC_TimeStamps/MH01.txt"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Výsledok: Stereo test využíva dvojicu kamier na priame výpočty hĺbky pomocou rozdielu (disparity) medzi dvoma snímkami, čím poskytuje presné informácie o vzdialenosti."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "RGB-D test"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Používame dataset TUM, ktorý obsahuje RGB a hĺbkové dáta. Na zlúčenie hĺbkových a farebných dát používame skript associate.py. Tento skript páruje snímky RGB a hĺbkové dáta podľa časových značiek a vytvára súbor associations.txt, ktorý je potrebný na testovanie RGB-D."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Pre náš prípad navigujte do adresára:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "cd /root/yahboomcar_ros2_ws/software/orbslam2/ORB_SLAM2-master/data/TUM/rgbd_dataset_freiburg1_xyz"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Spustite skript na párovanie dát:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "python3 associate.py rgb.txt depth.txt > associations.txt"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Po úspešnom spustení budete mať súbor associations.txt, ktorý obsahuje odkazy na zodpovedajúce snímky RGB a hĺbkové dáta."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Prejdite späť do hlavného adresára a spustite RGB-D test:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "cd /root/yahboomcar_ros2_ws/software/orbslam2/ORB_SLAM2-master\nExamples/RGB-D/rgbd_tum Vocabulary/ORBvoc.txt Examples/RGB-D/TUM1.yaml data/TUM/rgbd_dataset_freiburg1_xyz data/TUM/rgbd_dataset_freiburg1_xyz/associations.txt"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Výsledok: RGB-D test používa farebné aj hĺbkové dáta na presnú rekonstrukciu prostredia. Tým kombinuje výhody oboch dátových typov, čím dosahuje vyššiu presnosť v mapovaní a lokalizácii."
+                    }           
+                ]
+            }

@@ -5,9 +5,9 @@ const config = {
   preprocess: sveltePreprocess(),
   kit: {
     adapter: adapter({
-      pages: 'build',
-      assets: 'build',
-      fallback: 'index.html', // For SPA mode
+      pages: 'docs',
+      assets: 'docs',
+      fallback: null, // For SPA mode
     }),
     paths: {
 		base: '/ros-web'

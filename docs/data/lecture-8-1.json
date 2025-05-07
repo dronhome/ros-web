@@ -1,0 +1,203 @@
+{ 
+                "id": "lecture-8-1", 
+                "name": "Prednáška 8 - LiDAR: Detailnejší pohľad",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "Čo je LiDAR?"
+                    },
+                    {
+                        "type": "text",
+                        "content": "LiDAR (Light Detection and Ranging) je technológia umožňujúca presné meranie vzdialeností k objektom v okolí. Funguje na princípe:"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Vysielania krátkych laserových impulzov",
+                        "description": "Typicky infračerveného alebo viditeľného svetla."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Zachytávania odrazeného svetla senzorom",
+                        "description": "Senzor prijíma svetlo odrazené od objektov."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Výpočtu času medzi vyslaním a prijatím impulzu",
+                        "description": "Tento čas sa použije na určenie vzdialenosti."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Vďaka rýchlym pulzom a schopnosti otáčať sa do 360°, LiDAR vytvára hustú mapu okolitých vzdialeností v reálnom čase. Výsledkom je 2D (prípadne 3D, pri pokročilejších LiDARoch) mračno bodov, ktoré dokáže zachytiť tvar prostredia s vysokou presnosťou."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "RPLIDAR A1 na ROSmaster R2"
+                    },
+                    {
+                        "type": "text",
+                        "content": "RPLIDAR A1 (známy aj ako Slamtec A1) je cenovo dostupný LiDAR s možnosťou 360° skenovania. Je ideálnou voľbou pre mobilné roboty vďaka svojej kombinácii presnosti, spoľahlivosti a nízkych nákladov."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Prečo práve RPLIDAR A1"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Presnosť a spoľahlivosť merania",
+                        "description": "LiDAR dokáže presne určiť vzdialenosti objektov v okolí robota."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Kompaktné rozmery a nízka hmotnosť",
+                        "description": "Vhodné pre menšie mobilné roboty, kde je priestor a váha obmedzená."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Ako je integrovaný v ROSmaster R2"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Zber dát o vzdialenostiach",
+                        "description": "LiDAR rotuje v 360° a poskytuje informácie o vzdialenostiach objektov v okolí robota."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Mapovanie prostredia",
+                        "description": "Pomocou SLAM algoritmov dokáže robot vytvárať mapy prostredia a lokalizovať sa v nich."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Navigácia a vyhýbanie sa prekážkam",
+                        "description": "RPLIDAR A1 umožňuje robotu rozpoznať prekážky a plánovať trasu na ich obídenie."
+                    },
+                    {
+                        "type": "text",
+                        "content": "RPLIDAR A1 komunikuje cez sériové rozhranie (UART alebo USB adaptér) a je podporovaný v ROS, čo výrazne zjednodušuje jeho integráciu do robotických systémov."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Konkrétne vlastnosti RPLIDAR A1"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Technológia OPTMAG"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Senzor RPLIDAR A1 využíva Slamtec OPTMAG (Optical Magnetic) technológiu, ktorá nahrádza tradičné klzné kontakty pri napájaní a prenose dát. Namiesto kovových prstencov a kefiek sa používa bezdrôtový prenos energie a optická komunikácia, čo:"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Redukcia mechanického opotrebovania",
+                        "description": "Žiadne trenie kov na kov znamená dlhšiu životnosť zariadenia."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Zvýšená životnosť senzora",
+                        "description": "Technológia znižuje potrebu častých výmen súčiastok."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Eliminácia potreby údržby",
+                        "description": "Nie je nutné čistenie kontaktov ani iná pravidelná údržba."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Rozsah merania"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Typický merací dosah",
+                        "description": "Do cca 6 - 12 metrov v závislosti od verzie a podmienok."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Presnosť merania",
+                        "description": "Bežne okolo ±1 %, najmä v optimálnych podmienkach."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Rozsah skenovania 360°"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Rýchlosť rotácie",
+                        "description": "5 - 10 Hz, čo zodpovedá 300 - 600 otáčkam za minútu."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Kompletné 2D údaje",
+                        "description": "Jedno otočenie senzora poskytuje úplný obraz okolia."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Komunikačné rozhranie a kompatibilita s ROS"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Jednoduché pripojenie",
+                        "description": "Pripojenie cez USB alebo UART, s podporou adaptéra."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Oficiálny balík ROS",
+                        "description": "Umožňuje jednoduchú integráciu a spracovanie dát v reálnom čase."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Napájanie a spotreba"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Nízke napätie",
+                        "description": "Typicky 5 V, v závislosti od série."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Malá spotreba energie",
+                        "description": "Maximálne niekoľko wattov, vhodné pre batériové systémy."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Zhrnutie a dôvod nasadenia"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Cenová dostupnosť",
+                        "description": "RPLIDAR A1 ponúka priaznivú cenu v porovnaní s inými LiDARmi, čo ho robí ideálnou voľbou pre výskum, prototypy, vzdelávanie i hobby projekty."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Kompaktné rozmery a nízka hmotnosť",
+                        "description": "Uľahčuje inštaláciu na menšie mobilné platformy, kde je dôležitý priestor a hmotnosť."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "360° pohľad",
+                        "description": "Poskytuje kompletný prehľad o okolí, čo zlepšuje možnosti navigácie a vyhýbania sa prekážkam."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Jednoduchá integrácia v prostredí ROS",
+                        "description": "K dispozícii sú hotové knižnice a ovládače, čo skracuje čas potrebný na implementáciu."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Spoľahlivosť a životnosť vďaka OPTMAG technológii",
+                        "description": "Minimálne nároky na servis a udržiavanie vysokého výkonu po dlhší čas."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Celkovo je RPLIDAR A1 považovaný za základný LiDAR senzor v robotike, ktorý poskytuje dostatočnú funkcionalitu pre väčšinu navigačných úloh za rozumnú cenu a s dlhou životnosťou."
+                    }    
+                ] 
+            }

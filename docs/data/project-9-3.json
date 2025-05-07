@@ -1,0 +1,365 @@
+{
+    "id": "project-9-3",
+    "name": "Projekt 3 – Jednoduchý autopilot",
+    "description": [
+      {
+        "type": "title",
+        "content": "Úvod"
+      },
+      {
+        "type": "text",
+        "content": "V tomto projekte vytvoríme jednoduchý autopilot pre robotický podvozok Rosmaster. Nasledujúca 2D mriežka je modelom skutočnej mapy (zobrazené vyššie na obrázku), kde hodnota 0 znamená prejazdnú plochu a 1 je prekážka, ktorej sa musí robot vyhnúť."
+      },      
+      {
+        "type": "image",
+        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1746617734/iu_iosngr.jpg",
+        "alt": "Mapa"
+      },
+      {
+        "type": "code",
+        "content": "grid = [\n    [0, 0, 0, 0, 0, 0, 0],\n    [0, 1, 1, 1, 0, 1, 0],\n    [0, 0, 0, 0, 0, 0, 0],\n    [0, 1, 0, 1, 0, 1, 0],\n    [0, 1, 1, 1, 0, 1, 0],\n    [0, 0, 0, 0, 0, 0, 0],\n]"
+      },
+      {
+        "type": "text",
+        "content": "Každý prvok mriežky reprezentuje  jednotkovú bunka v priestore, podľa ktorej sa rozhoduje, či je daná pozícia voľná alebo zablokovaná. Túto mriežku použijeme ako vstup do nášho vyhľadávacieho algoritmu."
+      },
+      {
+        "type": "text",
+        "content": "Najskôr definujeme počiatočnú pozíciu (napríklad `start = (0, 0)`) a cieľovú pozíciu (napríklad `goal = (6, 5)`), spolu s počiatočným smerom pohybu (napr. `'NORTH'`, `'EAST'`, `'SOUTH'`, `'WEST'`)."
+      },
+      {
+        "type": "subtitle",
+        "content": "Výpočet cesty pomocou BFS"
+      },
+      {
+        "type": "text",
+        "content": "Na výpočet najkratšej cesty v mriežke použijeme algoritmus BFS (Breadth-First Search). BFS zabezpečí, že prvý raz, keď dosiahneme cieľ, máme zaručenú najkratšiu cestu podľa počtu krokov."
+      },
+      {
+        "type": "text",
+        "content": "Princíp BFS:"  
+      },
+      {
+        "type": "bullet",
+        "item": "Inicializácia fronty",
+        "description": "– Vložíme do nej počiatočnú bunku a označíme ju ako navštívenú."
+      },
+      {
+        "type": "bullet",
+        "item": "Rozbalia susedov",
+        "description": "– Pre každú bunku kontrolujeme jej susedné bunky (hore, dole, vľavo, vpravo) a ak sú voľné a nenavštívené, pridáme ich do fronty."
+      },
+      {
+        "type": "bullet",
+        "item": "Rekordy predchodcu",
+        "description": "– Pre každú novú bunku si zapamätáme, z ktorej sme prišli, aby sme vedeli rekonštruovať cestu po dosiahnutí cieľa."
+      },
+      {
+        "type": "bullet",
+        "item": "Rekonštrukcia cesty",
+        "description": "– Po dosiahnutí cieľa prejdeme späť cez predchodcov a zistíme postupnosť krokov od štartu po cieľ."
+      },
+      {
+        "type": "subtitle",
+        "content": "Odoslanie príkazov driving node-u"
+      },
+      {
+        "type": "text",
+        "content": "Získanú cestu v podobe zoznamu súradníc (napr. `[(0,0),(1,0),(2,0),...]`) prevedieme na sekvenciu pohybových príkazov: `forward`, `turn_left`, `turn_right`. Tieto príkazy posielame driving node-u cez ROS 2 témy, ktorý ich vykoná pomocou knižnice Rosmaster_Lib."
+      },
+      {
+        "type": "text",
+        "content": "Takto náš jednoduchý autopilot dokáže bezpečne prejsť z počiatočnej pozície do cieľa bez kolízií s prekážkami."
+      },
+      {
+        "type": "title",
+        "content": "Tvorba ROS 2 workspace"
+    },
+
+        {
+            "type": "subtitle",
+            "content": "Spustenie Docker kontajnera"
+        },
+        {
+            "type": "text",
+            "content": "Na vašom hostiteľskom stroji spustíte pripravený skript, ktorý “natiahne” ROS 2 Foxy image aj s prístupom k hardvéru:"
+        },
+        {
+            "type": "code",
+            "content": "./run_docker.sh"
+        },
+        {
+            "type": "text",
+            "content": "Vo vnútri kontajnera budete mať už nakonfigurované zdieľanie GPU, USB zariadení, X11 okna aj portov pre ROSBridge/Web UI."
+        },
+        {
+            "type": "subtitle",
+            "content": "Vytvorenie ROS 2 workspace"
+        },
+        {
+            "type": "code",
+            "content": "mkdir -p ~/ros2_ws/src\ncd ~/ros2_ws/src"
+        },
+        {
+            "type": "bullet",
+            "item": "– ~/ros2_ws/src",
+            "description": "sem idú všetky zdrojové balíky (packages)."
+        },
+        {
+            "type": "bullet",
+            "item": "– build/ a install/",
+            "description": "vygenerujú sa pri prvom build-e."
+        },
+        {
+            "type": "subtitle",
+            "content": "Vytvorenie nového balíka “simple_autopilot”"
+        },
+        {
+            "type": "code",
+            "content": "ros2 pkg create --build-type ament_python simple_autopilot"
+        },
+        {
+            "type": "bullet",
+            "item": "– --build-type ament_python",
+            "description": "hovorí, že balík bude Python-ový a použijeme colcon + ament"
+        },
+        {
+            "type": "bullet",
+            "item": "– Vzniknú priečinky",
+            "description": "line_follower/ (meta-súbory) a line_follower/line_follower/ (tu pôjdu zdrojáky)."
+        },
+        {
+            "type": "subtitle",
+            "content": "Pridanie node-skriptov"
+        },
+        {
+            "type": "code",
+            "content": "~/ros2_ws/src/simple_autopilot/simple_autopilot/\n  ├── executor_node.py\n  └── planner_node.py"
+        },
+        {
+            "type": "bullet",
+            "item": "– planner_node.py",
+            "description": "jeden ROS 2 uzol, ktorý na 6×7 mriežke (0=voľné,1=prekážka) pomocou BFS vypočíta trasu zo štartu (5,0) do cieľa (3,2), prevedie ju cez path_to_commands (pri zadanom start_direction 0–3) na sekvenciu príkazov (forward, turn_left, turn_right) a raz za sekundu ich publikuje na /drive_command."
+        },
+        {
+            "type": "bullet",
+            "item": "– executor_node.py",
+            "description": "druhý ROS 2 uzol, ktorý sa predplatí na /drive_command a pre každý príkaz buď jazdí vpred o definovaný počet enkodér-pulzov (forward), alebo po krátkom posune vpred sleduje gyroskop a vykoná 90° otočku vľavo (turn_left) či vpravo (turn_right), pričom po každom kroku zastaví a narovná kolesá."
+        },
+        {
+            "type": "subtitle",
+            "content": "Deklarácia závislostí v package.xml"
+        },
+        {
+            "type": "code",
+            "content": "<depend>rclpy</depend>\n<depend>std_msgs</depend>"
+        },
+        {
+            "type": "text",
+            "content": "Tým hovoríte, že váš balík potrebuje ROS 2 Python klienta (rclpy) a štandardné ROS správy (std_msgs)."
+        },
+        {
+            "type": "subtitle",
+            "content": "Registrácia skriptov v setup.py"
+        },
+        {
+            "type": "code",
+            "content": "entry_points={\n    'console_scripts': [\n        'executor_node = simple_autopilot.executor_node:main',\n        'planner_node       = simple_autopilot.planner_node:main',\n    ],\n},"
+        },
+
+        
+        {
+            "type": "title",
+            "content": "Coding"
+        },
+        {
+            "type": "subtitle",
+            "content": "executor_node.py"
+        },
+        {
+            "type": "code",
+            "content": "#!/usr/bin/env python3\nimport rclpy\nfrom rclpy.node import Node\nfrom std_msgs.msg import String\nimport time\nfrom Rosmaster_Lib import Rosmaster\n\nclass ExecutorNode(Node):\n    def __init__(self):\n        super().__init__('executor_node')\n        self.sub = self.create_subscription(String, '/drive_command', self.on_command, 10)\n        self.car = Rosmaster()\n        self.car.create_receive_threading()\n        self.car.set_auto_report_state(True)\n        time.sleep(0.2)\n        self.forward_speed = 30\n        self.turn_speed = 25\n        self.cell_ticks = 600\n        self.drift = 0.0\n\n    def on_command(self, msg):\n        cmd = msg.data\n        self.get_logger().info(f'Príkaz prijatý: {cmd}')\n        if cmd == 'forward':\n            self.drive_forward()\n        elif cmd == 'turn_left':\n            self.execute_turn(5)\n        elif cmd == 'turn_right':\n            self.execute_turn(6)\n\n    def drive_forward(self):\n        start = self.car.get_motor_encoder()\n        self.car.set_car_run(1, self.forward_speed)\n        while True:\n            curr = self.car.get_motor_encoder()\n            delta = sum(abs(c-s) for c,s in zip(curr, start))/len(start)\n            if delta >= self.cell_ticks: break\n            time.sleep(0.01)\n        self.car.set_car_run(0,0)\n        time.sleep(0.5)\n\n    def execute_turn(self, direction):\n        # Príprava na otočku a korekcia driftu\n        self.car.set_car_run(1, self.forward_speed)\n        time.sleep(0.2)\n        target, self.drift = 90.0, 15.0\n        self.car.set_car_run(direction, self.turn_speed)\n        acc, prev = 0.0, time.time()\n        while acc < (target - self.drift):\n            _, _, gz = self.car.get_gyroscope_data()\n            now = time.time(); dt = now-prev; prev = now\n            acc += abs(gz*57.2958)*dt; time.sleep(0.005)\n        self.car.set_car_run(0,0)\n        time.sleep(0.2)\n        self.car.set_akm_steering_angle(0)\n\n\ndef main(args=None):\n    rclpy.init(args=args)\n    node = ExecutorNode()\n    rclpy.spin(node)\n    node.destroy_node()\n    rclpy.shutdown()\n\nif __name__ == '__main__':\n    main()"
+        },
+        {
+            "type": "subtitle",
+            "content": "planner_node.py"
+        },
+        {
+            "type": "code",
+            "content": "#!/usr/bin/env python3\nimport rclpy\nfrom rclpy.node import Node\nfrom std_msgs.msg import String\nfrom collections import deque\n\n# Definícia mriežky – 0 = priechodné, 1 = prekážka\ngrid = [\n    [0, 0, 0, 0, 0, 0, 0],\n    [0, 1, 1, 1, 0, 1, 0],\n    [0, 0, 0, 0, 0, 0, 0],\n    [0, 1, 0, 1, 0, 1, 0],\n    [0, 1, 1, 1, 0, 1, 0],\n    [0, 0, 0, 0, 0, 0, 0],\n]\n# Mapovanie smerov na kódy: (-1,0)=0, (0,1)=1, (1,0)=2, (0,-1)=3\nDIR_MAP = {(-1,0):0, (0,1):1, (1,0):2, (0,-1):3}\n\ndef bfs(grid, start, goal):\n    rows, cols = len(grid), len(grid[0])\n    visited = set()\n    queue = deque([(start, [])])\n    while queue:\n        (x, y), path = queue.popleft()\n        if (x, y) == goal:\n            return path + [(x, y)]\n        if (x, y) in visited:\n            continue\n        visited.add((x, y))\n        for dx, dy in DIR_MAP:\n            nx, ny = x+dx, y+dy\n            if 0 <= nx < rows and 0 <= ny < cols and grid[nx][ny] == 0:\n                queue.append(((nx, ny), path + [(x, y)]))\n    return []\n\ndef path_to_commands(path, start_dir):\n    commands = []\n    direction = start_dir\n    i = 1\n    while i < len(path):\n        prev, curr = path[i-1], path[i]\n        move = (curr[0]-prev[0], curr[1]-prev[1])\n        target = DIR_MAP[move]\n        if target == direction:\n            commands.append('forward'); i += 1\n        else:\n            diff = (target - direction) % 4\n            if diff == 1: commands.append('turn_right')\n            elif diff == 3: commands.append('turn_left')\n            else: commands.append('turn_right')  # U-otáčka\n            direction = target\n            i += 2\n    return commands\n\nclass PlannerNode(Node):\n    def __init__(self):\n        super().__init__('planner_node')\n        self.pub = self.create_publisher(String, '/drive_command', 10)\n        start, goal, sd = (5,0), (3,2), 0\n        self.get_logger().info(f'Planner: start={start}, goal={goal}, dir={sd}')\n        path = bfs(grid, start, goal)\n        self.commands = path_to_commands(path, sd)\n        self.get_logger().info(f'Generujem {len(self.commands)} príkazov')\n        self.idx = 0\n        self.timer = self.create_timer(1.0, self.publish_next)\n\n    def publish_next(self):\n        if self.idx < len(self.commands):\n            cmd = self.commands[self.idx]\n            msg = String(); msg.data = cmd\n            self.pub.publish(msg)\n            self.get_logger().info(f'[{self.idx}] {cmd}')\n            self.idx += 1\n        else:\n            self.timer.cancel()\n            self.get_logger().info('Planner hotový')\n\ndef main(args=None):\n    rclpy.init(args=args)\n    node = PlannerNode()\n    rclpy.spin(node)\n    node.destroy_node()\n    rclpy.shutdown()\n\nif __name__ == '__main__':\n    main()"
+        },
+        
+        {
+            "type": "title",
+            "content": "Kompilácia a spustenie"
+        },
+        {
+            "type": "subtitle",
+            "content": "Prejdite do koreňa workspace"
+        },
+        {
+            "type": "code",
+            "content": "cd ~/ros2_ws"
+        },
+        {
+            "type": "text",
+            "content": "Tu sa nachádzajú priečinky src/, build/ a install/. V koreňovom adresári sa spúšťa build."
+        },
+        {
+            "type": "subtitle",
+            "content": "Postavte (build) balík simple_autopilot"
+        },
+        {
+            "type": "code",
+            "content": "colcon build --packages-select simple_autopilot"
+        },
+        {
+            "type": "bullet",
+            "item": "--packages-select",
+            "description": "– Zostaví len balík simple_autopilot, čo je rýchlejšie ako build všetkých balíkov."
+        },
+        {
+            "type": "bullet",
+            "item": "Výsledok",
+            "description": " –Artefakty sa uložia do priečinka build/ a inštalačné súbory do install/."
+        },
+        {
+            "type": "subtitle",
+            "content": "Nastavte ROS 2 prostredie"
+        },
+        {
+            "type": "code",
+            "content": "source ~/ros2_ws/install/setup.bash"
+        },
+        {
+            "type": "text",
+            "content": "Tento príkaz nastaví shell premenné ako ROS_PACKAGE_PATH a PYTHONPATH, aby ROS vedel, kde hľadať balíky."
+        },
+        {
+            "type": "subtitle",
+            "content": "Spustenie executor node-u"
+        },
+        {
+            "type": "code",
+            "content": "ros2 run simple_autopilot executor_node"
+        },
+        {
+            "type": "bullet",
+            "item": "ros2 run",
+            "description": "– Vyhľadá vo vašom balíku spustiteľný skript executor_node a spustí ho."
+        },
+        {
+            "type": "bullet",
+            "item": "Funkcia",
+            "description": "Executor node odoberá príkazy z témy `/drive_command` a vykonáva ich pomocou Rosmaster_Lib. Starostlivo meria dĺžku jazdy aj otáčky podľa enkodérov a gyroskopu."
+        },
+        {
+            "type": "subtitle",
+            "content": "Spustenie palenner node-u"
+        },
+        {
+            "type": "code",
+            "content": "source ~/ros2_ws/install/setup.bash\nros2 run simple_autopilot planner_node"
+        },
+        {
+            "type": "bullet",
+            "item": "Zdrojovanie",
+            "description": "– Zabezpečí, že shell „vidí“ nainštalované skripty."
+        },
+        {
+            "type": "bullet",
+            "item": "Funkcia",
+            "description": "Planner node načíta statickú mapu a pomocou BFS algoritmu nájde najkratšiu cestu od počiatočnej pozície po cieľ. Následne cestu premení na príkazy `forward`, `turn_left` a `turn_right` a publikuje ich postupne na tému `/drive_command`."
+        },
+        {
+            "type": "subtitle",
+            "content": "Spustenie oboch node-ov súčasne"
+        },
+        {
+            "type": "text",
+            "content": "V dvoch samostatných termináloch: v prvom spustite executor_node, v druhom planner_node."
+        },
+        {
+            "type": "bullet",
+            "item": "Source v každom termináli",
+            "description": "– Uistite sa, že v každom termináli máte vykonané source ~/ros2_ws/install/setup.bash."
+        },
+        {
+            "type": "bullet",
+            "item": "Očakávaný výstup",
+            "description": "– V logoch by ste mali vidieť postupné publikovanie príkazov (`forward`, `turn_left`, `turn_right`) aj informácie o vypočítanej trase."
+        },
+        {
+            "type": "text",
+            "content": "Týmto spôsobom máte plne funkčný autopilot, ktorý najprv naplánuje optimálnu cestu a následne ju spoľahlivo vykoná na hardvéri."
+        },
+        {
+            "type": "title",
+            "content": "Zhrnutie a záver – Projekt 3"
+          },
+          {
+            "type": "text",
+            "content": "V projekte 3 sme vytvorili dvojuzlový autopilot pre Rosmaster: Planner node vypočítava najkratšiu cestu v 2D grid mape pomocou BFS a Executor node následne vykonáva príkazy `forward`, `turn_left` a `turn_right` na základe Rosmaster_Lib. Systém dokáže prejsť z východzieho bodu do cieľa bez kolízií s prekážkami."
+          },
+          {
+            "type": "text",
+            "content": "Počas testovania sme narazili na problém s korekciou uhla riadenia – vozidlo pri zatáčaní často drifuje mimo plánovanej trasy. Jedným z hlavných dôvodov je horizontálna orientácia kamery, ktorá neposkytuje dostatočný uhol pohľadu na presné nastavenie kolies. Riešenie tejto výzvy vyžaduje buď externé senzory (napr. IMU), zmenu montáže kamery, alebo implementáciu spätnoväzbového riadenia."
+          },
+          {
+            "type": "table",
+            "columns": ["Vylepšenie", "Popis"],
+            "rows": [
+              {
+                "Vylepšenie": "Externé senzory (IMU)",
+                "Popis": "Pridať IMU na meranie skutočného natočenia kolies a korigovať drifty v reálnom čase."
+              },
+              {
+                "Vylepšenie": "Spätnoväzba (PID regulátor)",
+                "Popis": "Implementovať PID regulátor na základe odchýlky od plánovanej trasy pre plynulejšiu korekciu."
+              },
+              {
+                "Vylepšenie": "Naklonenie kamery",
+                "Popis": "Umiestniť kameru mierne zospodu (dole-nahor) pre lepšiu perspektívu trás a presnejšiu detekciu orientácie."
+              },
+              {
+                "Vylepšenie": "Adaptívna kalibrácia driftu",
+                "Popis": "Zapojiť snadné kalibračné rutiny pri štarte, ktoré zmerajú a automaticky kompenzujú drift podvozku."
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "content": "Táto tabuľka sumarizuje navrhované vylepšenia, ktoré môžu významne zlepšiť presnosť a spoľahlivosť nášho jednoduchého autopilota."
+          },
+          {
+            "type": "title", 
+            "content": "Autopilot jazda video ukážky"
+          },
+          {
+            "type": "video",
+            "src": "https://res.cloudinary.com/devzsrl7h/video/upload/v1746618281/IMG_1357_eshhxo.mp4",
+            "poster": "https://res.cloudinary.com/devzsrl7h/video/upload/so_1/fl_screenshot/IMG_1357_eshhxo.jpg",
+            "alt": "Autopilot jazda – ukážka 1"
+          },
+          {
+            "type": "video",
+            "src": "https://res.cloudinary.com/devzsrl7h/video/upload/v1746618281/IMG_1356_ddbwuv.mp4",
+            "poster": "https://res.cloudinary.com/devzsrl7h/video/upload/so_1/fl_screenshot/IMG_1356_ddbwuv.jpg",
+            "alt": "Autopilot jazda – ukážka 2"
+          },
+          {
+            "type": "video",
+            "src": "https://res.cloudinary.com/devzsrl7h/video/upload/v1746618281/IMG_1363_qxbtnr.mp4",
+            "poster": "https://res.cloudinary.com/devzsrl7h/video/upload/so_1/fl_screenshot/IMG_1363_qxbtnr.jpg",
+            "alt": "Autopilot jazda – ukážka 3"
+          },
+          {
+            "type": "video",
+            "src": "https://res.cloudinary.com/devzsrl7h/video/upload/v1746618281/IMG_1362_lmpukq.mp4",
+            "poster": "https://res.cloudinary.com/devzsrl7h/video/upload/so_1/fl_screenshot/IMG_1362_lmpukq.jpg",
+            "alt": "Autopilot jazda – ukážka 4"
+          }
+          
+    ]
+  }
+  

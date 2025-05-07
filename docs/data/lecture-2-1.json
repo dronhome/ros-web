@@ -1,0 +1,319 @@
+{ 
+                "id": "lecture-2-1", 
+                "name": "Prednáška 2 - Komponenty a IDE",
+                "description": [
+                    { 
+                        "type": "title", 
+                        "content": "ROS robot expansion board: komponenty" 
+                    },
+                    { 
+                        "type": "text", 
+                        "content": "Ako som už spomenul v úvodnej prednáške, ROS robot expansion board je zodpovedná za riadenie robotického hardvéru a integráciu s operačným systémom ROS. Funguje na mikroprocesore STM32, čo jej umožňuje pokročilé programovanie a ovládanie rôznych komponentov robota."
+                    },
+                    { 
+                        "type": "text", 
+                        "content": "Teraz sa bližšie pozrieme na to, aké komponenty táto doska obsahuje a aké sú ich funkcie."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Horná časť rozširujúcej dosky"
+                    },
+                    {
+                        "type": "image",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/t_ecr/v1735159474/image_2024-12-25_21-44-20_x1mo3q.png",
+                        "alt": "ROS robot expansion board: komponenty"
+                    },
+                    {
+                        "type": "text",
+                        "content": "1. <strong>T DC 12V vstupný port:</strong> Hlavný vstup napájania pre rozširujúci modul, ktorý sa pripája k DC 12V napájaniu alebo 12V batérii. Poskytuje základné napájanie celej doske."
+                    },
+                    {
+                        "type": "text",
+                        "content": "2. <strong>DC 12V výstup:</strong> Poskytuje 12V jednosmerné napájanie na pripojenie ďalších zariadení."
+                    },
+                    {
+                        "type": "text",
+                        "content": "3. <strong>Indikátor napájania:</strong> Signalizuje, či je napájanie v normálnom stave. Umožňuje rýchlu kontrolu napájania."
+                    },
+                    {
+                        "type": "text",
+                        "content": "4. <strong>Micro USB dátové rozhranie:</strong> Slúži na pripojenie komunikácie s hostiteľom alebo na nahrávanie programu do dosky."
+                    },
+                    {
+                        "type": "text",
+                        "content": "5. <strong>Type-C rozhranie:</strong> Poskytuje 5V napájanie, no neslúži na komunikáciu. Ideálne na napájanie zariadení."
+                    },
+                    {
+                        "type": "text",
+                        "content": "6. <strong>DC 5V výstupný port:</strong> Napája Jetson Nano alebo iné zariadenia vyžadujúce 5V."
+                    },
+                    {
+                        "type": "text",
+                        "content": "7. <strong>I2C rozhranie:</strong> Umožňuje pripojenie externých I2C zariadení, ako sú OLED displeje alebo senzory."
+                    },
+                    {
+                        "type": "text",
+                        "content": "8. <strong>Indikátory:</strong> Zahŕňajú indikátor dátovej aktivity a indikátor napätia 6,8V, ktoré zobrazujú stav napájania a komunikácie."
+                    },
+                    {
+                        "type": "text",
+                        "content": "9. <strong>DC 12V výstup:</strong> Poskytuje 12V jednosmerné napájanie na pripojenie ďalších zariadení."
+                    },
+                    {
+                        "type": "text",
+                        "content": "10. <strong>DC 12V hlavný vypínač:</strong> Slúži na zapnutie alebo vypnutie hlavného napájania dosky."
+                    },
+                    {
+                        "type": "text",
+                        "content": "11. <strong>Tlačidlá:</strong><br>"
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "KEY1:",
+                        "description": "Programovateľné tlačidlo pre vlastné funkcie." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "RESET:",
+                        "description": "Resetuje mikrokontrolér na doske." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "BOOT0:",
+                        "description": "Slúži na prepnutie mikrokontroléra do režimu nahrávania firmvéru." 
+                    },
+                    {
+                        "type": "text",
+                        "content": "12. <strong>9-osový senzor orientácie:</strong> Poskytuje informácie o aktuálnej polohe dosky, vhodné pre navigáciu."
+                    },
+                    {
+                        "type": "text",
+                        "content": "13. <strong>CAN rozhranie:</strong> Umožňuje pripojenie zariadení kompatibilných s CAN protokolom, napríklad priemyselných senzorov."
+                    },
+                    {
+                        "type": "text",
+                        "content": "14. <strong>RGB rozhranie na svetelný pás:</strong> Slúži na pripojenie RGB LED pásov pre vizuálne efekty."
+                    },
+                    {
+                        "type": "text",
+                        "content": "15. <strong>SBUS rozhranie:</strong> Používa sa na pripojenie prijímača diaľkového ovládania modelov lietadiel."
+                    },
+                    {
+                        "type": "text",
+                        "content": "16. <strong>Prepínač napätia PWM:</strong> Umožňuje zvoliť napätie 6,8V alebo 5V pre napájanie PWM servomotorov."
+                    },
+                    {
+                        "type": "text",
+                        "content": "17. <strong>PWM servomotor rozhranie:</strong> Pripojenie servomotorov s napätím 6,8V alebo 5V, podľa zvoleného napätia."
+                    },
+                    {
+                        "type": "text",
+                        "content": "18. <strong>Sériové rozhranie pre aktuátory:</strong> Slúži na pripojenie sériovo ovládaných mechanických ramien alebo aktuátorov."
+                    },
+                    {
+                        "type": "text",
+                        "content": "19. <strong>Bzučiak:</strong> Používa sa na zvukové výstrahy alebo upozornenia."
+                    },
+                    {
+                        "type": "text",
+                        "content": "20. <strong>Štvorcestný motorový port:</strong> Umožňuje pripojenie štyroch motorov. Spôsob pripojenia závisí od konkrétneho modelu."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Spodná časť rozširujúcej dosky"
+                    },
+                    {
+                        "type": "image",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/t_ecr/v1735160629/Screenshot_2024-12-25_220316_dqjhdy.png",
+                        "alt": "An image showcasing a bottom of expasion board."
+                    },
+                    {
+                        "type": "text",
+                        "content": "1. <strong>Mikrokontrolér (STM32):</strong> Hlavný riadiaci čip na doske, ktorý ovláda periférie, ako sú motory, senzory a LED diódy. Zodpovedá za spracovanie príkazov a riadenie všetkých funkcií dosky."
+                    },
+                    {
+                        "type": "text",
+                        "content": "2. <strong>SWD rozhranie (debugovacie rozhranie):</strong> Slúži na pripojenie debugovacieho nástroja, ako je ST-Link alebo J-Link, pre ladenie mikrokontroléra alebo nahrávanie firmvéru. Umožňuje aktualizáciu firmvéru a diagnostiku chýb."
+                    },
+                    {
+                        "type": "title",
+                        "content": "STM32CubeIDE"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Čo je STM32CubeIDE?"
+                    },
+                    {
+                        "type": "text",
+                        "content": "STM32CubeIDE je integrované vývojové prostredie (IDE) na vývoj v jazykoch C/C++ pre STM32 mikrokontroléry. Kombinuje vývoj kódu, konfiguráciu periférií, generovanie kódu, kompiláciu a ladenie do jednej platformy. STM32CubeIDE je postavené na rámci Eclipse a obsahuje nástroj STM32CubeMX, ktorý zjednodušuje konfiguráciu periférií mikrokontrolérov a generuje inicializačný kód."
+                    },
+                    {
+                        "type": "image",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1735162311/4d8c0b80-7bed-11e9-9338-fb7021245dd1_x6y5ir.png",
+                        "alt": "STMCubeIDE image."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Prečo potrebujete STM32CubeIDE?"
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Zjednodušená konfigurácia periférií:",
+                        "description": "Manuálne nastavovanie periférií mikrokontrolérov je časovo náročné a náchylné na chyby. STM32CubeMX tento proces automatizuje a plynulo sa integruje do IDE." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Rámec kódu:",
+                        "description": "Generuje pripravený inicializačný kód, ktorý šetrí čas a zaisťuje správne konfigurácie." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Komplexné nástroje na ladenie:",
+                        "description": "STM32CubeIDE poskytuje pokročilé nástroje na ladenie, ako sú zobrazenie registrov a pamäte, sledovanie premenných v reálnom čase a analýzu porúch na rýchle diagnostikovanie a opravu problémov." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Jednotná integrovaná platforma:",
+                        "description": "Kombinuje vývoj, konfiguráciu, generovanie kódu a ladenie do jedného prostredia, čím eliminuje potrebu samostatných nástrojov." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Podpora viacerých platforiem:",
+                        "description": "Funguje na Windows, Linuxe a macOS, čo z neho robí prístupný nástroj pre široké spektrum vývojárov." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Flexibilita na báze Eclipse:",
+                        "description": "Umožňuje integráciu s pluginmi a ďalšími nástrojmi z ekosystému Eclipse, čím rozširuje jeho funkcionalitu." 
+                    },
+                    {
+                        "type": "text",
+                        "content": "STM32CubeIDE je nevyhnutný nástroj na vývoj softvéru pre STM32 mikrokontroléry. Zjednodušuje konfiguráciu hardvéru, urýchľuje vývoj a poskytuje robustné nástroje na ladenie a analýzu. Je ideálnou voľbou pre prácu s mikrokontrolérmi STM."
+                    },
+                    {
+                        "type": "title",
+                        "content": "FreeRTOS"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Čo je RTOS?"
+                    },
+                    {
+                        "type": "text",
+                        "content": "RTOS (Real-Time Operating System) je špecializovaný operačný systém určený na správu hardvérových zdrojov a vykonávanie úloh s presným načasovaním a predvídateľnosťou. Na rozdiel od univerzálnych operačných systémov, ktoré sa zameriavajú na maximalizáciu priepustnosti a odozvy používateľov, RTOS zaisťuje, že kritické úlohy spĺňajú prísne časové termíny. Tento determinizmus sa dosahuje prostredníctvom plánovača, ktorý uprednostňuje úlohy na základe ich naliehavosti a dôležitosti, čo umožňuje systému reagovať na udalosti v rámci definovaných časových obmedzení. RTOS sú nevyhnutné vo vstavaných systémoch, kde sú včasné a spoľahlivé reakcie rozhodujúce, napríklad v automobilových ovládacích prvkoch, zdravotníckych pomôckach a priemyselnej automatizácii."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Čo je FreeRTOS? "
+                    },
+                    {
+                        "type": "text",
+                        "content": "FreeRTOS je populárny open-source RTOS navrhnutý tak, aby bol ľahký a efektívny, vďaka čomu je vhodný pre mikrokontroléry a malé embedded systémy. FreeRTOS, vyvinutý viac ako 15 rokov v spolupráci s poprednými výrobcami čipov, poskytuje vysokokvalitné jadro komerčnej kvality v reálnom čase. Ponúka základné funkcie plánovania v reálnom čase, komunikáciu medzi úlohami, načasovanie a synchronizáciu. Zatiaľ čo samotný FreeRTOS sa zameriava na to, aby bol jadrom v reálnom čase (alebo výkonným riaditeľom v reálnom čase), ďalšie funkcie, ako sú rozhrania príkazovej konzoly a sieťové zásobníky, môžu byť pridané prostredníctvom doplnkových komponentov. Táto modularita zaisťuje, že FreeRTOS zostáva kompaktný a prispôsobiteľný rôznym vstavaným aplikáciám bez réžie plnohodnotného operačného systému."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Na čo sa FreeRTOS používa?"
+                    },
+                    {
+                        "type": "text",
+                        "content": "FreeRTOS sa primárne používa v embedded systémoch, kde sú zdroje obmedzené a výkon v reálnom čase je kritický. Typické aplikácie zahŕňajú:"
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Projekty založené na mikrokontroléroch:",
+                        "description": "Ideálne pre zariadenia, ktoré vykonávajú špecifické, vyhradené úlohy bez potreby úplného operačného systému." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Automobilové systémy:",
+                        "description": "Používa sa v riadiacich jednotkách motora, informačno-zábavných systémoch a aplikáciách súvisiacich s bezpečnosťou, kde je nevyhnutná včasná reakcia." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Priemyselná automatizácia:",
+                        "description": "Riadi stroje, robotiku a systémy riadenia procesov, ktoré vyžadujú presné načasovanie a spoľahlivosť." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Spotrebná elektronika:",
+                        "description": "Poháňa zariadenia, ako sú inteligentné spotrebiče, nositeľné technológie a gadgety IoT, ktoré vyžadujú efektívnu a deterministickú prevádzku." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Zdravotnícke pomôcky:",
+                        "description": "Zabezpečuje, aby kritické zdravotnícke zariadenia fungovali spoľahlivo a rýchlo reagovali na vstupy používateľov a údaje zo senzorov." 
+                    },
+                    {
+                        "type": "title",
+                        "content": "Ackermannovo riadenie"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Čo je Ackermannovo riadenie?"
+                    },
+                    {
+                        "type": "text",
+                        "content": "<a href='https://raw.org/book/kinematics/ackerman-steering/' target='_blank'> Ackermannovo riadenie</a> je spôsob, akým vozidlá otáčajú kolesá tak, aby každé koleso pri zatáčaní sledovalo správnu cestu. Predstavte si, že auto odbočuje za roh: vnútorné kolesá sa musia otáčať prudšie ako vonkajšie kolesá. Riadenie Ackermann zaisťuje, že to prebieha hladko a pomáha autu efektívne zatáčať bez trenia pneumatík o cestu."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Ako to funguje?"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Keď otočíte volantom, Ackermannovo riadenie upraví uhly predných kolies. Vnútorné koleso (to bližšie k stredu zákruty) sa otáča viac ako vonkajšie koleso. Toto nastavenie zaisťuje, že sa všetky kolesá pohybujú spôsobom, ktorý zodpovedá zákrute, vďaka čomu je jazda plynulejšia a znižuje sa opotrebovanie pneumatík."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Kde sa používa Ackermannovo riadenie?"
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Automobilov a ľahkých vozidiel: ",
+                        "description": "Väčšina bežných áut používa tento riadiaci systém, aby ľahšie zvládali zákruty a zabránili rýchlemu opotrebovaniu pneumatík." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Pretekárskych vozidlá:",
+                        "description": "Vysokorýchlostné autá využívajú Ackermannovo riadenie na rýchlejšie a bezpečnejšie prechádzanie zákrutami na pretekárskych okruhoch." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Nákladných vozidlá a stroje:",
+                        "description": "Veľké vozidlá ako traktory a vysokozdvižné vozíky ho používajú na navigáciu v úzkych priestoroch a nerovnom teréne." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Bicyklov a motocyklov:",
+                        "description": "Aj keď nie vždy presne rovnaké, tento princíp pomáha týmto vozidlám zatáčať stabilne." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Autonómnych vozidiel a robotov:",
+                        "description": "Samoriadiace autá a roboty používajú princípy Ackermannovho riadenia na presné pohyby a správne sledovanie trás." 
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Výhody Ackermannovho riadenia"
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Dlhšia životnosť pneumatík:",
+                        "description": "Kolesá sa otáčajú správne, takže pneumatiky sa neužívajú tak rýchlo." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Lepšia kontrola:",
+                        "description": "Vozidlá plynulejšie a predvídateľnejšie zvládajú zákruty." 
+                    },
+                    {
+                        "type": "bullet", 
+                        "item": "Efektívne zatáčanie:",
+                        "description": "Znižuje zbytočné trenie, čo uľahčuje zatáčanie a šetrí energiu." 
+                    },
+                    {
+                        "type": "text",
+                        "content": "Riadenie Ackermann je veľmi populárne v automobilových a robotických aplikáciách vďaka svojej schopnosti optimalizovať účinnosť otáčania a minimalizovať opotrebovanie pneumatík, zabezpečením správneho vyrovnania kolies počas zatáčania. Jeho dizajn je vhodný najmä pre vozidlá, ktoré vyžadujú presnú manévrovateľnosť, ako sú osobné automobily, nákladné autá a robotické plošiny. Jednoduchosť a účinnosť mechanizmu z neho robia voľbu pre inžinierov vyvíjúcich systémy, ktoré uprednostňujú stabilitu a kontrolu."
+                    }
+                ] 
+            }

@@ -1,0 +1,62 @@
+{
+    "id": "exercise-3-4",
+    "name": "Cvičenie 3.4 - Ovládanie motorov",
+    "description": [
+        {
+            "type": "title",
+            "content": "Ovládanie motorov M2 a M4"
+        },
+        {
+            "type": "text",
+            "content": "V tomto cvičení sa naučíte ovládať dva motory Rosmastera (M2 a M4) pomocou posuvníkov v Jupyter Notebooku."
+        },
+        {
+            "type": "subtitle",
+            "content": "Importovanie knižníc a inicializácia"
+        },
+        {
+            "type": "code",
+            "content": "from Rosmaster_Lib import Rosmaster\nfrom ipywidgets import interact\nimport ipywidgets as widgets\nimport time\n\n# Vytvorenie objektu Rosmaster\nbot = Rosmaster()"
+        },
+        {
+            "type": "text",
+            "content": "Najprv sme importovali potrebné knižnice vrátane `Rosmaster_Lib` na ovládanie Rosmastera a `ipywidgets` na vytváranie interaktívnych ovládacích prvkov. Potom sme inicializovali objekt `bot` na komunikáciu s Rosmasterom."
+        },
+        {
+            "type": "subtitle",
+            "content": "Ovládanie motorov pomocou posuvníkov"
+        },
+        {
+            "type": "code",
+            "content": "def run_motor(M2, M4):\n    bot.set_motor(0, M2, 0, M4)\n    return M2, M4\n\n# Vytvorenie posuvníkov na ovládanie motorov\ninteract(run_motor, \n         M2=widgets.IntSlider(min=-100, max=100, step=1, value=0, description='Motor M2'), \n         M4=widgets.IntSlider(min=-100, max=100, step=1, value=0, description='Motor M4'));"
+        },
+        {
+            "type": "text",
+            "content": "Tento kód vytvára dva posuvníky, ktoré umožňujú nastaviť rýchlosť motorov M2 a M4 v rozsahu od -100 do 100. Posuvníky okamžite aplikujú nastavené hodnoty na motory."
+        },
+        {
+            "type": "subtitle",
+            "content": "Zastavenie motorov"
+        },
+        {
+            "type": "code",
+            "content": "bot.set_motor(0, 0, 0, 0)"
+        },
+        {
+            "type": "text",
+            "content": "Použitím tejto funkcie môžete zastaviť všetky motory nastavením ich rýchlosti na 0."
+        },
+        {
+            "type": "subtitle",
+            "content": "Vyčistenie zdrojov"
+        },
+        {
+            "type": "code",
+            "content": "del bot"
+        },
+        {
+            "type": "text",
+            "content": "Po ukončení programu nezabudnite vymazať objekt `bot`, aby ste predišli konfliktom v ďalšom programe."
+        }
+    ]             
+}

@@ -1,0 +1,87 @@
+{
+    "name": "OpenCV - základný prehľad",
+    "title": "OpenCV - základný prehľad",
+    "questions": [
+    {
+        "type": "mcq",
+        "question": "Čo je OpenCV?",
+        "options": [
+            "Operačný systém",
+            "Programovací jazyk",
+            "Otvorená knižnica pre počítačové videnie",
+            "Hardvér na spracovanie videa"
+        ],
+        "answer": "Otvorená knižnica pre počítačové videnie"
+    },
+    {
+        "type": "truefalse",
+        "question": "OpenCV je multiplatformová knižnica, ktorá beží aj na Android a iOS.",
+        "answer": "True"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorý modul OpenCV obsahuje základné dátové štruktúry a operácie s maticami?",
+        "options": [
+          "core",
+          "imgproc",
+          "objdetect",
+          "video"
+        ],
+        "answer": "core"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorý modul sa používa na detekciu objektov (napr. tvárí) pomocou Haar kaskád?",
+        "options": [
+          "core",
+          "imgproc",
+          "objdetect",
+          "ml"
+        ],
+        "answer": "objdetect"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorý modul poskytuje nástroje strojového učenia?",
+        "options": [
+          "ml",
+          "video",
+          "imgproc",
+          "core"
+        ],
+        "answer": "ml"
+      },
+      {
+        "type": "truefalse",
+        "question": "Video modul OpenCV umožňuje detekciu pohybu a sledovanie objektov vo video sekvenciách.",
+        "answer": "True"
+      },
+      {
+        "type": "short",
+        "question": "Uveď jedno typické použitie OpenCV pre spracovanie obrazu.",
+        "answer": "Detekcia tvárí"
+      },
+      {
+        "type": "truefalse",
+        "question": "OpenCV nie je kompatibilné s Python.",
+        "answer": "False"
+      },
+      {
+        "type": "mcq",
+        "question": "Na čo sa v projekte ROSMASTER R2 využíva OpenCV?",
+        "options": [
+          "Audio spracovanie",
+          "Analýza obrazu zo senzorov",
+          "Ovládanie motorov",
+          "Správa dát z enkodérov"
+        ],
+        "answer": "Analýza obrazu zo senzorov"
+      },
+      {
+        "type": "short",
+        "question": "Ktorá funkcionalita OpenCV umožňuje extrakciu hĺbky z rôznych uhlov pohľadu?",
+        "answer": "3D rekonštrukcia"
+      }
+    ]
+  }
+  

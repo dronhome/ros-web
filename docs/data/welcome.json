@@ -1,0 +1,57 @@
+{
+    "name": "Vitajte vo vzdelávacom kurze ROSMASTER R2",
+    "description": [
+    {
+        "type": "text",
+        "content": "Tento kurz je navrhnutý tak, aby vás naučil základy práce s robotom Rosmaster R2. Získate základné znalosti a praktické zručnosti v oblasti navigácie robota, využitia senzorov, integrácie umelej inteligencie a ďalších tém."
+    },
+    {
+        "type": "text",
+        "content": "Po absolvovaní tohto kurzu sa naučíte základy ROS (Robotického operačného systému), počítačového videnia a implementácie autonómnych funkcií v robote."
+    },
+    {
+        "type": "title",
+        "content": "Ciele"
+    },
+    {
+        "type": "bullet",
+        "item": "Naučiť základy práce s robotom Rosmaster R2.",
+        "description": ""
+    },
+    {
+        "type": "bullet",
+        "item": "Porozumieť navigácii, využitiu senzorov a umelej inteligencii v robote.",
+        "description": ""
+    },
+    {
+        "type": "bullet",
+        "item": "Osvojiť si základné princípy ROS2 a počítačového videnia.",
+        "description": ""
+    },
+    {
+        "type": "bullet",
+        "item": "Implementovať autonómne funkcie v robote.",
+        "description": ""
+    },
+    {
+        "type": "title",
+        "content": "Zdroje"
+    },
+    {
+        "type": "text",
+        "content": "<strong>Rosmaster R2:</strong><ul><li><a href=\"https://github.com/orbbec/ros2_astra_camera\" target=\"_blank\">Oficiálny GitHub pre ovládač kamery Astra</a></li><li><a href=\"https://github.com/YahboomTechnology/ROSMASTER-R2/\" target=\"_blank\">Oficiálny GitHub pre Rosmaster R2</a></li><li><a href=\"http://www.yahboom.net/study/ROSMASTER-R2\" target=\"_blank\">Študijné materiály pre Rosmaster R2</a></li><li><a href=\"http://www.yahboom.net/study/ROSMASTER-X3-PLUS\" target=\"_blank\">Študijné materiály pre Rosmaster X3 Plus</a></li><li><a href=\"https://www.youtube.com/results?search_query=rosmaster+ros2\" target=\"_blank\">YouTube videá o Rosmaster a ROS2</a></li><li><a href=\"https://www.youtube.com/watch?v=xqroBkpf3lY&t=508s&ab_channel=robotmania\" target=\"_blank\">Rozpoznávanie objektov s Jetson Orin Nano a YOLOv8</a></li></ul>"
+    },
+    {
+        "type": "text",
+        "content": "<strong>YOLO (You Only Look Once):</strong><ul><li><a href=\"https://github.com/moksh-401-511/YOLOv5_ROS2-YOu-can-Leverage-On-ROS2\" target=\"_blank\">YOLOv5 integrácia s ROS2</a></li><li><a href=\"https://www.hackster.io/feiticeir0/yolov8-custom-classification-model-using-jetson-orin-nx-68a1a9\" target=\"_blank\">YOLOv8: Vytváranie vlastných klasifikačných modelov s Jetson Orin NX</a></li><li><a href=\"https://medium.com/@kabilankb2003/object-detection-in-ros2-with-pytorchs-faster-bb54a65e47e0\" target=\"_blank\">Detekcia objektov v ROS2 pomocou PyTorch Faster</a></li></ul>"
+    },
+    {
+        "type": "text",
+        "content": "<strong>Úvod do ROS2:</strong><ul><li><a href=\"https://medium.com/spinor/getting-started-with-ros2-install-and-setup-ros2-humble-on-ubuntu-22-04-lts-ad718d4a3ac2\" target=\"_blank\">Príručka na inštaláciu a nastavenie ROS2 na Ubuntu 22.04 LTS</a></li></ul>"
+    },
+    {
+        "type": "text",
+        "content": "<strong>Nvidia Jetson NX:</strong><ul><li><a href=\"https://developer.nvidia.com/embedded/jetpack-archive\" target=\"_blank\">Oficiálne zdroje pre JetPack od NVIDIA</a></li><li><a href=\"https://dusty-nv.github.io/NanoLLM/\" target=\"_blank\">NanoLLM: Implementácia malých jazykových modelov</a></li><li><a href=\"https://github.com/dusty-nv/NanoLLM/tree/main\" target=\"_blank\">NanoLLM: Oficiálny GitHub projekt</a></li><li><a href=\"https://www.youtube.com/watch?v=HlH3QkS1F5Y&ab_channel=JetsonHacks\" target=\"_blank\">Príručka na používanie Docker kontajnerov s Jetson</a></li><li><a href=\"https://www.youtube.com/watch?v=w48i8FmVvLA&ab_channel=NVIDIADeveloper\" target=\"_blank\">Live LLaVA implementácia na Jetson Orin</a></li></ul>"
+    }
+    ]
+}

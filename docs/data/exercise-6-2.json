@@ -1,0 +1,75 @@
+{ 
+                "id": "exercise-6-2", 
+                "name": "Cvičenie 6.2 - Odhad pózy pomocou OpenCV",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "Úvod do modelu a princípov odhadu pózy"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Odhad pózy je technika, ktorá identifikuje pozície kľúčových bodov na ľudskom tele, ako sú kĺby alebo hlavné časti tela. Model OpenPose analyzuje vstupný obraz alebo video a deteguje časti tela a spojenia medzi nimi. Tento model využíva konvolučné neurónové siete (CNN) na rozpoznávanie vzorov v obraze a určovanie presných polôh jednotlivých bodov tela."
+                    },
+                    {
+                        "type": "title",
+                        "content": "Časti kódu a vysvetlenie"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Definícia častí tela a párov"
+                    },
+                    {
+                        "type": "code",
+                        "content": "import cv2 as cv\n\n# Definícia častí tela a ich párov pre kreslenie póz\nBODY_PARTS = {\"Nose\": 0, \"Neck\": 1, \"RShoulder\": 2, \"RElbow\": 3, \"RWrist\": 4,\n              \"LShoulder\": 5, \"LElbow\": 6, \"LWrist\": 7, \"RHip\": 8, \"RKnee\": 9,\n              \"RAnkle\": 10, \"LHip\": 11, \"LKnee\": 12, \"LAnkle\": 13, \"REye\": 14,\n              \"LEye\": 15, \"REar\": 16, \"LEar\": 17, \"Background\": 18}\nPOSE_PAIRS = [[\"Neck\", \"RShoulder\"], [\"Neck\", \"LShoulder\"], [\"RShoulder\", \"RElbow\"],\n              [\"RElbow\", \"RWrist\"], [\"LShoulder\", \"LElbow\"], [\"LElbow\", \"LWrist\"],\n              [\"Neck\", \"RHip\"], [\"RHip\", \"RKnee\"], [\"RKnee\", \"RAnkle\"], [\"Neck\", \"LHip\"],\n              [\"LHip\", \"LKnee\"], [\"LKnee\", \"LAnkle\"], [\"Neck\", \"Nose\"], [\"Nose\", \"REye\"],\n              [\"REye\", \"REar\"], [\"Nose\", \"LEye\"], [\"LEye\", \"LEar\"]]"
+                    },                    
+                    {
+                        "type": "text",
+                        "content": "BODY_PARTS definuje mapovanie častí tela na ich indexy vo výstupe modelu. POSE_PAIRS obsahuje párované časti tela, ktoré sa majú vizualizovať pomocou čiar."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Načítanie predtrénovaného modelu"
+                    },
+                    {
+                        "type": "code",
+                        "content": "net = cv.dnn.readNetFromTensorflow(\"graph_opt.pb\")"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Tento riadok načíta predtrénovaný model uložený vo formáte TensorFlow. Súbor 'graph_opt.pb' obsahuje váhy a architektúru modelu OpenPose."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Funkcia na odhad pózy"
+                    },
+                    {
+                        "type": "code",
+                        "content": "def estimate_pose(frame):\n    frameHeight, frameWidth = frame.shape[:2]\n    # Vytvorenie blobu a nastavenie vstupu pre model\n    net.setInput(cv.dnn.blobFromImage(frame, 1.0, (368, 368), (127.5, 127.5, 127.5), swapRB=True, crop=False))\n    out = net.forward()  # Spustenie predikcie\n    out = out[:, :19, :, :]  # Výstup modelu obsahuje 19 častí tela\n\n    points = []\n    for i in range(len(BODY_PARTS)):\n        # Extrahovanie heatmapy pre danú časť tela\n        heatMap = out[0, i, :, :]\n        _, conf, _, point = cv.minMaxLoc(heatMap)  # Nájdeme bod s najväčšou dôverou\n        x = int((frameWidth * point[0]) / out.shape[3])\n        y = int((frameHeight * point[1]) / out.shape[2])\n        # Pridanie bodu, ak je dôvera vyššia ako 0.2\n        points.append((x, y) if conf > 0.2 else None)\n\n    # Kreslenie čiar a bodov medzi párovanými časťami tela\n    for pair in POSE_PAIRS:\n        partFrom = pair[0]\n        partTo = pair[1]\n        idFrom = BODY_PARTS[partFrom]\n        idTo = BODY_PARTS[partTo]\n        if points[idFrom] and points[idTo]:\n            cv.line(frame, points[idFrom], points[idTo], (0, 255, 0), 3)  # Spojenie čiarou\n            cv.ellipse(frame, points[idFrom], (3, 3), 0, 0, 360, (0, 0, 255), cv.FILLED)  # Bod\n            cv.ellipse(frame, points[idTo], (3, 3), 0, 0, 360, (0, 0, 255), cv.FILLED)  # Bod\n    return frame"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Táto funkcia analyzuje vstupný obraz, identifikuje kľúčové body tela a vizualizuje ich pomocou čiar a bodov."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Hlavná časť programu"
+                    },
+                    {
+                        "type": "code",
+                        "content": "if __name__ == '__main__':\n    # Použitie webkamery na snímanie\n    capture = cv.VideoCapture(0)\n    while capture.isOpened():\n        ret, frame = capture.read()\n        if not ret:\n            break\n\n        # Odhad pózy v snímke\n        frame = estimate_pose(frame)\n        cv.imshow('Pose Estimation', frame)  # Zobrazenie výsledkov\n\n        # Ukončenie pri stlačení klávesy 'q'\n        if cv.waitKey(10) & 0xFF == ord('q'):\n            break\n\n    capture.release()\n    cv.destroyAllWindows()"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Hlavná časť programu inicializuje webkameru, spracováva snímky pomocou funkcie estimate_pose a zobrazuje výstupy v reálnom čase."
+                    },
+                    {
+                        "type": "title",
+                        "content": "Zhrnutie"
+                    },
+                    {
+                        "type": "text",
+                        "content": "V tomto cvičení sme použili model OpenPose na odhad pózy v reálnom čase pomocou webkamery. Naučili sme sa identifikovať časti tela, spojiť ich čiarami a vizualizovať výsledky. Tieto základy sú dôležité pre pokročilejšie aplikácie spracovania obrazu."
+                    }
+                    
+                ] 
+            }

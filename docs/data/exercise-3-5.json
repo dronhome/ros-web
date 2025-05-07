@@ -1,0 +1,186 @@
+{
+    "id": "exercise-3-5",
+    "name": "Cvičenie 3.5 - Základná kontrola pohybu robota",
+    "description": [
+        {
+            "type": "text",
+            "content": "V tomto cvičení sa naučíme ovládať pohyb robota, monitorovať jeho rýchlosti, nastavovať PID parametre a resetovať jeho nastavenia na továrenské hodnoty. Cieľom je získať základné skúsenosti s riadením a konfiguráciou robota pomocou Jupyter Notebooku."
+        },
+        {
+            "type": "bullet",
+            "item": "Ovládanie pohybu robota",
+            "description": "Použijeme interaktívne posuvníky na nastavenie lineárnych rýchlostí (V_x, V_y) a uhlovej rýchlosti (V_z), čo umožní pohyb robota v rôznych smeroch s nastaviteľnou rýchlosťou."
+        },
+        {
+            "type": "bullet",
+            "item": "Získavanie údajov o pohybe",
+            "description": "Program nám umožní čítať a zobrazovať aktuálne údaje o pohybe robota, vrátane jeho lineárnych a uhlových rýchlostí, čo je užitočné pre monitorovanie v reálnom čase."
+        },
+        {
+            "type": "bullet",
+            "item": "Nastavenie PID parametrov",
+            "description": "Používateľ bude mať možnosť upraviť PID parametre pre pohyb robota, čím optimalizuje jeho odozvu a presnosť pohybov."
+        },
+        {
+            "type": "bullet",
+            "item": "Reset na továrenské nastavenia",
+            "description": "Na záver bude predstavená funkcia resetovania robota na predvolené hodnoty, ktorá je užitočná pri ladení alebo obnove systému."
+        },
+        {
+            "type": "title",
+            "content": "Kódovanie"
+        },
+        {
+            "type": "subtitle",
+            "content": "Import knižníc"
+        },
+        {
+            "type": "code",
+            "content": "#!/usr/bin/env python3\n#coding=utf-8\nimport time\nfrom Rosmaster_Lib import Rosmaster\nfrom ipywidgets import interact\nimport ipywidgets as widgets"
+        },
+        {
+            "type": "text",
+            "content": "Importujeme potrebné knižnice: `Rosmaster_Lib` na ovládanie robota, `ipywidgets` na vytvorenie interaktívnych ovládacích prvkov a `time` na spracovanie oneskorení."
+        },
+        {
+            "type": "subtitle",
+            "content": "Vytvorenie objektu Rosmaster"
+        },
+        {
+            "type": "code",
+            "content": "# Vytvorenie objektu Rosmaster\nbot = Rosmaster()"
+        },
+        {
+            "type": "text",
+            "content": "Vytvoríme objekt `Rosmaster` s názvom `bot`, ktorý umožní prístup k funkciám robota."
+        },
+        {
+            "type": "subtitle",
+            "content": "Spustenie prijímania dát"
+        },
+        {
+            "type": "code",
+            "content": "# Spustenie prijímania dát\nbot.create_receive_threading()"
+        },
+        {
+            "type": "text",
+            "content": "Spustíme prijímanie dát, čo je nevyhnutné na čítanie údajov o pohybe alebo senzoroch z robota."
+        },
+        {
+            "type": "subtitle",
+            "content": "Automatické odosielanie dát"
+        },
+        {
+            "type": "code",
+            "content": "# Povolenie automatického odosielania dát\nenable = True\nbot.set_auto_report_state(enable, forever=False)"
+        },
+        {
+            "type": "text",
+            "content": "Povolíme automatické odosielanie dát. Keď je povolené (`enable=True`), robot odosiela údaje každých 40ms. Parameter `forever` určuje, či je nastavenie trvalé."
+        },
+        {
+            "type": "code",
+            "content": "# Zrušenie automatického odosielania dát\nenable = False\nbot.set_auto_report_state(enable, forever=False)"
+        },
+        {
+            "type": "text",
+            "content": "Zakážeme automatické odosielanie dát, aby robot prestal odosielať údaje kontinuálne."
+        },
+        {
+            "type": "subtitle",
+            "content": "Vymazanie dát z vyrovnávacej pamäte"
+        },
+        {
+            "type": "code",
+            "content": "# Vymazanie údajov z vyrovnávacej pamäte\nbot.clear_auto_report_data()"
+        },
+        {
+            "type": "text",
+            "content": "Vymažeme všetky uložené údaje prijaté z robota počas automatického odosielania."
+        },
+        {
+            "type": "subtitle",
+            "content": "Ovládanie pohybu robota"
+        },
+        {
+            "type": "code",
+            "content": "# Funkcia na ovládanie pohybu robota\ndef car_motion(V_x, V_y, V_z):\n    speed_x = V_x / 10.0\n    speed_y = V_y / 10.0\n    speed_z = V_z / 10.0\n    bot.set_car_motion(speed_x, speed_y, speed_z)\n    return speed_x, speed_y, speed_z\n\ninteract(car_motion, \\\n         V_x=widgets.IntSlider(min=-10, max=10, step=1, value=0), \\\n         V_y=widgets.IntSlider(min=-10, max=10, step=1, value=0), \\\n         V_z=widgets.IntSlider(min=-50, max=50, step=1, value=0));"
+        },
+        {
+            "type": "text",
+            "content": "Definujeme funkciu `car_motion` na ovládanie rýchlosti robota v troch osiach. Hodnoty rýchlostí sú zmenšené delením číslom 10 pre jemnejšie ovládanie."
+        },
+        {
+            "type": "subtitle",
+            "content": "Zastavenie pohybu"
+        },
+        {
+            "type": "code",
+            "content": "# Zastavenie pohybu\nbot.set_car_motion(0, 0, 0)"
+        },
+        {
+            "type": "text",
+            "content": "Zastavíme pohyb robota nastavením všetkých komponentov rýchlosti (`V_x`, `V_y`, `V_z`) na nulu."
+        },
+        {
+            "type": "subtitle",
+            "content": "Získanie údajov o pohybe"
+        },
+        {
+            "type": "code",
+            "content": "# Načítanie údajov o pohybe\ntry:\n    while True:\n        V_x, V_y, V_z = bot.get_motion_data()\n        print(\"Rýchlosť:\", V_x, V_y, V_z)\n        bot.clear_auto_report_data()\n        time.sleep(.1)\nexcept KeyboardInterrupt:\n    pass"
+        },
+        {
+            "type": "text",
+            "content": "Čítame a zobrazujeme údaje o pohybe robota (lineárna a uhlová rýchlosť). Pamäť sa vymaže po každom načítaní a proces sa ukončí po stlačení `Ctrl+C`."
+        },
+        {
+            "type": "subtitle",
+            "content": "Nastavenie PID parametrov"
+        },
+        {
+            "type": "code",
+            "content": "# Nastavenie PID parametrov\nkp = 0.8\nki = 0.06\nkd = 0.5\nbot.set_pid_param(kp, ki, kd, forever=False)"
+        },
+        {
+            "type": "text",
+            "content": "Nastavujeme PID parametre (proporcionálny, integračný a derivačný) na jemné doladenie odozvy robota. Toto nastavenie je voliteľné."
+        },
+        {
+            "type": "subtitle",
+            "content": "Načítanie PID parametrov"
+        },
+        {
+            "type": "code",
+            "content": "# Načítanie PID parametrov\nkp, ki, kd = bot.get_motion_pid()\nprint(\"PID:\", kp, ki, kd)"
+        },
+        {
+            "type": "text",
+            "content": "Získavame a zobrazujeme aktuálne PID parametre na overenie nastavení."
+        },
+        {
+            "type": "subtitle",
+            "content": "Obnovenie výrobných nastavení"
+        },
+        {
+            "type": "code",
+            "content": "# Obnovenie výrobných nastavení\nbot.reset_flash_value()"
+        },
+        {
+            "type": "text",
+            "content": "Resetujeme konfigurácie robota na výrobné nastavenia. Tento krok je užitočný pri riešení problémov alebo reštartovaní konfigurácie."
+        },
+        {
+            "type": "subtitle",
+            "content": "Vymazanie objektu"
+        },
+        {
+            "type": "code",
+            "content": "# Vymazanie objektu bot\n del bot"
+        },
+        {
+            "type": "text",
+            "content": "Vymažeme objekt `bot`, aby sme zabránili konfliktom v ďalších programoch."
+        }
+    ]
+}

@@ -1,0 +1,203 @@
+{ 
+                "id": "exercise-7-1", 
+                "name": "Cvičenie 7.1 - Astra SDK: Inštalácia a spustenie",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "Stiahnutie a inštalácia Astra SDK"
+                    },
+                    {
+                        "type": "text",
+                        "content": "<a href='https://www.orbbec.com/developers/astra-sdk/' target='_blank'>Astra SDK</a> je oficiálny balík nástrojov od spoločnosti Orbbec, ktorý poskytuje knižnice, dokumentáciu a nástroje na prístup k dátam z RGB a hĺbkového senzora. Umožňuje vývoj aplikácií pre robotiku, 3D mapovanie a ďalšie oblasti."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Príprava adresára a stiahnutie Astra SDK"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Najskôr vytvorte adresár pre SDK a stiahnite si archív SDK zo stránky Orbbec pomocou wget. Skontrolujte, či vyberáte správnu verziu pre váš operačný systém."
+                    },
+                    {
+                        "type": "code",
+                        "content": "mkdir -p ~/astra_sdk && cd ~/astra_sdk\nwget https://path_to_sdk_zip_file.zip"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Rozbalenie stiahnutého archívu"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Po stiahnutí SDK súboru použite nástroj unzip na rozbalenie zip archívu. Po rozbalení nájdete tar.gz súbor, ktorý je potrebné ďalej rozbaliť."
+                    },
+                    {
+                        "type": "code",
+                        "content": "unzip AstraSDK-vX.X.X.zip\ntar -zxvf AstraSDK-vX.X.X-Ubuntu18.04-x86_64.tar.gz"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Inštalácia Astra SDK"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Po rozbalení tar.gz archívu prejdite do priečinka 'install' a spustite inštalačný skript. Uistite sa, že máte dostatočné oprávnenia (použitie sudo)."
+                    },
+                    {
+                        "type": "code",
+                        "content": "cd AstraSDK-vX.X.X-Ubuntu18.04-x86_64/install\nsudo sh ./install.sh"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Záver"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Týmto ste úspešne nainštalovali Astra SDK. SDK teraz môžete použiť na prístup k funkciám kamery a vývoj vlastných aplikácií."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Konfigurácia CMakeLists.txt súboru"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Prečo SimpleColorViewer-SFML?"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Jednoduchosť",
+                        "description": "Zobrazuje základné RGB dáta z kamery, vhodné pre začiatočníkov."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Minimálne závislosti",
+                        "description": "Používa iba SFML, ľahké na zostavenie."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Overenie SDK",
+                        "description": "Rýchlo preverí funkčnosť Astra SDK."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Dobrý základ",
+                        "description": "Slúži na pochopenie a ďalší rozvoj aplikácií."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Nájdite projekt SimpleColorViewer-SFML"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Najskôr prejdite do adresára, kde sa nachádza ukážkový projekt SimpleColorViewer-SFML. Tento projekt je zvyčajne umiestnený v priečinku samples/sfml v rámci Astra SDK."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Príklad príkazu na navigáciu (upravte cestu podľa vašej štruktúry):"
+                    },
+                    {
+                        "type": "code",
+                        "content": "cd AstraSDK-vX.X.X-Linux-aarch64/samples/sfml/SimpleColorViewer-SFML"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Otvorte súbor CMakeLists.txt"
+                    },
+                    {
+                        "type": "text",
+                        "content": "V tomto adresári by mal byť súbor CMakeLists.txt, ktorý definuje konfiguráciu pre zostavenie projektu."
+                    },                    
+                    {
+                        "type": "code",
+                        "content": "cmake_minimum_required(VERSION 3.16)\n\nproject(SimpleColorViewer-SFML)\n\n# Definícia názvu projektu\nset(_projname \"SimpleColorViewer-SFML\")\n\n# Explicitne definovaný priečinok pre spoločné zdroje\nset(SAMPLE_COMMON_DIR \"AstraSDK-vX.X.X-Ubuntu18.04-x86_64/samples/common\")\n\n# Zdroje projektu\nset(${_projname}_SOURCES\n  main.cpp\n  ${SAMPLE_COMMON_DIR}/key_handler.h\n)\n\n# Nájdite knižnicu SFML\nfind_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)\n\n# Definícia zahrnutých adresárov Astra SDK a SFML\nset(ASTRA_SDK_INCLUDE \"AstraSDK-vX.X.X-Ubuntu18.04-x86_64/include\")\nset(ASTRA_SDK_LIB \"AstraSDK-vX.X.X-Ubuntu18.04-x86_64/lib\")\n\n# Zahrňte adresáre\ninclude_directories(${SFML_INCLUDE_DIR} ${ASTRA_SDK_INCLUDE} ${SAMPLE_COMMON_DIR})\n\n# Pridajte adresáre pre linkovanie knižníc\nlink_directories(${ASTRA_SDK_LIB})\n\n# Pridajte spustiteľný súbor\nadd_executable(${_projname} ${${_projname}_SOURCES})\n\n# Linkovanie SFML a Astra SDK knižníc\ntarget_link_libraries(${_projname} sfml-graphics sfml-window sfml-system\n    ${ASTRA_SDK_LIB}/libastra.so\n    ${ASTRA_SDK_LIB}/libastra_core.so\n)\n\n# Inštalujte cieľový binárny súbor\ninstall(TARGETS ${_projname} DESTINATION bin)"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "cmake_minimum_required a project",
+                        "description": "Definujú minimálnu požadovanú verziu CMake a názov projektu."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "set",
+                        "description": "Nastavuje premenné pre názov projektu, spoločné zdroje, zahrnuté adresáre a knižnice."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "SAMPLE_COMMON_DIR",
+                        "description": "Cesta k zdieľaným súborom projektu."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "ASTRA_SDK_INCLUDE a ASTRA_SDK_LIB",
+                        "description": "Cesty k zahrnutým súborom a knižniciam Astra SDK."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "find_package",
+                        "description": "Vyhľadá a zahrnie knižnicu SFML."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "include_directories",
+                        "description": "Definuje adresáre, kde kompilátor hľadá hlavičkové súbory."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "link_directories",
+                        "description": "Definuje adresáre pre linkovanie knižníc."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "add_executable",
+                        "description": "Pridá hlavný spustiteľný súbor pre projekt."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "target_link_libraries",
+                        "description": "Pridá knižnice SFML a Astra SDK pre prepojenie so spustiteľným súborom."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "install",
+                        "description": "Umožňuje inštaláciu spustiteľného súboru do definovaného priečinka."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Spustenie programu"
+                    },
+                    {
+                        "type": "code",
+                        "content": "mkdir build\ncd build"
+                    },
+                    {
+                        "type": "code",
+                        "content": "cmake .."
+                    },
+                    {
+                        "type": "code",
+                        "content": "make"
+                    },
+                    {
+                        "type": "code",
+                        "content": "./SimpleColorViewer-SFML"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Po spustení programu by sa malo zobraziť okno, ktoré zobrazuje dáta RGB zo senzora Astra kamery v reálnom čase. Toto umožňuje jednoduché testovanie funkčnosti kamery a správnej inštalácie SDK."
+                    },
+                    {
+                        "type": "title",
+                        "content": "Zhrnutie"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Týmto postupom ste úspešne nakonfigurovali a spustili program SimpleColorViewer-SFML. Správna konfigurácia CMakeLists.txt súboru zabezpečila správne zahrnutie knižníc a súborov Astra SDK a SFML. Program teraz dokáže zobrazovať dáta z kamery v reálnom čase a je pripravený na ďalšie úpravy a rozšírenia."
+                    }
+                    
+                ]
+            }

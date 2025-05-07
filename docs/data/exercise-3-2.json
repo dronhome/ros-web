@@ -1,0 +1,109 @@
+{
+    "id": "exercise-3-2",
+    "name": "Cvičenie 3.2 - Základné ovládanie",
+    "description": [
+        {
+            "type": "text",
+            "content": "Najprv si vytvorte nový priečinok, v ktorom budete organizovať svoj kód. Potom v tomto priečinku vytvorte nový súbor s príponou `.ipynb`. Tento typ súboru je Jupyter Notebook, ktorý vám umožňuje písať a spúšťať kód interaktívne."
+        },
+        {
+            "type": "text",
+            "content": "Po otvorení súboru `.ipynb` v Jupyter Lab skontrolujte, či je vybraný správny kernel. Kernel definuje prostredie, v ktorom sa bude váš kód spúšťať. Pre Python kód vyberte `Python 3`."
+        },
+        {
+            "type": "title",
+            "content": "Základné ovládanie"
+        },
+        {
+            "type": "text",
+            "content": "V tomto cvičení sa naučíte, ako používať knižnicu `Rosmaster_Lib` na základné ovládanie Rosmastera R2. Toto zahŕňa čítanie základných informácií a ovládanie bzučiaka."
+        },
+        {
+            "type": "subtitle",
+            "content": "Importovanie knižnice a vytvorenie objektu"
+        },
+        {
+            "type": "code",
+            "content": "from Rosmaster_Lib import Rosmaster\n\n# Vytvorenie objektu Rosmaster na ovládanie robota\nbot = Rosmaster()"
+        },
+        {
+            "type": "text",
+            "content": "Knižnica `Rosmaster_Lib` poskytuje všetky potrebné funkcie na ovládanie robota. Vytvorením objektu `bot` inicializujete komunikáciu s Rosmasterom."
+        },
+        {
+            "type": "subtitle",
+            "content": "Zobrazenie dostupných metód"
+        },
+        {
+            "type": "code",
+            "content": "help(bot)"
+        },
+        {
+            "type": "text",
+            "content": "Funkcia `help(bot)` zobrazí všetky dostupné metódy objektu `bot` spolu s poznámkami. Pomocou tejto funkcie si môžete rýchlo pozrieť dostupné príkazy na ovládanie Rosmastera."
+        },
+        {
+            "type": "subtitle",
+            "content": "Spustenie prijímania údajov"
+        },
+        {
+            "type": "code",
+            "content": "bot.create_receive_threading()"
+        },
+        {
+            "type": "text",
+            "content": "Táto funkcia spustí prijímanie údajov z Rosmastera. Musí byť zavolaná pred použitím funkcií na čítanie údajov, aby bol zaistený príjem dát."
+        },
+        {
+            "type": "subtitle",
+            "content": "Čítanie základných údajov"
+        },
+        {
+            "type": "code",
+            "content": "# Čítanie verzie firmvéru\nversion = bot.get_version()\nprint(version)\n\n# Čítanie napätia batérie\nvoltage = bot.get_battery_voltage()\nprint(voltage)"
+        },
+        {
+            "type": "text",
+            "content": "Funkcia `get_version()` vráti verziu firmvéru Rosmastera. Funkcia `get_battery_voltage()` číta aktuálne napätie batérie a zobrazí ho."
+        },
+        {
+            "type": "subtitle",
+            "content": "Ovládanie bzučiaka"
+        },
+        {
+            "type": "code",
+            "content": "# Zapnutie bzučiaka na 100 ms\nbot.set_beep(100)\n\n# Zapnutie bzučiaka na 300 ms\nbot.set_beep(300)\n\n# Neustále pískanie bzučiaka\nbot.set_beep(1)\n\n# Vypnutie bzučiaka\nbot.set_beep(0)"
+        },
+        {
+            "type": "text",
+            "content": "Funkcia `set_beep(on_time)` ovláda bzučiak:\n- `on_time=0`: vypnutie bzučiaka.\n- `on_time=1`: bzučiak zostáva zapnutý.\n- `on_time>=10`: bzučiak je zapnutý počas špecifikovaného počtu milisekúnd (musí byť násobkom 10)."
+        },
+        {
+            "type": "subtitle",
+            "content": "Uvoľnenie objektu"
+        },
+        {
+            "type": "code",
+            "content": "del bot"
+        },
+        {
+            "type": "text",
+            "content": "Po ukončení programu nezabudnite vymazať objekt `bot`, aby sa zabránilo konfliktom pri ďalšom používaní knižnice."
+        },
+        {
+            "type": "text",
+            "content": "Pre spustenie kódu kliknite na bunku s kódom, ktorú chcete spustiť, a stlačte `Shift + Enter`. Notebook vykoná kód a zobrazí výstup priamo pod bunkou."
+        },
+        {
+            "type": "line"
+        },
+        {
+            "type": "subtitle",
+            "content": "Záver"
+        },
+        {
+            "type": "text",
+            "content": "Týmto cvičením ste sa naučili, ako inicializovať Rosmaster, čítať základné informácie, ako je verzia firmvéru a napätie batérie, a ovládať bzučiak. Tieto základy sú dôležité pre ďalšie rozšírené ovládanie robota."
+        }
+    ]                                  
+}

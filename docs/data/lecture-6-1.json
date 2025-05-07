@@ -1,0 +1,131 @@
+{ 
+                "id": "lecture-6-1", 
+                "name": "Prednáška 6 - OpenCV - základný prehľad",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "Úvod do OpenCV"
+                    },
+                    {
+                        "type": "image-short",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1736965639/OpenCV_logo_black-3874605940_frlkie.png",
+                        "alt": "open cv logo"
+                    },
+                    {
+                        "type": "text",
+                        "content": "<a href='https://opencv.org/' target='_blank'>OpenCV</a> je otvorená knižnica určená na spracovanie a analýzu obrazu (Computer Vision). Poskytuje nástroje na rôzne operácie: detekciu objektov, rozpoznávanie tvárí, spracovanie videa, filtráciu obrazu a iné."
+                    },                    
+                    {
+                        "type": "text",
+                        "content": "Využíva sa v mnohých oblastiach, ako sú robotika, medicína, autonómne vozidlá či bezpečnostné systémy."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Hlavné vlastnosti"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Open source",
+                        "description": "– Bezplatne dostupná, veľká komunita prispievateľov."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Multiplatformová",
+                        "description": "– Beží na Windows, Linux, macOS, Android, iOS."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Podpora viacerých jazykov",
+                        "description": "– C++, Python, Java a iné."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Rozsiahly rozsah funkcií",
+                        "description": "– Od základných filtrov (Gaussian Blur) až po pokročilé algoritmy (detekcia tvárí, sledovanie objektov)."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Kľúčové moduly"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "core",
+                        "description": "– Základné dátové štruktúry, matice, vektory."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "imgproc",
+                        "description": "– Spracovanie obrazu (filtrovanie, morfologické operácie, detekcia hrán)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "objdetect",
+                        "description": "– Detekcia objektov (napr. Haar kaskády)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "video",
+                        "description": "– Spracovanie a analýza videa (detekcia pohybu, sledovanie)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "ml",
+                        "description": "– Zabudované algoritmy strojového učenia."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Typické použitie"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Detekcia a rozpoznávanie",
+                        "description": "– Rozpoznávanie tvárí, QR kódov, dopravných značiek."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Filtrácia a úprava obrazu",
+                        "description": "– Odstránenie šumu, doostrovanie, zmena veľkosti alebo orez."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Sledovanie objektov",
+                        "description": "– Trackovanie pohybu vo video sekvenciách."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "3D rekonštrukcia",
+                        "description": "– Stereo kamera, extrakcia hĺbky z rôznych uhlov pohľadu."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Prepojenie OpenCV s ROSMASTER R2"
+                    },
+                    {
+                        "type": "text",
+                        "content": "OpenCV je kľúčovým nástrojom pre vizuálnu analýzu na ROSMASTER R2. Používa sa na spracovanie dát zo senzorov, ako sú kamery, a umožňuje realizovať úlohy, ako je rozpoznávanie objektov, sledovanie pohybu a 3D mapovanie. V kombinácii s ROS frameworkom poskytuje efektívnu integráciu medzi softvérom a hardvérom robota."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Záver"
+                    },
+                    {
+                        "type": "text",
+                        "content": "OpenCV je univerzálny nástroj, ktorý dokáže pokryť väčšinu potrieb v oblasti spracovania obrazu a videa. Pre začiatočníkov je ideálne začať s jednoduchými príkladmi (dostupné tutoriály na GitHube a v dokumentácii) a postupne prechádzať k zložitejším úlohám, ako je detekcia objektov, sledovanie a pokročilá počítačová vízia."
+                    }                                                                              
+                ]
+            }

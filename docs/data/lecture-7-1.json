@@ -1,0 +1,199 @@
+{ 
+                "id": "lecture-7-1", 
+                "name": "Prednáška 7 - Hĺbková kamera: detailnejší pohľad",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "Čo je hĺbková kamera?"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Hĺbková kamera je špeciálny typ snímacieho zariadenia, ktorý dokáže merať vzdialenosť objektov od snímača (tzv. hĺbku) a popri tom zaznamenávať aj obrazové dáta v klasickom 2D formáte. Na rozdiel od bežných RGB kamier, ktoré zachytávajú len farebné spektrum, hĺbková kamera vytvára zároveň 3D reprezentáciu scény. Technológie hĺbkových kamier sa líšia (napr. štruktúrované svetlo, time-of-flight a pod.), ale ich spoločný cieľ je poskytnúť informáciu o tvare a vzdialenosti pozorovaných objektov."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Štruktúrované svetlo",
+                        "description": "Na povrch sa premieta vzor (mriežka alebo bodová mapa). Kamera následne sníma deformácie tohto vzoru, z čoho sa vypočíta hĺbka."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Time-of-flight",
+                        "description": "Vysiela sa infračervené svetlo a meria sa čas, za aký sa odrazí späť, z čoho je možné získať vzdialenosť."
+                    },
+                    {
+                        "type": "text",
+                        "content": "V praxi umožňuje hĺbková kamera robotom a autonómnym zariadeniam lepšie chápať prostredie, zaznamenávať polohu a rozmery objektov a efektívne sa vyhýbať prekážkam."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Astra Pro Plus na ROSmaster R2"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Na platforme ROSmaster R2 je nainštalovaná Astra Pro Plus – 3D hĺbková kamera od firmy Orbbec, ktorá využíva technológiu štruktúrovaného svetla. Táto kamera disponuje nielen bežným farebným (RGB) senzorom, ale aj samostatným hĺbkovým senzorom, čo umožňuje:"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Hĺbkové snímanie (Depth Sensing)"
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Robot rozpozná, ako ďaleko sú objekty, steny alebo prekážky."
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Dáta z hĺbky sa integrujú do softvéru robota (napr. do ROS uzlov) na účely mapovania a navigácie."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Detekcia prekážok (Obstacle Detection)"
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Kamera poskytuje 3D informácie na vyhodnocovanie vzdialenosti a tvaru prekážok."
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Robot môže dynamicky upravovať trasu, aby sa vyhol kolíziám."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "3D mapovanie a rekonštrukcia (3D Mapping/Reconstruction)"
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Vytváranie 3D modelu prostredia pre autonómnu orientáciu."
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Umožňuje robustnejšie SLAM (Simultaneous Localization and Mapping) algoritmy."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Interakcia s ľuďmi (Human-Interaction Tasks)"
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Možnosť rozpoznať gestá, polohu tela či tváre."
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Hodí sa na rôzne HRI (Human-Robot Interaction) aplikácie, kde je dôležité rozlíšiť a sledovať ľudí v okolí."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Na ROSmaster R2 kamera spolupracuje s balíčkami v ROS ekosystéme, vďaka čomu môžu vývojári naplno využiť jej funkcionalitu. Dáta z kamery sa prenášajú priamo do ROS grafu (tzv. ROS topics) a môžu ich spracúvať ďalšie nody (napr. detekcia objektov, navigačné algoritmy a pod.)."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Využitie na autonómnych robotoch a vozidlách"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Hĺbkové kamery ako Astra Pro Plus nie sú využívané len na ROSmaster R2. Sú bežné aj v iných autonómnych platformách, vrátane robotických ramien, dronov či autonómnych vozidiel. Všade tam, kde je potrebné:"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Presné snímanie priestoru",
+                        "description": "Na identifikáciu objektov, ľudí či prekážok."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Bezpečnosť",
+                        "description": "Kamery môžu spustiť núdzové zastavenie, ak je detegovaná človeku nebezpečná kolízia."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Interaktívne funkcie",
+                        "description": "Gestá, rozpoznávanie osôb, identifikácia objektov a podobne."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Konkrétne vlastnosti Astra Pro Plus"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Kompaktné rozmery a jednoduchá inštalácia"
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Dizajn je prispôsobený pre jednoduchú montáž na rôzne platformy (roboty, statívy, steny)."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Integrovaný RGB aj hĺbkový senzor"
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Umožňuje snímať farebný obraz + hĺbku súčasne."
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Pre aplikácie (napr. rozpoznávanie objektov v 3D, generovanie farebných 3D modelov)."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Vyššia presnosť a kratšia minimálna meracia vzdialenosť"
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "V porovnaní so staršími modelmi dokáže poskytovať hĺbkové dáta s jemnejším rozlíšením na kratšie vzdialenosti."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Kompatibilita s ROS"
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Na ROSmaster R2 beží balíček astra_camera, ktorý sa stará o inicializáciu a publikovanie hĺbkových a farebných dát do ROS topicov."
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Vďaka tomu je integrácia s existujúcimi ROS nástrojmi (rqt, RViz, tf, atď.) pomerne jednoduchá."
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Podpora pre vývojové platformy"
+                    },
+                    {
+                        "type": "bullet",
+                        "description": "Orbbec poskytuje SDK (Astra SDK), ukážkové projekty a návody. Pre robotické aplikácie je najpodstatnejšie, že existuje aj ROS driver, čím sa uľahčuje nasadenie v robotických systémoch."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Zhrnutie a dôvod nasadenia"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Všestranné využitie",
+                        "description": "Spojenie RGB a hĺbky v jednej kamere poskytuje robustnú priestorovú informáciu."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Vývojárska komunita",
+                        "description": "Vďaka existujúcim ROS balíčkom je integrácia do robotických scenárov rýchla."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Presnosť a výkon",
+                        "description": "Kamera dokáže s dostatočnou presnosťou (aj v reálnom čase) poskytovať dáta pre navigáciu a vyhýbanie sa prekážkam."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Budúce rozšírenia",
+                        "description": "Možno doinštalovať ďalšie softvérové moduly (napr. na rozpoznávanie gest, ľudských postáv, sledovanie tváre), čo je kľúčové pre ľudskú-robotickú interakciu."
+                    }              
+                ] 
+            }

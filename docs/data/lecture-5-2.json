@@ -1,0 +1,269 @@
+{ 
+                "id": "lecture-5-2", 
+                "name": "Prednáška 5.2 - ROS 2",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "Úvod do ROS 2"
+                    },
+                    {
+                        "type": "text",
+                        "content": "ROS 2 je druhá generácia Robot Operating System, ktorá nadväzuje na úspechy a ponaučenia z ROS 1 (často volaného aj \"ROS\"). Zameriava sa na riešenie obmedzení, ktoré sa v priebehu vývoja ROS 1 ukázali ako kľúčové, najmä:"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Podpora viacerých platforiem",
+                        "description": "– Umožňuje spúšťať ROS 2 nielen na Linuxe, ale aj na Windows a macOS."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Distribuovaná architektúra",
+                        "description": "– Nevyžaduje centrálneho uzla Master, čím zvyšuje flexibilitu a odolnosť systému."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Zlepšená podpora reálneho času",
+                        "description": "– Poskytuje lepšiu spoľahlivosť komunikácie a umožňuje prevádzku v reálnom čase."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Nové komunikačné protokoly",
+                        "description": "– Využíva DDS (Data Distribution Service), ktorý umožňuje Quality of Service (QoS) politiky na riadenie komunikácie."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Prvá oficiálna verzia ROS 2 (Ardent Apalone) vyšla v roku 2017. Momentálne existuje niekoľko stabilných distribúcií, napr. Foxy Fitzroy (pre Ubuntu 20.04), Galactic Geochelone (tiež pre Ubuntu 20.04) a Humble Hawksbill (pre Ubuntu 22.04)."
+                    },
+                    {
+                        "type": "title",
+                        "content": "Prehľad hlavných vlastností ROS 2"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Podpora viacerých operačných systémov"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Linux",
+                        "description": "– Najčastejšie Ubuntu."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Windows 10",
+                        "description": "– Alternatíva pre prostredia vyžadujúce Windows."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "macOS",
+                        "description": "– Menej častá, ale podporovaná platforma."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Vďaka tomu je ROS 2 vhodný aj do prostredí, kde ROS 1 nebolo možné ľahko nasadiť."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Distribuovaná architektúra (bez Mastera)"
+                    },
+                    {
+                        "type": "text",
+                        "content": "V ROS 2 už nie je centrálna entita Master ako v ROS 1. Uzly si vzájomne objavujú (discovery) dostupné témy a služby pomocou DDS (Data Distribution Service). To umožňuje lepšiu škálovateľnosť a robustnejšiu komunikáciu, kde zlyhanie jedného uzla nespôsobí kolaps celého systému."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Reálne-časové použitie (Real-Time) a QoS"
+                    },
+                    {
+                        "type": "text",
+                        "content": "DDS umožňuje definovať tzv. Quality of Service (QoS) profily, ktoré pomáhajú zabezpečiť:"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Spoľahlivú komunikáciu",
+                        "description": "– Reliable/unreliable podľa potrieb."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Nastavenie latencie a priority správ",
+                        "description": "– Umožňuje flexibilitu v závislosti od scenára."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Možnosti latchingu",
+                        "description": "– Zachovanie poslednej správy pre nových odoberateľov."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Táto flexibilita je potrebná napr. v priemysle, kde robotické systémy vyžadujú deterministické spracovanie."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Novšie verzie programovacích jazykov"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "C++11 alebo novšie",
+                        "description": "– ROS 1 využíva zväčša C++03."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Python 3.5+",
+                        "description": "– ROS 1 bol typicky viazaný na Python 2."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Tým vzniká lepšia podpora moderných jazykových funkcií a knižníc."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Nový build systém: ament"
+                    },
+                    {
+                        "type": "text",
+                        "content": "ROS 1 používa catkin, zatiaľ čo ROS 2 prešlo na ament ako základ pre tvorbu balíkov. Pri väčších projektoch sa však využíva nástroj colcon (napr. colcon build), ktorý integruje ament (aj ďalšie build systémy) a poskytuje jednotnú prácu s balíkmi."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Kompatibilita s ROS 1"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Existuje viaceré spôsoby, ako prepojiť ROS 1 a ROS 2, napr. ros1_bridge alebo rosbridge, ktoré umožňujú výmenu správ medzi ROS 1 a ROS 2. To je užitočné pri postupnom prechode na novú platformu alebo pri zachovaní starších uzlov, ktoré ešte neboli portované do ROS 2."
+                    },
+                    {
+                        "type": "title",
+                        "content": "Hlavné rozdiely medzi ROS 2 a ROS 1"
+                    },
+                    {
+                        "type": "table",
+                        "columns": ["Aspekt", "ROS 1", "ROS 2"],
+                        "rows": [
+                          {
+                            "Aspekt": "Podporované platformy",
+                            "ROS 1": "Linux (Ubuntu), neoficiálne porty na iné systémy",
+                            "ROS 2": "Ubuntu, Windows 10, macOS a ďalšie (vrátane embedded platforiem)"
+                          },
+                          {
+                            "Aspekt": "Programovacie jazyky",
+                            "ROS 1": "C++03, Python 2 (mnohé balíky)",
+                            "ROS 2": "C++11/14+, Python 3.5+ (Foxy používa 3.8)"
+                          },
+                          {
+                            "Aspekt": "Middleware / Komunikačná vrstva",
+                            "ROS 1": "Centralizovaný roscore (Master) koordinuje témy a služby",
+                            "ROS 2": "Distribuované objavovanie uzlov cez DDS (FastDDS, Cyclone DDS, RTI Connext…)"
+                          },
+                          {
+                            "Aspekt": "Kompilácia projektov",
+                            "ROS 1": "catkin_make (alebo catkin_make_isolated)",
+                            "ROS 2": "colcon build – univerzálny nástroj pre ament, CMake, Python, Gradle…"
+                          },
+                          {
+                            "Aspekt": "Architektúra a modularita",
+                            "ROS 1": "Uzly spojené cez rosmaster, každý vo vlastnom procese",
+                            "ROS 2": "Komponenty (composition) – viacero uzlov v jednom procese, lepší overhead a nasadenie"
+                          }
+                        ]
+                    },                      
+                    {
+                        "type": "title",
+                        "content": "Zhrnutie"
+                    },
+                    {
+                        "type": "text",
+                        "content": "ROS 2 sa snaží zachovať filozofiu modulárneho, distribuovaného a otvoreného vývoja robotických riešení, avšak zavádza kľúčové vylepšenia:"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Distribuované objavovanie (DDS)",
+                        "description": "– Odstránenie centrálneho Master v prospech distribuovaného objavovania."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Podpora viacerých operačných systémov",
+                        "description": "– Oficiálne podporované platformy zahŕňajú Linux, Windows a macOS."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Reálne-časové a spoľahlivejšie scenáre",
+                        "description": "– Vďaka Quality of Service (QoS) a DDS."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Modernejšie programovacie jazyky",
+                        "description": "– Podpora pre C++11/14 a Python 3.x."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Nový build systém",
+                        "description": "– Colcon + ament poskytujú efektívnejšie nástroje na zostavovanie balíkov."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Ak už poznáte ROS 1, pri prechode na ROS 2 je potrebné naučiť sa:"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Práca s príkazmi",
+                        "description": "– Spúšťať uzly a pracovať s príkazmi ako ros2 run, ros2 topic list, atď."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Tvorba a zostavovanie balíkov",
+                        "description": "– Používať colcon na zostavovanie ROS 2 balíkov."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Využitie nových funkcií DDS",
+                        "description": "– Pochopenie QoS profilov, spôsobov discovery a iných noviniek."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Riešenie rozdielov v knižniciach",
+                        "description": "– Prepojenie a prispôsobenie balíkov z ROS 1 na ROS 2."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Rozhodnutie, či použiť ROS 1 alebo ROS 2, často závisí od:"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Požiadaviek na reálny čas",
+                        "description": "– Ak potrebujete deterministické spracovanie dát."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Cieľovej platformy",
+                        "description": "– Windows/macOS vs. Linux."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Dostupnosti balíkov",
+                        "description": "– Nie všetky balíky z ROS 1 sú dostupné v ROS 2."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Komunity a podpory",
+                        "description": "– ROS 2 naberá na popularite a je budúcnosťou ROS ekosystému."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Kombinovaná inštalácia: V prípade, že potrebujete prepojiť staršie uzly z ROS 1 a nové uzly z ROS 2, existuje ros1_bridge, ktorý umožňuje komunikáciu naprieč verziami. Takto je možné zavádzať ROS 2 postupne, bez nutnosti okamžitého refaktoringu celého systému."
+                    }                                                                            
+                ]
+            }

@@ -1,0 +1,117 @@
+{
+    "name": "ROS 1 a ROS 2",
+    "title": "ROS 1, ROS 2, základy a rozdiely",
+    "questions": [
+      {
+        "type": "mcq",
+        "question": "Ktorý proces v ROS 1 zabezpečuje registráciu a vyhľadávanie tém, služieb a akcií?",
+        "options": ["Parameter Server", "Node Manager (Master)", "roscore Bridge", "Robot State Publisher"],
+        "answer": "Node Manager (Master)"
+      },
+      {
+        "type": "mcq",
+        "question": "Aký mechanizmus v ROS 1 používame pre krátke synchrónne operácie request/response?",
+        "options": ["Topic", "Service", "Action", "TF"],
+        "answer": "Service"
+      },
+      {
+        "type": "truefalse",
+        "question": "V ROS 1 môže jeden uzol obsahovať viacero uzlových komponentov v tom istom procese bez ďalších úprav.",
+        "answer": "False"
+      },
+      {
+        "type": "short",
+        "question": "Názov nástroja v ROS, ktorý sa používa na 3D vizualizáciu robotických dát (mapy, model robota).",
+        "answer": "rviz"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorý súbor v balíku ROS 1 opisuje závislosti, licenciu a metadáta balíka?",
+        "options": ["CMakeLists.txt", "setup.py", "package.xml", "ament.xml"],
+        "answer": "package.xml"
+      },
+      {
+        "type": "truefalse",
+        "question": "Uzly v ROS 1 komunikujú asynchrónne cez mechanizmus publish/subscribe nazývaný Topic.",
+        "answer": "True"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorý nástroj alebo prostredie v ekosystéme ROS slúži ako 3D fyzikálny simulátor robotov?",
+        "options": ["Gazebo", "MoveIt!", "rqt_graph", "TF"],
+        "answer": "Gazebo"
+      },
+      {
+        "type": "short",
+        "question": "Aká knižnica/služba v ROS rieši sledovanie a prepočty súradnicových systémov robota v čase?",
+        "answer": "tf"
+      },
+      {
+        "type": "mcq",
+        "question": "Aký typ súboru (.launch) sa v ROS používa na spúšťanie a konfigurovanie viacerých uzlov naraz?",
+        "options": ["launch file", "yaml config", "bag file", "srv file"],
+        "answer": "launch file"
+      },
+      {
+        "type": "truefalse",
+        "question": "Parameter Server v ROS slúži na ukladanie a čítanie konfiguračných parametrov pre uzly.",
+        "answer": "True"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorý middleware využíva ROS 2 a umožňuje definovať QoS profily?",
+        "options": ["DDS", "MQTT", "WebSockets", "ZeroMQ"],
+        "answer": "DDS"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorý nástroj sa v ROS 2 najčastejšie používa na zostavenie viacerých balíkov projektu?",
+        "options": ["catkin_make", "colcon", "make", "bazel"],
+        "answer": "colcon"
+      },
+      {
+        "type": "truefalse",
+        "question": "ROS 2 vyžaduje centrálneho uzla Master na objavovanie tém a služieb.",
+        "answer": "False"
+      },
+      {
+        "type": "short",
+        "question": "QoS vlastnosť DDS, ktorá zachová poslednú publikovanú správu pre nových odoberateľov (anglický termín).",
+        "answer": "latching"
+      },
+      {
+        "type": "mcq",
+        "question": "Ktorá stabilná distribúcia ROS 2 je určená pre Ubuntu 22.04?",
+        "options": ["Foxy Fitzroy", "Galactic Geochelone", "Humble Hawksbill", "Melodic Morenia"],
+        "answer": "Humble Hawksbill"
+      },
+      {
+        "type": "mcq",
+        "question": "Ako sa volala prvá oficiálna distribúcia ROS 2 vydaná v roku 2017?",
+        "options": ["Ardent Apalone", "Bouncy Bolson", "Crystal Clemmys", "Dashing Diademata"],
+        "answer": "Ardent Apalone"
+      },
+      {
+        "type": "truefalse",
+        "question": "ROS 2 podporuje natívne spustenie na operačnom systéme Windows 10.",
+        "answer": "True"
+      },
+      {
+        "type": "short",
+        "question": "Názov mosta (bridge), ktorý umožňuje komunikáciu medzi ROS 1 a ROS 2 systémami.",
+        "answer": "ros1_bridge"
+      },
+      {
+        "type": "mcq",
+        "question": "V ROS 2 môžeme zoskupiť viacero uzlov do jedného procesu kvôli zníženiu overheadu. Ako sa táto funkcia nazýva?",
+        "options": ["Composability (Components)", "Bagging", "roslaunch", "Nodelet"],
+        "answer": "Composability (Components)"
+      },
+      {
+        "type": "truefalse",
+        "question": "DDS v ROS 2 umožňuje používať politiky QoS na riadenie spoľahlivosti a latencie komunikácie.",
+        "answer": "True"
+      }
+    ]
+  }
+  

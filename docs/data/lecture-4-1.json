@@ -1,0 +1,270 @@
+{ 
+                "id": "lecture-4-1", 
+                "name": "Prednáška 4 - Docker - základný prehľad",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "Čo je Docker?"
+                    },
+                    {
+                        "type": "image",
+                        "src": "https://res.cloudinary.com/devzsrl7h/image/upload/v1736937875/Docker-Logo_zrmj8h.png",
+                        "alt": "docker logo"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Docker je open-source platforma, ktorá umožňuje vytvárať, nasadzovať a spúšťať aplikácie v ľahkých „kontajneroch“. Kontajnery obsahujú všetky potrebné komponenty (knižnice, závislosti, nastavenia) na to, aby aplikácia mohla fungovať rovnako naprieč rôznymi prostrediami a operačnými systémami."
+                    },
+                    {
+                        "type": "text",
+                        "content": "<strong>Jednoduchý príklad:</strong><br> Predstav si, že máš aplikáciu, ktorá beží v tvojom počítači. Potrebuješ ju presunúť na iný počítač alebo server. Bez Dockeru musíš znova nastavovať všetko potrebné (knižnice, verzie, konfigurácie). S Dockerom stačí preniesť jeden „kontajner“ a spustiť ho. Všetko funguje tak, ako u teba."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Prečo Docker?"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Jednoduchosť",
+                        "description": "– Kontajnery sa dajú rýchlo vytvoriť, upraviť či zmazať."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Prenositeľnosť",
+                        "description": "– Aplikácia v Docker kontajneri beží rovnako takmer všade."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Efektívne využitie zdrojov",
+                        "description": "– Oproti virtuálnym strojom (VM) sú Docker kontajnery menej náročné na pamäť a procesor."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Izolácia",
+                        "description": "– Každá aplikácia je uzavretá vo vlastnom kontajneri, čím sa znižuje riziko konfliktov medzi rôznymi aplikáciami alebo ich verziami."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Docker vs. Virtual Machine (VM)"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Virtual Machine (VM): Spúšťa celý operačný systém v rámci hostiteľského systému. Má vlastné jadro (kernel), čo znamená vyššiu spotrebu zdrojov (pamäť, procesor)."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Docker kontajner: Využíva jadro hostiteľského operačného systému, a preto je omnoho ľahší a štartuje veľmi rýchlo."
+                    },
+                    {
+                        "type": "text",
+                        "content": "<strong>Jednoducho povedané:</strong> VM je ako stolný počítač – výkonnejší, ale zaberá viac miesta a je menej prenosný, zatiaľ čo Docker kontajner je ako notebook – ľahký, prenosný a dostatočný na väčšinu úloh."
+                    },                    
+                    {
+                        "type": "table",
+                        "columns": ["Aspekt", "Virtual Machine (VM)", "Docker kontajner"],
+                        "rows": [
+                            {
+                                "Aspekt": "Štartovanie",
+                                "Virtual Machine (VM)": "Pomalejšie, vyžaduje zavedenie celého operačného systému.",
+                                "Docker kontajner": "Rýchlejšie, využíva hostiteľský operačný systém."
+                            },
+                            {
+                                "Aspekt": "Využitie zdrojov",
+                                "Virtual Machine (VM)": "Vyššia spotreba pamäte a CPU.",
+                                "Docker kontajner": "Nižšia spotreba zdrojov."
+                            },
+                            {
+                                "Aspekt": "Izolácia",
+                                "Virtual Machine (VM)": "Úplná izolácia, vlastné jadro (kernel).",
+                                "Docker kontajner": "Čiastočná izolácia, zdieľa jadro s hostiteľom."
+                            },
+                            {
+                                "Aspekt": "Prenositeľnosť",
+                                "Virtual Machine (VM)": "Prenos závislý na hypervízore.",
+                                "Docker kontajner": "Jednoduchý prenos medzi systémami."
+                            },
+                            {
+                                "Aspekt": "Použitie",
+                                "Virtual Machine (VM)": "Komplexnejšie aplikácie s rôznymi operačnými systémami.",
+                                "Docker kontajner": "Mikroslužby a ľahké aplikácie."
+                            }
+                        ]
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Základné pojmy"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Image (Obraz)",
+                        "description": "– Je to šablóna (ako „fotka“) s presnou inštaláciou aplikácie a jej závislostí. Obraz je nemenný – keď ho upravíš, vytváraš nový obraz."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Container (Kontajner)",
+                        "description": "– Bežiaca inštancia obrazu. Keď spustíš obraz, dostaneš kontajner."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Dockerfile",
+                        "description": "– Textový súbor, ktorý obsahuje inštrukcie na vytvorenie vlastného Docker obrazu (napr. ako nainštalovať knižnicu, skopírovať súbory a pod.)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Docker Hub",
+                        "description": "– Verejná online služba, kde môžeš nájsť (pull) alebo zdieľať (push) Docker obrazy."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Inštalácia a spustenie Dockeru"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Docker môžete nainštalovať na akýkoľvek operačný systém. Pre podrobné inštrukcie navštívte stránku: <a href='https://docs.docker.com/engine/install/' target='_blank'>Sprievodca inštaláciou Dockeru</a>."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Po nainštalovaní Dockeru si môžete overiť jeho funkčnosť jednoduchým príkazom:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker run hello-world"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Tento príkaz vykoná nasledujúce kroky:"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Stiahnutie obrazu",
+                        "description": "– Automaticky stiahne obraz 'hello-world' z Docker Hubu, ak ho ešte nemáte lokálne."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Vytvorenie a spustenie kontajnera",
+                        "description": "– Vytvorí a spustí nový kontajner z obrazu 'hello-world'."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Zobrazenie správy",
+                        "description": "– Vypíše na obrazovku správu od Dockeru, čím potvrdí správnu inštaláciu."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Tvorba vlastného kontajnera"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Vlastný kontajner môžeš vytvoriť pomocou súboru Dockerfile, ktorý obsahuje inštrukcie na vytvorenie obrazu. Tento súbor umožňuje špecifikovať závislosti, kopírovať súbory a nastaviť príkazy, ktoré sa spustia pri štarte kontajnera."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Pre väčšie projekty s viacerými službami je užitočné použiť Docker Compose. Umožňuje definovať a spúšťať viacero kontajnerov naraz pomocou jedného konfiguračného súboru (docker-compose.yml). Tento súbor obsahuje informácie o službách, portoch a sieťach, ktoré kontajnery používajú."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Základné príkazy"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Zobrazenie obrazov",
+                        "description": "– Pozri si všetky lokálne dostupné obrazy príkazom:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker images"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Vymazanie obrazov",
+                        "description": "– Nepotrebné obrazy vymaž príkazom:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker rmi <IMAGE_ID>"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Zobrazenie bežiacich kontajnerov",
+                        "description": "– Zobraz všetky aktívne kontajnery príkazom:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker ps"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Zastavenie kontajnera",
+                        "description": "– Zastav bežiaci kontajner príkazom:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker stop <CONTAINER_ID>"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Vymazanie kontajnera",
+                        "description": "– Odstráň zastavený kontajner príkazom:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker rm <CONTAINER_ID>"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Zobrazenie logov",
+                        "description": "– Pozri si logy bežiaceho kontajnera príkazom:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker logs <CONTAINER_ID>"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Prístup do kontajnera",
+                        "description": "– Ak chceš získať prístup do bežiaceho kontajnera, použi:"
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker exec -it <CONTAINER_ID> bash"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Presmerovanie portov",
+                        "description": "– Presmeruj porty kontajnera na svoj lokálny systém príkazom (napr. 8080 na 80):"
+                    },
+                    {
+                        "type": "code",
+                        "content": "docker run -p 8080:80 <IMAGE_NAME>"
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Zhrnutie"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Docker je výkonný nástroj na vytváranie a správu kontajnerov. Umožňuje efektívne vyvíjať, testovať a nasadzovať aplikácie. Vďaka jeho prenosnosti a škálovateľnosti sa stal nevyhnutnou súčasťou moderného softvérového vývoja."
+                    }
+                ]
+            }

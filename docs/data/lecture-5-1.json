@@ -1,0 +1,354 @@
+{ 
+                "id": "lecture-5-1", 
+                "name": "Prednáška 5.1 - ROS 1",
+                "description": [
+                    {
+                        "type": "title",
+                        "content": "Čo je ROS"
+                    },
+                    {
+                        "type": "text",
+                        "content": "ROS (Robot Operating System) je open source systém vyvinutý špeciálne pre robotické aplikácie. Zahŕňa:"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Hardvérovú abstrakciu",
+                        "description": "– Jednotné rozhranie k rôznym senzorom a aktuátorom."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Nástroje na správu a prenos dát medzi procesmi (uzlami)",
+                        "description": "– Umožňuje komunikáciu medzi rôznymi časťami robotického systému."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Systém na publikovanie a zdieľanie softvérových balíkov",
+                        "description": "– Uľahčuje distribúciu a opätovné využitie softvéru."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Možnosť distribuovaného vývoja",
+                        "description": "– Viaceré uzly môžu bežať na viacerých počítačoch v sieti."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Hlavným cieľom ROS je podporiť znovupoužiteľnosť kódu vo výskume a pri vývoji robotických riešení, zrýchliť prototypovanie a uľahčiť zdieľanie riešení naprieč komunitou."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Odporúčaný odkaz: <a href='https://www.ros.org/' target='_blank'>ROS Wiki</a> – Oficiálna dokumentácia a komunitné zdroje."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Hlavné vlastnosti ROS"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Distribuovaná architektúra",
+                        "description": "– Každý spustený proces sa v ROS nazýva „uzol“ (node). Uzly sú spravované centrálnym procesom nazývaným Master (resp. Node Manager), ktorý zabezpečuje registráciu a vyhľadávanie tém, služieb či akcií."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Podpora viacerých jazykov",
+                        "description": "– ROS poskytuje oficiálne knižnice pre C++ (roscpp) a Python (rospy). Existujú však aj neoficiálne väzby pre ďalšie jazyky (napr. Java)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Modularita a škálovateľnosť",
+                        "description": "– Je možné spúšťať len jeden uzol, ale aj prepojiť desiatky či stovky uzlov do väčšieho projektu (spravované často cez konfiguračné súbory launch)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Otvorenosť a voľné použitie",
+                        "description": "– ROS má licenciu BSD, čo umožňuje voľné použitie a úpravy – či už na akademické účely, alebo v komerčnom prostredí."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Celková architektúra ROS"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Úroveň výpočtového grafu (Computation Graph Level)",
+                        "description": "– Zodpovedá behu uzlov (nodes) a ich komunikácii prostredníctvom tém (topics), služieb (services) a akcií (actions)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Úroveň systému súborov (File System Level)",
+                        "description": "– Popisuje, kde a ako sú uložené kódy, spustiteľné súbory, definície správ (messages), služby (srv) alebo akcie (action) na pevnom disku. Tieto sú organizované do balíkov (packages) a metabalíkov (metapackages)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Úroveň open source komunity (Open Source Community Level)",
+                        "description": "– Zahŕňa zdielanie kódu, balíkov, algoritmov a znalostí prostredníctvom oficiálnych distribúcií, repozitárov, wiki, mailing listov či fóra."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Úroveň výpočtového grafu"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Uzly (Nodes)",
+                        "description": "– Každý uzol je jeden samostatný proces vykonávajúci určitú funkciu (napríklad čítanie dát zo senzora, plánovanie dráhy, ovládanie robota a pod.). Množstvo menších a špecializovaných uzlov zvyšuje flexibilitu a modularitu."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Správy (Messages)",
+                        "description": "– Definujú formáty dát, ktoré sa prenášajú medzi uzlami. Ak napr. čítate údaje o polohe z enkodéra motora, zadefinujete si správu (message), ktorá obsahuje požadované premenné (pozícia, rýchlosť atď.)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Témy (Topics)",
+                        "description": "– Mechanizmus publish/subscribe. Uzol, ktorý dáta generuje (napr. senzor), ich publikuje (publish) na určitú tému. Iný uzol, ktorý potrebuje tieto dáta, danú tému odoberá (subscribe). Týmto spôsobom dochádza k asynchrónnemu prenosu dát."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Služby (Services)",
+                        "description": "– Používajú sa v modeli požiadavka-odpoveď (request-reply). Klient (client) pošle požiadavku na server (server) a čaká na odpoveď. Je to vhodné, ak potrebujeme ihneď výsledok a ide o krátkodobú operáciu."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Akcie (Actions)",
+                        "description": "– Slúžia na úlohy, ktoré môžu trvať dlhší čas, pričom klient (action client) dostáva priebežný feedback a môže akciu kedykoľvek zrušiť (cancel). Akcie sú nadstavbou nad témami a službami."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Node Manager (Master)",
+                        "description": "– Zabezpečuje registráciu a vyhľadávanie názvov tém, služieb a akcií. Ak Master nebeží, uzly sa navzájom „nenájdu“."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Parameter Server",
+                        "description": "– Umožňuje vkladať a čítať konfiguračné parametre v rámci ROS systému (napr. kalibrácia senzora)."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Úroveň systému súborov"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Balík (Package)",
+                        "description": "– Základná jednotka softvérovej organizácie v ROS. Obsahuje zdrojové kódy, spustiteľné súbory, súbory s definíciami správ, služby alebo akcie. Súbor `package.xml` opisuje závislosti balíka, licenciu a pod."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Komplexnejší (metabalík) alebo komplexná funkčná skupina",
+                        "description": "– Viac balíkov môže byť združených do tzv. metabalíkov alebo väčších funkčných celkov, ktoré spolu tvoria napríklad kompletné riešenie pre navigáciu."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Súbory s definíciami",
+                        "description": "– Obsahujú špecifikácie potrebné na komunikáciu v rámci ROS systému:\n  - `msg/` – správy (Messages)\n  - `srv/` – služby (Services)\n  - `action/` – akcie (Actions)"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Ostatné súbory",
+                        "description": "– Konfigurácie, zdrojové kódy, knižnice, skripty."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Úroveň open source komunity"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Distribúcie ROS (Releases)",
+                        "description": "– ROS funguje na princípe distribúcií (napr. Melodic, Noetic). Každá distribúcia má podporu pre konkrétne verzie Ubuntu a má určenú dobu životnosti. Príklad: ROS Noetic Ninjemys (máj 2020) beží na Ubuntu 20.04 a je oficiálne podporovaný do mája 2023."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Repozitáre kódu",
+                        "description": "– V komunitnom ekosystéme ROS existuje obrovské množstvo repozitárov, v ktorých sa dajú nájsť balíky pre rôzne roboty, senzory a algoritmy."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "ROS Wiki",
+                        "description": "– Hlavné miesto s dokumentáciou, návodmi a tutoriálmi. Každý sa môže zapojiť a pridať nové články či opravy."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "ROS Answers",
+                        "description": "– Fórum pre otázky a odpovede, ktoré riešia konkrétne problémy s ROS."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Komunikačný mechanizmus"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Topic (Téma)"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Asynchrónny publish-subscribe model. Publikovanie (publish) a odoberanie (subscribe) prebieha pomocou názvov tém, pričom sa očakáva súlad v type správy (napr. geometry_msgs/Twist)."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Ideálne na kontinuálne a jednosmerné dátové toky (napr. údaje zo senzora LIDAR, kamerové dáta, informácie o polohe)."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Service (Služba)"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Služba = server + klient, kde klient pošle požiadavku (request) a server odpovie (response)."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Vhodné, keď potrebujeme okamžitý výsledok a operácia netrvá dlho (napr. zistiť stav batérie, prepnúť mód zariadenia)."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Je to synchrónny mechanizmus – klient čaká, kým server neodpovie."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Action (Akcia)"
+                    },
+                    {
+                        "type": "text",
+                        "content": "Akcia = asynchrónny klient–server mechanizmus s neustálym odovzdávaním spätnej väzby (feedback) a možnosťou zrušiť úlohu počas behu."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Akcia pracuje cez viacero tém (goal, feedback, result, status, cancel) a dokáže riešiť dlhšie bežiace operácie (napr. presun robota na určenú súradnicu)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Goal (cieľ)",
+                        "description": "– Klient vyšle cieľ a chce ho dosiahnuť (napr. navigovať robota do určitej pozície)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Feedback",
+                        "description": "– Server posiela priebežné informácie o stave úlohy (napr. percento dokončenia, aktuálnu pozíciu)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Result (výsledok)",
+                        "description": "– Po úspešnom (alebo neúspešnom) dokončení sa klient dozvie konečný stav."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Cancel (zrušenie)",
+                        "description": "– Kedykoľvek možno akciu zastaviť (napr. ak úloha už nie je potrebná)."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "subtitle",
+                        "content": "Porovnanie komunikačných mechanizmov"
+                    },                    
+                    {
+                        "type": "table",
+                        "columns": ["Vlastnosť", "Topic", "Service", "Action"],
+                        "rows": [
+                            {
+                                "Vlastnosť": "Mechanizmus",
+                                "Topic": "Publish/Subscribe",
+                                "Service": "Request/Response",
+                                "Action": "Asynchrónny Client/Server"
+                            },
+                            {
+                                "Vlastnosť": "Odozva",
+                                "Topic": "Žiadna",
+                                "Service": "Ihneď – jednorazová",
+                                "Action": "Priebežný feedback + konečný výsledok"
+                            },
+                            {
+                                "Vlastnosť": "Zrušenie",
+                                "Topic": "Nie",
+                                "Service": "Nie",
+                                "Action": "Áno (Cancel)"
+                            },
+                            {
+                                "Vlastnosť": "Vhodné",
+                                "Topic": "Kontinuálne dáta",
+                                "Service": "Krátke dotazy/operácie",
+                                "Action": "Dlhšie trvajúce úlohy, navigácia atď."
+                            }
+                        ]
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Bežné súčasti (Common Components)"
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "launch (spúšťací súbor)",
+                        "description": "– Umožňuje naraz spúšťať a konfigurovať viaceré uzly. Môže automaticky štartovať roscore (Master), nastavovať parametre a spúšťať uzly."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "TF (transformácie súradníc)",
+                        "description": "– Rieši sledovanie a prepočty medzi rôznymi súradnicovými systémami (napr. základňa robota, rameno, kamera atď.) v čase. Pomocou TF môžeme získať transformácie (napr. posun, rotáciu) medzi jednotlivými časťami robota."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Rviz",
+                        "description": "– 3D vizualizačný nástroj na zobrazovanie robotických dát (mapy, senzory, 3D model robota). Umožňuje interaktívne overovanie dát, napr. pohyb robota, dráhy, obrysy z LIDAR-u atď."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Gazebo",
+                        "description": "– Výkonný 3D fyzikálny simulátor robotov, ktorý dokáže simulovať dynamiku, trenie či senzory. Umožňuje testovať robotické scenáre bez fyzického hardvéru."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "rqt (Qt toolbox)",
+                        "description": "– Sada grafických nástrojov (napr. rqt_graph na zobrazenie grafu uzlov a tém, rqt_plot na vykreslenie dát v reálnom čase, rqt_console na prezeranie logov)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "Navigation",
+                        "description": "– Sústava balíkov, ktoré umožňujú 2D navigáciu robotov (plánovanie dráhy, vyhýbanie sa prekážkam, mapovanie)."
+                    },
+                    {
+                        "type": "bullet",
+                        "item": "MoveIt!",
+                        "description": "– Najčastejšie používaný balík pre manipulátory (robotické ramená). Zahŕňa plánovanie dráhy, inverznú kinematiku, kolízne testy, atď."
+                    },
+                    {
+                        "type": "line"
+                    },
+                    {
+                        "type": "title",
+                        "content": "Zhrnutie"
+                    },
+                    {
+                        "type": "text",
+                        "content": "ROS je robustný a flexibilný systém, ktorý umožňuje efektívnu správu robotických aplikácií. S jeho distribúciami, nástrojmi ako Rviz a Gazebo, a s možnosťou jednoduchej integrácie hardvéru, sa stal neoddeliteľnou súčasťou vývoja moderných robotických systémov."
+                    },
+                    {
+                        "type": "text",
+                        "content": "Aj keď ROS poskytuje množstvo výhod, jeho vývoj pokračuje. V ďalšej prednáške sa zameriame na ROS 2, novšiu verziu systému, ktorá prináša pokročilé funkcie, vyššiu bezpečnosť a výkon pre náročnejšie aplikácie."
+                    }                                                                                                            
+                ]
+            }

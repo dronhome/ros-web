@@ -1,0 +1,54 @@
+{
+    "id": "exercise-6-3",
+    "name": "Cvičenie 6.3 - Detekcia objektov pomocou OpenCV a SSD MobileNet V2",
+    "description": [
+        {
+            "type": "text",
+            "content": "V tomto cvičení sa naučíte, ako používať OpenCV a model SSD MobileNet V2 na detekciu objektov v reálnom čase. Tento model dokáže identifikovať rôzne objekty na základe predtrénovaného modelu COCO (Common Objects in Context)."
+        },
+        {
+            "type": "subtitle",
+            "content": "Princípy detekcie objektov"
+        },
+        {
+            "type": "text",
+            "content": "Detekcia objektov zahŕňa identifikáciu konkrétnych objektov na obrázku alebo videu. Použitím modelu SSD MobileNet V2 dokážeme lokalizovať a označiť objekty, ako sú osoby, autá, bicykle a mnoho ďalších. Model bol predtrénovaný na datasete COCO, ktorý obsahuje 80 tried objektov."
+        },
+        {
+            "type": "title",
+            "content": "Kód"
+        },
+        {
+            "type": "subtitle",
+            "content": "Načítanie názvov tried a predtrénovaného modelu"
+        },
+        {
+            "type": "code",
+            "content": "import cv2 as cv\nimport numpy as np\n\n# Načítanie názvov tried COCO\nwith open('object_detection_coco.txt', 'r') as f:\n    class_names = f.read().strip().split('\\n')\n\n# Generovanie náhodných farieb pre každú triedu\nCOLORS = np.random.uniform(0, 255, size=(len(class_names), 3))\n\n# Načítanie predtrénovaného modelu DNN (SSD MobileNet V2)\nmodel = cv.dnn.readNet(model='frozen_inference_graph.pb', config='ssd_mobilenet_v2_coco_2018_03_29.pbtxt', framework='TensorFlow')"
+        },
+        {
+            "type": "subtitle",
+            "content": "Funkcia na detekciu objektov v snímke"
+        },
+        {
+            "type": "code",
+            "content": "def detect_objects(frame):\n    # Získanie rozmerov snímky\n    image_height, image_width, _ = frame.shape\n    # Vytvorenie blobu (predspracovanie snímky pre model)\n    blob = cv.dnn.blobFromImage(image=frame, size=(300, 300), mean=(104, 117, 123), swapRB=True)\n    model.setInput(blob)  # Nastavenie vstupu pre model\n    detections = model.forward()  # Spustenie predikcie\n\n    # Spracovanie každej detekcie\n    for detection in detections[0, 0, :, :]:\n        confidence = detection[2]  # Pravdepodobnosť detekcie\n        if confidence > 0.4:  # Prah dôveryhodnosti\n            class_id = int(detection[1])  # ID triedy objektu\n            class_name = class_names[class_id - 1]  # Názov triedy\n            color = COLORS[class_id]  # Farba pre triedu\n\n            # Výpočet súradníc ohraničujúceho boxu\n            box_x = int(detection[3] * image_width)\n            box_y = int(detection[4] * image_height)\n            box_width = int(detection[5] * image_width)\n            box_height = int(detection[6] * image_height)\n\n            # Kreslenie ohraničujúceho boxu a názvu objektu\n            cv.rectangle(frame, (box_x, box_y), (box_width, box_height), color, thickness=2)\n            cv.putText(frame, class_name, (box_x, box_y - 10), cv.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)\n    return frame"
+        },
+        {
+            "type": "subtitle",
+            "content": "Hlavná časť programu"
+        },
+        {
+            "type": "code",
+            "content": "if __name__ == '__main__':\n    # Použitie webkamery na snímanie\n    capture = cv.VideoCapture(0)\n    while capture.isOpened():\n        ret, frame = capture.read()\n        if not ret:\n            break\n\n        # Detekcia objektov v snímke\n        frame = detect_objects(frame)\n        cv.imshow('Object Detection', frame)  # Zobrazenie výsledkov\n\n        # Ukončenie pri stlačení klávesy 'q'\n        if cv.waitKey(10) & 0xFF == ord('q'):\n            break\n\n    capture.release()\n    cv.destroyAllWindows()"
+        },
+        {
+            "type": "subtitle",
+            "content": "Zhrnutie"
+        },
+        {
+            "type": "text",
+            "content": "Toto cvičenie vám ukázalo, ako používať OpenCV a model SSD MobileNet V2 na detekciu objektov v reálnom čase. Môžete experimentovať s inými prahmi dôveryhodnosti, snímkami alebo videami, aby ste získali lepšie výsledky."
+        }
+    ]
+}

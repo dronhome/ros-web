@@ -1,0 +1,86 @@
+{
+    "id": "exercise-3-3",
+    "name": "Cvičenie 3.3 - Základné ovládanie RGB a efektov",
+    "description": [
+        {
+            "type": "title",
+            "content": "Ovládanie RGB a efektov"
+        },
+        {
+            "type": "text",
+            "content": "V tomto cvičení sa naučíte ovládať RGB svetlá a pridávať rôzne efekty na Rosmastere pomocou knižnice `Rosmaster_Lib` a interaktívnych ovládacích prvkov Jupyter Notebooku."
+        },
+        {
+            "type": "subtitle",
+            "content": "Importovanie knižníc a inicializácia"
+        },
+        {
+            "type": "code",
+            "content": "from Rosmaster_Lib import Rosmaster\nfrom ipywidgets import interact\nimport ipywidgets as widgets\nimport time\nimport random\n\n# Vytvorenie objektu Rosmaster\nbot = Rosmaster()"
+        },
+        {
+            "type": "text",
+            "content": "Importovali sme knižnicu `Rosmaster_Lib` na ovládanie Rosmastera a `ipywidgets` na vytváranie interaktívnych ovládacích prvkov v Jupyter Notebooku. Následne sme vytvorili objekt `bot` na komunikáciu s Rosmasterom."
+        },
+        {
+            "type": "subtitle",
+            "content": "Ovládanie RGB svetiel cez posuvníky"
+        },
+        {
+            "type": "code",
+            "content": "def rgb_control(r, g, b):\n    bot.set_colorful_lamps(0xff, r, g, b)\n\n# Posuvníky na ovládanie farieb RGB\ninteract(rgb_control, \n         r=widgets.IntSlider(min=0, max=255, step=1, value=128, description='Červená'), \n         g=widgets.IntSlider(min=0, max=255, step=1, value=128, description='Zelená'), \n         b=widgets.IntSlider(min=0, max=255, step=1, value=128, description='Modrá'));"
+        },
+        {
+            "type": "text",
+            "content": "Tento kód vytvorí tri posuvníky na ovládanie intenzity červenej, zelenej a modrej farby svetiel. Výber farby sa prejaví okamžite na Rosmastere."
+        },
+        {
+            "type": "subtitle",
+            "content": "Generovanie náhodnej farby a posúvanie efektu"
+        },
+        {
+            "type": "code",
+            "content": "r, g, b = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)\nprint(f'Generované farby: R={r}, G={g}, B={b}')\n\ndef move_effect(index):\n    bot.set_colorful_lamps(0xff, 0, 0, 0)\n    time.sleep(0.05)\n    bot.set_colorful_lamps(index, r, g, b)\n\n# Posuvník na ovládanie pozície efektu\ninteract(move_effect, index=widgets.IntSlider(min=0, max=14, step=1, value=0, description='Pozícia'));"
+        },
+        {
+            "type": "text",
+            "content": "Tento kód generuje náhodnú farbu a vytvorí posuvník na ovládanie pozície svetla s touto farbou."
+        },
+        {
+            "type": "subtitle",
+            "content": "Ovládanie svetiel cez tlačidlá"
+        },
+        {
+            "type": "code",
+            "content": "def button_click(info):\n    color = info.description\n    print(f'Tlačidlo {color} stlačené!')\n    if color == \"Červená\":\n        bot.set_colorful_lamps(0xff, 255, 0, 0)\n    elif color == \"Zelená\":\n        bot.set_colorful_lamps(0xff, 0, 255, 0)\n    elif color == \"Modrá\":\n        bot.set_colorful_lamps(0xff, 0, 0, 255)\n    elif color == \"Biela\":\n        bot.set_colorful_lamps(0xff, 255, 255, 255)\n    elif color == \"Vypnúť\":\n        bot.set_colorful_lamps(0xff, 0, 0, 0)\n\n# Vytvorenie tlačidiel\nbtn_red = widgets.Button(description=\"Červená\")\nbtn_red.on_click(button_click)\n\nbtn_green = widgets.Button(description=\"Zelená\")\nbtn_green.on_click(button_click)\n\nbtn_blue = widgets.Button(description=\"Modrá\")\nbtn_blue.on_click(button_click)\n\nbtn_white = widgets.Button(description=\"Biela\")\nbtn_white.on_click(button_click)\n\nbtn_off = widgets.Button(description=\"Vypnúť\")\nbtn_off.on_click(button_click)\n\ndisplay(widgets.HBox([btn_red, btn_green, btn_blue]))\ndisplay(widgets.HBox([btn_white, btn_off]))"
+        },
+        {
+            "type": "text",
+            "content": "Pomocou tlačidiel môžete jednoducho zapnúť svetlá s konkrétnou farbou alebo ich vypnúť. Každé tlačidlo spustí funkciu na ovládanie farieb svetiel."
+        },
+        {
+            "type": "subtitle",
+            "content": "Pridanie špeciálnych efektov"
+        },
+        {
+            "type": "code",
+            "content": "def effect_handler(effect):\n    bot.set_colorful_effect(effect, speed=5)\n\n# Dropdown menu na výber efektu\neffect_dropdown = widgets.Dropdown(\n    options=[\"Vypnúť\", \"Prechádzajúce svetlá\", \"Pulzujúce svetlá\", \"Plynulý prechod\"],\n    description='Efekt',\n    value=\"Vypnúť\")\n\neffect_dropdown.observe(lambda change: effect_handler(effect_dropdown.options.index(change.new)), names='value')\n\ndisplay(effect_dropdown)"
+        },
+        {
+            "type": "text",
+            "content": "Tento kód vytvorí rozbaľovaciu ponuku, kde môžete vybrať špeciálne efekty, ako sú prechádzajúce alebo pulzujúce svetlá. Každý výber aplikuje efekt na Rosmaster."
+        },
+        {
+            "type": "subtitle",
+            "content": "Vyčistenie zdrojov"
+        },
+        {
+            "type": "code",
+            "content": "del bot"
+        },
+        {
+            "type": "text",
+            "content": "Po dokončení programu nezabudnite vymazať objekt `bot`, aby ste predišli konfliktom v ďalšom programe."
+        }
+    ]                
+}
